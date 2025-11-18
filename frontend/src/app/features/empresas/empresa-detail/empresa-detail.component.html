@@ -1,12 +1,12 @@
-<div *ngIf="loading; else content" class="loading-container">
-  <mat-card class="loading-card">
-    <mat-progress-spinner mode="indeterminate" diameter="60"></mat-progress-spinner>
-    <p>Cargando datos de la empresa...</p>
-  </mat-card>
-</div>
-
-<ng-template #content>
-  <div *ngIf="empresa; else noEmpresa">
+@if (loading) {
+  <div class="loading-container">
+    <mat-card class="loading-card">
+      <mat-progress-spinner mode="indeterminate" diameter="60"></mat-progress-spinner>
+      <p>Cargando datos de la empresa...</p>
+    </mat-card>
+  </div>
+} @else {
+  @if (empresa) {
     <mat-card class="mb-3 header-card">
       <button mat-icon-button color="primary" [routerLink]="['/empresas']" aria-label="Volver al listado">
         <mat-icon>arrow_back</mat-icon>
@@ -63,60 +63,59 @@
       </mat-tab>
 
       <mat-tab label="Indicadores">
-        <mat-card class="contenido-tab" *ngIf="indicadores?.length; else noIndicadores">
-          <table mat-table [dataSource]="indicadores" class="mat-elevation-z8 indicadores-table">
-            <ng-container matColumnDef="fecha">
-              <th mat-header-cell *matHeaderCellDef>Fecha</th>
-              <td mat-cell *matCellDef="let i">{{ i.fecha | date }}</td>
-            </ng-container>
+        @if (indicadores && indicadores.length) {
+          <mat-card class="contenido-tab">
+            <table mat-table [dataSource]="indicadores" class="mat-elevation-z8 indicadores-table">
+              <ng-container matColumnDef="fecha">
+                <th mat-header-cell *matHeaderCellDef>Fecha</th>
+                <td mat-cell *matCellDef="let i">{{ i.fecha | date }}</td>
+              </ng-container>
 
-            <ng-container matColumnDef="roe">
-              <th mat-header-cell *matHeaderCellDef>ROE</th>
-              <td mat-cell *matCellDef="let i" class="numeric">{{ i.roe | number:'1.2-2' }} %</td>
-            </ng-container>
+              <ng-container matColumnDef="roe">
+                <th mat-header-cell *matHeaderCellDef>ROE</th>
+                <td mat-cell *matCellDef="let i" class="numeric">{{ i.roe | number:'1.2-2' }} %</td>
+              </ng-container>
 
-            <ng-container matColumnDef="roa">
-              <th mat-header-cell *matHeaderCellDef>ROA</th>
-              <td mat-cell *matCellDef="let i" class="numeric">{{ i.roa | number:'1.2-2' }} %</td>
-            </ng-container>
+              <ng-container matColumnDef="roa">
+                <th mat-header-cell *matHeaderCellDef>ROA</th>
+                <td mat-cell *matCellDef="let i" class="numeric">{{ i.roa | number:'1.2-2' }} %</td>
+              </ng-container>
 
-            <ng-container matColumnDef="margen">
-              <th mat-header-cell *matHeaderCellDef>Margen</th>
-              <td mat-cell *matCellDef="let i" class="numeric">{{ i.margen | number:'1.2-2' }} %</td>
-            </ng-container>
+              <ng-container matColumnDef="margen">
+                <th mat-header-cell *matHeaderCellDef>Margen</th>
+                <td mat-cell *matCellDef="let i" class="numeric">{{ i.margen | number:'1.2-2' }} %</td>
+              </ng-container>
 
-            <ng-container matColumnDef="deuda">
-              <th mat-header-cell *matHeaderCellDef>Deuda</th>
-              <td mat-cell *matCellDef="let i" class="numeric">{{ i.deuda | number:'1.2-2' }} %</td>
-            </ng-container>
+              <ng-container matColumnDef="deuda">
+                <th mat-header-cell *matHeaderCellDef>Deuda</th>
+                <td mat-cell *matCellDef="let i" class="numeric">{{ i.deuda | number:'1.2-2' }} %</td>
+              </ng-container>
 
-            <ng-container matColumnDef="ingresos">
-              <th mat-header-cell *matHeaderCellDef>Ingresos</th>
-              <td mat-cell *matCellDef="let i" class="numeric">{{ i.ingresos | number }}</td>
-            </ng-container>
+              <ng-container matColumnDef="ingresos">
+                <th mat-header-cell *matHeaderCellDef>Ingresos</th>
+                <td mat-cell *matCellDef="let i" class="numeric">{{ i.ingresos | number }}</td>
+              </ng-container>
 
-            <ng-container matColumnDef="beneficio">
-              <th mat-header-cell *matHeaderCellDef>Beneficio</th>
-              <td mat-cell *matCellDef="let i" class="numeric">{{ i.beneficio_neto | number }}</td>
-            </ng-container>
+              <ng-container matColumnDef="beneficio">
+                <th mat-header-cell *matHeaderCellDef>Beneficio</th>
+                <td mat-cell *matCellDef="let i" class="numeric">{{ i.beneficio_neto | number }}</td>
+              </ng-container>
 
-            <ng-container matColumnDef="eps">
-              <th mat-header-cell *matHeaderCellDef>EPS</th>
-              <td mat-cell *matCellDef="let i" class="numeric">{{ i.eps | number:'1.2-2' }}</td>
-            </ng-container>
+              <ng-container matColumnDef="eps">
+                <th mat-header-cell *matHeaderCellDef>EPS</th>
+                <td mat-cell *matCellDef="let i" class="numeric">{{ i.eps | number:'1.2-2' }}</td>
+              </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-          </table>
-        </mat-card>
-        <ng-template #noIndicadores>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </mat-card>
+        } @else {
           <p>No hay indicadores disponibles para esta empresa.</p>
-        </ng-template>
+        }
       </mat-tab>
     </mat-tab-group>
-  </div>
-</ng-template>
-
-<ng-template #noEmpresa>
-  <p>No se encontró la empresa.</p>
-</ng-template>
+  } @else {
+    <p>No se encontró la empresa.</p>
+  }
+}
