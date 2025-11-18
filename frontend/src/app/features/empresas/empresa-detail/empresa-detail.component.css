@@ -1,0 +1,220 @@
+.mb-3 mat-progress-spinner,
+.mb-3 p {
+  margin: 0.5rem 0;
+}
+
+.mb-3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+  color: #f1f5f9;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+.header-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+  color: #f1f5f9;
+  box-shadow: 0 6px 20px rgba(59,130,246,0.4);
+}
+
+.titulo-empresa {
+  flex: 1;
+}
+
+.titulo-empresa h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.titulo-empresa h3 {
+  margin: 0.25rem 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #e0f2fe;
+}
+
+.titulo-empresa small {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  color: #bae6fd;
+}
+
+.precio {
+  font-weight: 800;
+  font-size: 1.4rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 8px;
+}
+
+.precio.sube {
+  color: #22c55e;
+  background: rgba(34,197,94,0.15);
+}
+
+.precio.baja {
+  color: #dc2626;
+  background: rgba(220,38,38,0.15);
+}
+
+.saldo {
+  margin-top: 0.6rem;
+  font-size: 1rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.acciones-empresa {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.acciones-empresa button {
+  min-width: 180px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.acciones-empresa button[color="primary"] {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  color: #fff !important;
+}
+
+.acciones-empresa button[color="primary"]:hover {
+  background: linear-gradient(90deg, #1e40af, #2563eb);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 16px rgba(59,130,246,0.5);
+}
+
+.acciones-empresa button[color="accent"] {
+  background: linear-gradient(90deg, #f97316, #ea580c);
+  color: #fff !important;
+}
+
+.acciones-empresa button[color="accent"]:hover {
+  background: linear-gradient(90deg, #c2410c, #ea580c);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 16px rgba(234,88,12,0.5);
+}
+
+.empresa-tabs {
+  margin-top: 1.5rem;
+  border-radius: 10px;
+  background: #1e293b;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+::ng-deep .empresa-tabs .mat-mdc-tab-header,
+::ng-deep .empresa-tabs .mat-mdc-tab-header .mat-mdc-tab-labels,
+::ng-deep .empresa-tabs .mat-mdc-tab-header .mdc-tab {
+  background: #1e293b;
+}
+
+::ng-deep .empresa-tabs .mdc-tab__text-label {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+::ng-deep .empresa-tabs .mdc-tab--active .mdc-tab__text-label {
+  color: #ffffff !important;
+  background: none;
+}
+
+::ng-deep .empresa-tabs .mat-mdc-tab-header .mat-mdc-ink-bar {
+  background-color: #3b82f6 !important;
+  height: 3px;
+  border-radius: 2px;
+}
+
+::ng-deep .empresa-tabs .mdc-tab:not(.mdc-tab--active):hover .mdc-tab__ripple::before {
+  background: rgba(59,130,246,0.15) !important;
+  opacity: 1 !important;
+}
+
+::ng-deep .empresa-tabs .mdc-tab--active:hover {
+  background: linear-gradient(90deg, #2563eb, #1e40af) !important;
+  border-radius: 6px;
+  box-shadow: 0 0 12px rgba(59,130,246,0.6);
+}
+
+.contenido-tab {
+  background: #1e293b;
+  border-radius: 10px;
+  padding: 1.5rem;
+  color: #f1f5f9;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.indicadores-table {
+  width: 100%;
+  margin-top: 1rem;
+  border-radius: 12px;
+  background: #1e293b;
+  box-shadow: 0 6px 18px rgba(59,130,246,0.2);
+}
+
+.indicadores-table th {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #38bdf8;
+  font-weight: 700;
+  padding: 0.9rem;
+  text-transform: uppercase;
+}
+
+.indicadores-table td {
+  padding: 0.8rem;
+  font-size: 0.95rem;
+  color: #f1f5f9;
+  border-bottom: 1px solid #334155;
+}
+
+.indicadores-table td.numeric {
+  text-align: right;
+}
+
+.indicadores-table tr.mat-row:hover td {
+  background: rgba(59,130,246,0.2);
+}
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+.loading-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+  color: #f1f5f9;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,327 @@
+<div class="calculadora-layout">
+  <!-- Columna izquierda: formulario -->
+  <div class="formulario">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon color="primary">calculate</mat-icon>
+          Calculadora profesional extendida
+        </mat-card-title>
+        <button mat-stroked-button color="accent" (click)="openHelp()">
+          <mat-icon>help_outline</mat-icon>
+          Ayuda
+        </button>
+
+        <mat-card-subtitle
+          >Simula escenarios realistas: crecimiento, impuestos, caídas y
+          objetivo.</mat-card-subtitle
+        >
+      </mat-card-header>
+
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <!-- Básicos -->
+          <mat-form-field appearance="outline">
+            <mat-label>Inversión inicial (€)</mat-label>
+            <mat-icon matPrefix>account_balance</mat-icon>
+            <input matInput type="number" formControlName="initialInvestment" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Contribución mensual (€)</mat-label>
+            <mat-icon matPrefix>payments</mat-icon>
+            <input matInput type="number" formControlName="monthlyContribution" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Años</mat-label>
+            <mat-icon matPrefix>calendar_today</mat-icon>
+            <input matInput type="number" formControlName="years" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Rentabilidad anual (%)</mat-label>
+            <mat-icon matPrefix>trending_up</mat-icon>
+            <input matInput type="number" formControlName="interestRate" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Dividendos anuales (%)</mat-label>
+            <mat-icon matPrefix>payments</mat-icon>
+            <input matInput type="number" formControlName="dividendRate" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Inflación anual (%)</mat-label>
+            <mat-icon matPrefix>trending_down</mat-icon>
+            <input matInput type="number" formControlName="inflationRate" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Comisión anual (%)</mat-label>
+            <mat-icon matPrefix>percent</mat-icon>
+            <input matInput type="number" formControlName="annualFee" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Frecuencia de aportación (meses)</mat-label>
+            <mat-icon matPrefix>schedule</mat-icon>
+            <input
+              matInput
+              type="number"
+              formControlName="contributionFrequencyMonths"
+              placeholder="1=mensual, 3=trimestral, 12=anual"
+            />
+          </mat-form-field>
+
+          <!-- Lógicas avanzadas -->
+          <mat-card-subtitle>Opciones avanzadas</mat-card-subtitle>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Aportaciones crecientes (% anual)</mat-label>
+            <mat-icon matPrefix>trending_up</mat-icon>
+            <input matInput type="number" formControlName="growthRate" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Impuestos sobre beneficios (%)</mat-label>
+            <mat-icon matPrefix>receipt_long</mat-icon>
+            <input matInput type="number" formControlName="taxRate" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Objetivo de capital (€)</mat-label>
+            <mat-icon matPrefix>flag</mat-icon>
+            <input matInput type="number" formControlName="objetivo" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Rentabilidades anuales (%, separadas por coma)</mat-label>
+            <mat-icon matPrefix>timeline</mat-icon>
+            <textarea
+              matInput
+              rows="2"
+              placeholder="Ej: 8, -5, 12, 7..."
+              (blur)="onRentabilidadesBlur($event)"
+              formControlName="rentabilidadesAnuales"
+            ></textarea>
+            <mat-error
+              *ngIf="form.get('rentabilidadesAnuales')?.hasError('rentabilidadFueraDeRango')"
+            >
+              Las rentabilidades deben estar entre -100% y 100%.
+            </mat-error>
+          </mat-form-field>
+
+          <div class="extra-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Año de caída</mat-label>
+              <mat-icon matPrefix>warning</mat-icon>
+              <input matInput type="number" formControlName="caidaMercado" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>% caída</mat-label>
+              <mat-icon matPrefix>south</mat-icon>
+              <input matInput type="number" formControlName="caidaPorcentaje" />
+            </mat-form-field>
+          </div>
+
+          <!-- Aportaciones extraordinarias -->
+          <mat-card-subtitle>Aportaciones extraordinarias</mat-card-subtitle>
+          <div formArrayName="extraContributions" class="extra-contributions">
+            <div
+              *ngFor="let extra of extraContributions.controls; let i = index"
+              [formGroupName]="i"
+              class="extra-row"
+            >
+              <mat-form-field appearance="outline">
+                <mat-label>Año</mat-label>
+                <input matInput type="number" formControlName="year" />
+                <mat-error *ngIf="extra.hasError('yearInvalido')">
+                  El año debe estar entre 1 y {{ form.get('years')?.value }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Monto (€)</mat-label>
+                <input matInput type="number" formControlName="amount" />
+                <mat-error *ngIf="extra.hasError('montoInvalido')">
+                  El monto debe ser mayor que 0
+                </mat-error>
+              </mat-form-field>
+
+              <button
+                mat-icon-button
+                color="warn"
+                type="button"
+                (click)="removeExtraContribution(i)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+
+            <button
+              mat-stroked-button
+              color="accent"
+              type="button"
+              (click)="addExtraContribution()"
+            >
+              <mat-icon>add</mat-icon>
+              Añadir aportación extraordinaria
+            </button>
+          </div>
+
+          <!-- Botón principal -->
+          <button mat-raised-button color="primary" type="submit">
+            <mat-icon>play_arrow</mat-icon>
+            Calcular
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Columna derecha: resultados -->
+  <div class="resultados">
+    <ng-container *ngIf="result; else noResult">
+      <mat-tab-group>
+        <!-- Totales -->
+        <mat-tab label="Totales">
+          <mat-card class="resultado">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon color="accent">savings</mat-icon>
+                Resultado
+              </mat-card-title>
+              <mat-card-subtitle>Nominal vs. Real ajustado por inflación</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="resultados-grid">
+                <div class="valor">
+                  <p class="label">Total aportado</p>
+                  <p class="cifra">
+                    {{ result.rows.at(-1)?.aportado | currencyEs : 'EUR' : 2 : 'es-ES' }}
+                  </p>
+                </div>
+                <div class="valor">
+                  <p class="label">Intereses acumulados</p>
+                  <p class="cifra">
+                    {{ result.rows.at(-1)?.intereses | currencyEs : 'EUR' : 2 : 'es-ES' }}
+                  </p>
+                </div>
+                <div class="valor">
+                  <p class="label">Valor nominal</p>
+                  <p class="cifra valor-nominal">
+                    {{ result.totalNominal | currencyEs : 'EUR' : 2 : 'es-ES' }}
+                  </p>
+                </div>
+                <div class="valor">
+                  <p class="label">Valor real</p>
+                  <p class="cifra valor-real">
+                    {{ result.totalReal | currencyEs : 'EUR' : 2 : 'es-ES' }}
+                  </p>
+                </div>
+              </div>
+
+              <div *ngIf="result.objetivoAlcanzado as year" style="margin-top: 1rem">
+                <mat-card>
+                  <mat-card-header>
+                    <mat-card-title>
+                      <mat-icon color="primary">flag</mat-icon>
+                      Objetivo alcanzado
+                    </mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <p>Se alcanza el objetivo en el año {{ year }}.</p>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </mat-tab>
+
+        <!-- Gráficas -->
+        <mat-tab label="Gráficas">
+          <mat-card class="grafica">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon color="primary">show_chart</mat-icon>
+                Evolución de la inversión
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <canvas
+                baseChart
+                [data]="chartDataLine"
+                [options]="chartOptionsLine"
+                chartType="line"
+              ></canvas>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="grafica">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon color="primary">bar_chart</mat-icon>
+                Aportaciones vs. Intereses
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <canvas
+                baseChart
+                [data]="chartDataBar"
+                [options]="chartOptionsBar"
+                chartType="bar"
+              ></canvas>
+            </mat-card-content>
+          </mat-card>
+        </mat-tab>
+
+        <!-- Tabla -->
+        <mat-tab label="Tabla">
+          <mat-card class="tabla">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon color="warn">table_chart</mat-icon>
+                Resumen anual
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="overflow-x-auto">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Año</th>
+                      <th>Aportado</th>
+                      <th>Intereses</th>
+                      <th>Valor nominal</th>
+                      <th>Valor real</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let r of result.rows">
+                      <td>{{ r.year }}</td>
+                      <td>{{ r.aportado | currencyEs : 'EUR' : 2 : 'es-ES' }}</td>
+                      <td>{{ r.intereses | currencyEs : 'EUR' : 2 : 'es-ES' }}</td>
+                      <td>{{ r.valorNominal | currencyEs : 'EUR' : 2 : 'es-ES' }}</td>
+                      <td>{{ r.valorReal | currencyEs : 'EUR' : 2 : 'es-ES' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </mat-tab>
+      </mat-tab-group>
+    </ng-container>
+
+    <!-- Estado vacío -->
+    <ng-template #noResult>
+      <mat-card class="no-result">
+        <mat-icon color="primary">insights</mat-icon>
+        <h3>Visualiza tus proyecciones</h3>
+        <p>Introduce tus datos y haz clic en "Calcular".</p>
+      </mat-card>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<mat-card *ngIf="!loading; else cargando" class="operaciones-card">
+  <mat-card-header>
+    <mat-card-title>Histórico de operaciones</mat-card-title>
+    <mat-card-subtitle>Detalle de compras y ventas realizadas</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="operaciones-grid">
+      <mat-card *ngFor="let op of operaciones" class="operacion-card">
+        <div class="op-top">
+          <span class="fecha">{{ op.created_at | date : 'short' }}</span>
+          <span
+            class="tipo"
+            [ngClass]="{ compra: op.tipo === 'compra', venta: op.tipo === 'venta' }"
+          >
+            {{ op.tipo | titlecase }}
+          </span>
+        </div>
+        <div class="op-body">
+          <div class="row">
+            <span class="label">Empresa:</span>
+            <span class="value">{{ op.empresa?.nombre }} ({{ op.empresa?.ticker }})</span>
+          </div>
+          <div class="row">
+            <span class="label">Cantidad:</span>
+            <span class="value">{{ op.cantidad | number : '1.2-2' }}</span>
+          </div>
+          <div class="row">
+            <span class="label">Precio:</span>
+            <span class="value">{{ op.precio | number : '1.2-2' }} €</span>
+          </div>
+          <div class="row">
+            <span class="label">Importe:</span>
+            <span class="value">{{ op.cantidad * op.precio | number : '1.2-2' }} €</span>
+          </div>
+          <div
+            class="row plusvalia"
+            [ngClass]="{ positivo: op.plusvalia >= 0, negativo: op.plusvalia < 0 }"
+          >
+            <span class="label">Plusvalía:</span>
+            <span class="value">
+              {{ op.plusvalia !== null ? (op.plusvalia | number : '1.2-2') + ' €' : '-' }}
+            </span>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <app-generar-pdf [operaciones]="operaciones"></app-generar-pdf>
+    <mat-paginator
+      [length]="total"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="[5, 10, 20]"
+      (page)="onPageChange($event)"
+    >
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #cargando>
+  <div *ngIf="loading" class="loading-container">
+    <mat-card class="loading-card">
+      <mat-progress-spinner mode="indeterminate" diameter="60"></mat-progress-spinner>
+      <p>Cargando operaciones...</p>
+    </mat-card>
+  </div>
+</ng-template>

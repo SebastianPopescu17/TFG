@@ -1,0 +1,74 @@
+<mat-card class="watchlist-card mat-elevation-z8">
+  <div class="titulo-container">
+    <h2 class="titulo">Mi Lista de Favoritos</h2>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+  <mat-card class="loading-card">
+    <mat-progress-spinner mode="indeterminate" diameter="60"></mat-progress-spinner>
+    <p>Cargando favoritos...</p>
+  </mat-card>
+</div>
+
+  <div class="cards-container" *ngIf="!loading && watchlist.length">
+  <figure
+    class="product-wrapper"
+    *ngFor="let empresa of watchlist"
+    (click)="irADetalle(empresa.ticker)"   
+  >
+    <svg
+      class="border-svg"
+      viewBox="0 0 300 180"
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="none"
+    >
+      <rect
+        x="0"
+        y="0"
+        width="300"
+        height="180"
+        rx="12"
+        stroke="url(#gradientStroke)"
+        stroke-width="3"
+        fill="transparent"
+        stroke-dasharray="960"
+        stroke-dashoffset="960"
+      >
+        <animate
+          attributeName="stroke-dashoffset"
+          values="960;0;960"
+          dur="5s"
+          repeatCount="indefinite"
+        />
+      </rect>
+      <defs>
+        <linearGradient id="gradientStroke" x1="0" y1="0" x2="300" y2="0">
+          <stop stop-color="#38bdf8" />
+          <stop offset="1" stop-color="#22c55e" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="product-img">
+      <div class="left-text">
+        <h1>{{ empresa.nombre }}</h1>
+        <h2>{{ empresa.ticker }}</h2>
+      </div>
+    </div>
+
+    <div class="product-info">
+      <div class="product-text">
+        <p>Sector: {{ empresa.sector }}<br />Precio: {{ empresa.precio_actual }}</p>
+      </div>
+      <div class="product-price-btn" (click)="$event.stopPropagation(); eliminarDeWatchlist(empresa.id)">
+        <button type="button">Eliminar</button>
+      </div>
+    </div>
+  </figure>
+</div>
+
+
+  <div *ngIf="!loading && !watchlist.length" class="empty">
+    <p>No tienes empresas en tu watchlist.</p>
+  </div>
+</mat-card>

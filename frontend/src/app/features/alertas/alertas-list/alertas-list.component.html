@@ -1,0 +1,52 @@
+<mat-card class="alertas-card mat-elevation-z8">
+  <h2 class="titulo"> Mis Alertas</h2>
+
+  <table mat-table [dataSource]="alertas" class="full-width-table mat-elevation-z2" *ngIf="alertas.length; else noAlertas">
+
+    <!-- Empresa -->
+    <ng-container matColumnDef="empresa">
+      <th mat-header-cell *matHeaderCellDef>Empresa</th>
+      <td mat-cell *matCellDef="let alerta">{{ alerta.empresa?.nombre }}</td>
+    </ng-container>
+
+    <!-- Tipo -->
+    <ng-container matColumnDef="tipo">
+      <th mat-header-cell *matHeaderCellDef>Tipo</th>
+      <td mat-cell *matCellDef="let alerta">{{ alerta.tipo | titlecase }}</td>
+    </ng-container>
+
+    <!-- Condición -->
+    <ng-container matColumnDef="condicion">
+      <th mat-header-cell *matHeaderCellDef>Condición</th>
+      <td mat-cell *matCellDef="let alerta">{{ alerta.condicion }} {{ alerta.valor }}</td>
+    </ng-container>
+
+    <!-- Activa -->
+    <ng-container matColumnDef="activa">
+      <th mat-header-cell *matHeaderCellDef>Estado</th>
+      <td mat-cell *matCellDef="let alerta">
+        <span [ngClass]="alerta.activa ? 'activa' : 'inactiva'">
+          {{ alerta.activa ? 'Activa' : 'Inactiva' }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let alerta">
+        <button mat-icon-button color="warn" (click)="eliminarAlerta(alerta.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Header y filas -->
+    <tr mat-header-row *matHeaderRowDef="['empresa','tipo','condicion','activa','acciones']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['empresa','tipo','condicion','activa','acciones']"></tr>
+  </table>
+
+  <ng-template #noAlertas>
+    <p class="empty">No tienes alertas creadas.</p>
+  </ng-template>
+</mat-card>

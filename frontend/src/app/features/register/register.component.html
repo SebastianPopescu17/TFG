@@ -1,0 +1,65 @@
+<div class="register-container">
+  <!-- Panel izquierdo con imagen -->
+  <div class="register-side"></div>
+
+  <!-- Panel derecho con formulario -->
+  <div class="register-form-wrapper">
+    <mat-card class="auth-card">
+      <mat-card-header>
+        <mat-card-title class="auth-title">Crear cuenta</mat-card-title>
+        <mat-card-subtitle class="auth-subtitle">Regístrate para empezar a invertir</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form">
+          <!-- Nombre -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="name" />
+            <mat-error *ngIf="form.get('name')?.hasError('required')">El nombre es obligatorio</mat-error>
+          </mat-form-field>
+
+          <!-- Email -->
+          <mat-form-field appearance="outline" class="full-width ">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" />
+            <mat-error *ngIf="form.get('email')?.hasError('required')">El email es obligatorio</mat-error>
+            <mat-error *ngIf="form.get('email')?.hasError('email')">Formato de email inválido</mat-error>
+          </mat-form-field>
+
+          <!-- Contraseña -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Contraseña</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" />
+            <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="form.get('password')?.hasError('required')">La contraseña es obligatoria</mat-error>
+            <mat-error *ngIf="form.get('password')?.hasError('weakPassword')">
+              Debe tener al menos 8 caracteres, una mayúscula, un número y un símbolo
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Confirmar contraseña -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Confirmar contraseña</mat-label>
+            <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="password_confirmation" />
+            <button mat-icon-button matSuffix type="button" (click)="hideConfirmPassword = !hideConfirmPassword">
+              <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="form.hasError('passwordsMismatch')">Las contraseñas no coinciden</mat-error>
+          </mat-form-field>
+
+          <!-- Botón principal -->
+          <button mat-raised-button type="submit" class="auth-button">Registrarse</button>
+        </form>
+
+        <p *ngIf="error" class="mensaje-error">❌ {{ error }}</p>
+
+        <div class="auth-actions">
+          <button mat-stroked-button routerLink="/login">¿Ya tienes cuenta? Inicia sesión</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

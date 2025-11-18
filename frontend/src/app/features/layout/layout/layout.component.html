@@ -1,0 +1,101 @@
+<ng-container *ngIf="showLayout; else authRoutes">
+  <div class="layout-container" [ngClass]="currentRouteClass">
+    <aside class="sidebar" [class.collapsed]="sidebarCollapsed">
+      <div class="logo">
+        <span class="logo-text" *ngIf="!sidebarCollapsed">El Rincón del Inversor</span>
+      </div>
+      <nav class="menu">
+        <a routerLink="/dashboard" routerLinkActive="active">
+          <mat-icon>dashboard</mat-icon>
+          <span *ngIf="!sidebarCollapsed">Menú Principal</span>
+        </a>
+        <a routerLink="/empresas" routerLinkActive="active">
+          <mat-icon>business</mat-icon>
+          <span *ngIf="!sidebarCollapsed">Empresas</span>
+        </a>
+        <a routerLink="/watchlist" routerLinkActive="active">
+          <mat-icon>star</mat-icon>
+          <span *ngIf="!sidebarCollapsed">Lista de Favoritos</span>
+        </a>
+        <a routerLink="/alertas" routerLinkActive="active">
+          <mat-icon>notifications</mat-icon>
+          <span *ngIf="!sidebarCollapsed">Alertas</span>
+        </a>
+        <a routerLink="/noticias" routerLinkActive="active">
+          <mat-icon>article</mat-icon>
+          <span *ngIf="!sidebarCollapsed">Noticias</span>
+        </a>
+        <a routerLink="/macros" routerLinkActive="active">
+          <mat-icon>bar_chart</mat-icon>
+          <span *ngIf="!sidebarCollapsed">Macros</span>
+        </a>
+        <a routerLink="/calculadora" routerLinkActive="active">
+          <mat-icon>calculate</mat-icon>
+          <span *ngIf="!sidebarCollapsed">Calculadora</span>
+        </a>
+        <a
+          routerLink="/cartera"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon>account_balance_wallet</mat-icon>
+          <span *ngIf="!sidebarCollapsed">Cartera</span>
+        </a>
+        <a
+          routerLink="/cartera/operaciones"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon>history</mat-icon>
+          <span *ngIf="!sidebarCollapsed">Operaciones</span>
+        </a>
+        <a
+          routerLink="/saldo"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="saldo-link"
+        >
+          <mat-icon color="primary">savings</mat-icon>
+          <span *ngIf="!sidebarCollapsed">
+            Saldo {{ user?.saldo | currency : 'EUR' : 'symbol' : '1.2-2' : 'es-ES' }}
+          </span>
+        </a>
+        <a *ngIf="user?.role === 'admin'" routerLink="/admin" routerLinkActive="active">
+          <mat-icon>admin_panel_settings</mat-icon>
+          <span *ngIf="!sidebarCollapsed">Admin</span>
+        </a>
+      </nav>
+    </aside>
+    <div class="main">
+      <header class="navbar" [class.collapsed]="sidebarCollapsed">
+        <button class="toggle-btn" (click)="sidebarCollapsed = !sidebarCollapsed">
+          <mat-icon>{{ sidebarCollapsed ? 'menu_open' : 'menu' }}</mat-icon>
+        </button>
+       
+        <span class="spacer"></span>
+        <ng-container *ngIf="user; else guest">
+          <div class="user-info" *ngIf="!sidebarCollapsed">
+            <mat-icon>account_circle</mat-icon>
+            <span class="username">{{ user.name }}</span>
+            <button mat-flat-button color="warn" (click)="logout()">Cerrar sesión</button>
+          </div>
+        </ng-container>
+        <ng-template #guest>
+          <button mat-flat-button color="primary" routerLink="/login" *ngIf="!sidebarCollapsed">
+            Login
+          </button>
+          <button mat-flat-button color="accent" routerLink="/register" *ngIf="!sidebarCollapsed">
+            Registro
+          </button>
+        </ng-template>
+      </header>
+
+      <main class="content">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </div>
+</ng-container>
+<ng-template #authRoutes>
+  <router-outlet></router-outlet>
+</ng-template>

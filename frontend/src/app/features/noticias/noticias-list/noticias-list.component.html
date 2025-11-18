@@ -1,0 +1,17 @@
+<mat-card>
+  <mat-card-title>📰 Noticias</mat-card-title>
+  <mat-card-content>
+    <mat-list *ngIf="noticias.length > 0; else noNoticias">
+      <mat-list-item *ngFor="let n of noticias">
+        <div matLine>
+          <a [href]="n.enlace" target="_blank">{{ n.titulo }}</a>
+        </div>
+        <p matLine>{{ n.fuente }} — {{ n.fecha_publicacion }}</p>
+      </mat-list-item>
+    </mat-list>
+
+    <ng-template #noNoticias>
+      <p>No hay noticias disponibles.</p>
+    </ng-template>
+  </mat-card-content>
+</mat-card>

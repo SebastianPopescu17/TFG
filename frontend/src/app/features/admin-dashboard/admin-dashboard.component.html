@@ -1,0 +1,50 @@
+<div class="dashboard-container" *ngIf="stats">
+  <mat-grid-list cols="3" rowHeight="150px" gutterSize="16px">
+    <mat-grid-tile>
+      <mat-card class="stat-card">
+        <mat-card-title>Usuarios Totales</mat-card-title>
+        <mat-card-content>
+          <h2>{{ stats.usuarios_totales }}</h2>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card class="stat-card">
+        <mat-card-title>Administradores</mat-card-title>
+        <mat-card-content>
+          <h2>{{ stats.usuarios_admin }}</h2>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card class="stat-card">
+        <mat-card-title>Empresas</mat-card-title>
+        <mat-card-content>
+          <h2>{{ stats.empresas }}</h2>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card class="stat-card">
+        <mat-card-title>Noticias</mat-card-title>
+        <mat-card-content>
+          <h2>{{ stats.noticias }}</h2>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="3">
+      <mat-card class="stat-card">
+        <mat-card-title>Último Usuario Registrado</mat-card-title>
+        <mat-card-content>
+          <p *ngIf="stats.ultimo_usuario">
+            {{ stats.ultimo_usuario.name }} ({{ stats.ultimo_usuario.email }}) - Rol: {{ stats.ultimo_usuario.role }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

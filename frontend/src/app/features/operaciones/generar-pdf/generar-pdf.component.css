@@ -1,0 +1,27 @@
+.pdf-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.btn-exportar {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-exportar:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+}
+
+.btn-exportar:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+}

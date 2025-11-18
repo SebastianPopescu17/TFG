@@ -1,0 +1,49 @@
+<mat-card class="header-card">
+  <h2 class="titulo-indicador">{{ nombreIndicadorSeleccionado }}</h2>
+  <div class="filters-inline">
+    <span class="filters-label">País:</span>
+    <div class="toggle-group">
+      <button mat-button *ngFor="let p of paises"
+              [class.active]="paisSeleccionado === p"
+              (click)="paisSeleccionado = p; cargarDatos()">
+        {{ p }}
+      </button>
+    </div>
+
+    <span class="filters-label">Indicador:</span>
+    <div class="toggle-group">
+      <button mat-button *ngFor="let ind of indicadoresDisponibles"
+              [class.active]="indicadorSeleccionado === ind.codigo"
+              (click)="indicadorSeleccionado = ind.codigo; cargarDatos()">
+        {{ ind.nombre }}
+      </button>
+    </div>
+  </div>
+</mat-card>
+
+<div class="tabla-container">
+  <table class="tabla-indicadores">
+    <thead>
+      <tr>
+        <th (click)="ordenarPor('anio')">
+          Año <span *ngIf="sortColumn==='anio'">{{ sortDirection==='asc' ? '▲' : '▼' }}</span>
+        </th>
+        <th (click)="ordenarPor('valor')">
+          Valor <span *ngIf="sortColumn==='valor'">{{ sortDirection==='asc' ? '▲' : '▼' }}</span>
+        </th>
+        <th (click)="ordenarPor('variacion')">
+          Variación <span *ngIf="sortColumn==='variacion'">{{ sortDirection==='asc' ? '▲' : '▼' }}</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of registros">
+        <td>{{ i.anio }}</td>
+        <td>{{ i.valor | number:'1.0-0' }} {{ i.unidad }}</td>
+        <td [ngClass]="{'positivo': (i.variacion ?? 0) > 0, 'negativo': (i.variacion ?? 0) < 0}">
+          {{ i.variacion ?? 'N/A' }}%
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

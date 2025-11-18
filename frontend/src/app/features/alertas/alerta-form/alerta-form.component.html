@@ -1,0 +1,39 @@
+<mat-card class="alerta-card">
+  <h2 class="titulo">Crear Alerta</h2>
+
+  <form (ngSubmit)="crearAlerta()" #alertaForm="ngForm">
+    <!-- Tipo de alerta -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Tipo de alerta</mat-label>
+      <mat-select [(ngModel)]="tipo" name="tipo" required>
+        <mat-option value="precio">Precio</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Condición -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Condición</mat-label>
+      <mat-select [(ngModel)]="condicion" name="condicion" required>
+        <mat-option value="mayor">Mayor que</mat-option>
+        <mat-option value="menor">Menor que</mat-option>
+        <mat-option value="igual">Igual a</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Valor -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Valor</mat-label>
+      <input matInput type="number" [(ngModel)]="valor" name="valor" required>
+    </mat-form-field>
+
+    <!-- Botones -->
+    <div class="acciones">
+      <button mat-raised-button color="primary" type="submit">
+        <mat-icon>check</mat-icon> Crear
+      </button>
+      <button mat-raised-button color="warn" type="button" (click)="cancelar()">
+        <mat-icon>close</mat-icon> Cancelar
+      </button>
+    </div>
+  </form>
+</mat-card>

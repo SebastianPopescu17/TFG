@@ -1,0 +1,30 @@
+:host {
+  display: block;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h2 {
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Éxito */
+h2.success {
+  color: #16a34a;
+}
+
+/* Error */
+h2.error {
+  color: #dc2626;
+}
+
+mat-dialog-content {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #1e293b;
+}
+
+mat-dialog-actions button {
+  font-weight: 600;
+  color: #2563eb;
+}

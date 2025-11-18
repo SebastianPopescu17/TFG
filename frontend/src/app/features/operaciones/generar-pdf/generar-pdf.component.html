@@ -1,0 +1,8 @@
+<div class="pdf-container">
+  <button
+    class="btn-exportar"
+    (click)="generarPDF()"
+    [disabled]="generatingPdf">
+    {{ generatingPdf ? 'Generando PDF...' : 'Exportar operaciones a PDF' }}
+  </button>
+</div>

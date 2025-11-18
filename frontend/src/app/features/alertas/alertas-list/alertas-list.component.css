@@ -1,0 +1,131 @@
+.alertas-card {
+  border-radius: 16px;
+  padding: 20px;
+  background: linear-gradient(180deg, #0f172a 0%, #0b1020 100%);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.titulo {
+  margin: 0 0 16px 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #e6edf7;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.empty {
+  margin: 16px 0 4px;
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(148, 163, 184, 0.08);
+  color: #cbd5e1;
+  text-align: center;
+  font-weight: 500;
+}
+
+.full-width-table {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.mat-mdc-table {
+  background: transparent;
+}
+
+.mat-mdc-header-cell {
+  background: rgba(255, 255, 255, 0.06);
+  color: #cbd5e1;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.mat-mdc-cell {
+  color: #e2e8f0;
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.mat-mdc-row {
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.mat-mdc-row:hover {
+  background: rgba(30, 58, 138, 0.18);
+}
+
+.activa {
+  color: #22c55e;
+  font-weight: 700;
+}
+
+.inactiva {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+.inactiva-row {
+  background: rgba(239, 68, 68, 0.10) !important;
+}
+
+.inactiva-row:hover {
+  background: rgba(239, 68, 68, 0.13) !important;
+}
+
+.mat-mdc-icon-button {
+  --mdc-icon-button-state-layer-size: 36px;
+  border-radius: 10px;
+}
+
+.mat-mdc-icon-button:hover {
+  backdrop-filter: saturate(120%);
+}
+
+.alerta-snackbar {
+  background: linear-gradient(90deg, #0ea5e9 0%, #22c55e 100%);
+  color: #0b1020;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px !important;
+}
+
+.mdc-snackbar__actions .mdc-button {
+  color: #0b1020 !important;
+  font-weight: 800;
+}
+
+@media (max-width: 768px) {
+  .titulo {
+    font-size: 18px;
+  }
+
+  .mat-mdc-header-cell {
+    font-size: 11px;
+  }
+
+  .mat-mdc-cell {
+    font-size: 13px;
+  }
+}
+
+.alertas-card {
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.55), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.full-width-table {
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.45);
+}
+
+:root {
+  --accent-1: #0ea5e9;
+  --accent-2: #1d4ed8;
+}

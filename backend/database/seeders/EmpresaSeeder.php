@@ -1,0 +1,61 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use App\Models\Empresa;
+
+class EmpresaSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $empresas = [
+           // España
+    ['ticker'=>'SAN','nombre'=>'Banco Santander','sector'=>'Banca','industria'=>'Servicios Financieros','pais'=>'España','capitalizacion'=>55000000000,'per'=>8.50,'dividendo'=>0.12,'precio_actual'=>3.45,'moneda'=>'EUR','sitio_web'=>'https://www.santander.com','descripcion'=>'Grupo financiero global con sede en España.'],
+    ['ticker'=>'BBVA','nombre'=>'BBVA','sector'=>'Banca','industria'=>'Servicios Financieros','pais'=>'España','capitalizacion'=>45000000000,'per'=>7.80,'dividendo'=>0.15,'precio_actual'=>6.10,'moneda'=>'EUR','sitio_web'=>'https://www.bbva.com','descripcion'=>'Banco multinacional español.'],
+    ['ticker'=>'IBE','nombre'=>'Iberdrola','sector'=>'Energía','industria'=>'Electricidad','pais'=>'España','capitalizacion'=>75000000000,'per'=>16.20,'dividendo'=>0.42,'precio_actual'=>11.20,'moneda'=>'EUR','sitio_web'=>'https://www.iberdrola.com','descripcion'=>'Líder en energías renovables.'],
+    ['ticker'=>'REP','nombre'=>'Repsol','sector'=>'Energía','industria'=>'Petróleo y gas','pais'=>'España','capitalizacion'=>20000000000,'per'=>5.90,'dividendo'=>0.60,'precio_actual'=>14.30,'moneda'=>'EUR','sitio_web'=>'https://www.repsol.com','descripcion'=>'Multinacional energética y petroquímica.'],
+    ['ticker'=>'ITX','nombre'=>'Inditex','sector'=>'Consumo','industria'=>'Retail Textil','pais'=>'España','capitalizacion'=>120000000000,'per'=>25.20,'dividendo'=>1.25,'precio_actual'=>43.50,'moneda'=>'EUR','sitio_web'=>'https://www.inditex.com','descripcion'=>'Grupo textil de marcas como Zara y Massimo Dutti.'],
+    ['ticker'=>'TEF','nombre'=>'Telefónica','sector'=>'Telecomunicaciones','industria'=>'Operadores','pais'=>'España','capitalizacion'=>23000000000,'per'=>9.80,'dividendo'=>0.30,'precio_actual'=>3.80,'moneda'=>'EUR','sitio_web'=>'https://www.telefonica.com','descripcion'=>'Operador global de telecomunicaciones.'],
+    ['ticker'=>'FER','nombre'=>'Ferrovial','sector'=>'Infraestructuras','industria'=>'Construcción y concesiones','pais'=>'España','capitalizacion'=>28000000000,'per'=>22.10,'dividendo'=>0.72,'precio_actual'=>32.40,'moneda'=>'EUR','sitio_web'=>'https://www.ferrovial.com','descripcion'=>'Infraestructuras y gestión de autopistas y aeropuertos.'],
+    ['ticker'=>'ACS','nombre'=>'ACS','sector'=>'Infraestructuras','industria'=>'Construcción','pais'=>'España','capitalizacion'=>9200000000,'per'=>13.50,'dividendo'=>2.04,'precio_actual'=>37.20,'moneda'=>'EUR','sitio_web'=>'https://www.grupoacs.com','descripcion'=>'Grupo de construcción y servicios.'],
+    ['ticker'=>'MAP','nombre'=>'Mapfre','sector'=>'Seguros','industria'=>'Seguros generales','pais'=>'España','capitalizacion'=>6000000000,'per'=>9.30,'dividendo'=>0.15,'precio_actual'=>2.10,'moneda'=>'EUR','sitio_web'=>'https://www.mapfre.com','descripcion'=>'Aseguradora internacional con sede en España.'],
+    ['ticker'=>'MEL','nombre'=>'Meliá Hotels','sector'=>'Turismo','industria'=>'Hoteles','pais'=>'España','capitalizacion'=>1600000000,'per'=>15.80,'dividendo'=>0.00,'precio_actual'=>6.55,'moneda'=>'EUR','sitio_web'=>'https://www.melia.com','descripcion'=>'Cadena hotelera internacional.'],
+
+    // USA (convertidas a EUR)
+    ['ticker'=>'AAPL','nombre'=>'Apple Inc.','sector'=>'Tecnología','industria'=>'Hardware y Software','pais'=>'EE.UU.','capitalizacion'=>2800000000000,'per'=>28.30,'dividendo'=>0.62,'precio_actual'=>195.10,'moneda'=>'EUR','sitio_web'=>'https://www.apple.com','descripcion'=>'Diseño y producción de hardware y software.'],
+    ['ticker'=>'MSFT','nombre'=>'Microsoft Corp.','sector'=>'Tecnología','industria'=>'Software','pais'=>'EE.UU.','capitalizacion'=>2500000000000,'per'=>30.10,'dividendo'=>2.48,'precio_actual'=>330.50,'moneda'=>'EUR','sitio_web'=>'https://www.microsoft.com','descripcion'=>'Creador de Windows, Office y Azure.'],
+    ['ticker'=>'AMZN','nombre'=>'Amazon.com Inc.','sector'=>'Consumo','industria'=>'E-commerce y cloud','pais'=>'EE.UU.','capitalizacion'=>1700000000000,'per'=>60.20,'dividendo'=>0.00,'precio_actual'=>140.50,'moneda'=>'EUR','sitio_web'=>'https://www.amazon.com','descripcion'=>'E-commerce y servicios en la nube.'],
+    ['ticker'=>'GOOGL','nombre'=>'Alphabet Inc.','sector'=>'Tecnología','industria'=>'Internet','pais'=>'EE.UU.','capitalizacion'=>1900000000000,'per'=>27.50,'dividendo'=>0.00,'precio_actual'=>135.20,'moneda'=>'EUR','sitio_web'=>'https://www.abc.xyz','descripcion'=>'Matriz de Google.'],
+    ['ticker'=>'TSLA','nombre'=>'Tesla Inc.','sector'=>'Automoción','industria'=>'Vehículos eléctricos','pais'=>'EE.UU.','capitalizacion'=>800000000000,'per'=>70.50,'dividendo'=>0.00,'precio_actual'=>250.30,'moneda'=>'EUR','sitio_web'=>'https://www.tesla.com','descripcion'=>'Coches eléctricos y energía.'],
+    ['ticker'=>'NVDA','nombre'=>'NVIDIA Corp.','sector'=>'Tecnología','industria'=>'Semiconductores','pais'=>'EE.UU.','capitalizacion'=>1100000000000,'per'=>55.40,'dividendo'=>0.16,'precio_actual'=>460.80,'moneda'=>'EUR','sitio_web'=>'https://www.nvidia.com','descripcion'=>'GPUs y plataforma de IA.'],
+    ['ticker'=>'META','nombre'=>'Meta Platforms','sector'=>'Comunicación','industria'=>'Redes sociales','pais'=>'EE.UU.','capitalizacion'=>800000000000,'per'=>29.70,'dividendo'=>0.00,'precio_actual'=>310.10,'moneda'=>'EUR','sitio_web'=>'https://about.facebook.com','descripcion'=>'Facebook, Instagram, WhatsApp.'],
+    ['ticker'=>'NFLX','nombre'=>'Netflix Inc.','sector'=>'Comunicación','industria'=>'Streaming','pais'=>'EE.UU.','capitalizacion'=>200000000000,'per'=>35.40,'dividendo'=>0.00,'precio_actual'=>420.10,'moneda'=>'EUR','sitio_web'=>'https://www.netflix.com','descripcion'=>'Streaming de series y películas.'],
+
+    // Europa
+    ['ticker'=>'SAP','nombre'=>'SAP SE','sector'=>'Tecnología','industria'=>'Software empresarial','pais'=>'Alemania','capitalizacion'=>150000000000,'per'=>24.60,'dividendo'=>2.05,'precio_actual'=>125.40,'moneda'=>'EUR','sitio_web'=>'https://www.sap.com','descripcion'=>'Software empresarial ERP.'],
+    ['ticker'=>'ASML','nombre'=>'ASML Holding','sector'=>'Tecnología','industria'=>'Equipos semiconductores','pais'=>'Países Bajos','capitalizacion'=>300000000000,'per'=>35.90,'dividendo'=>5.80,'precio_actual'=>650.00,'moneda'=>'EUR','sitio_web'=>'https://www.asml.com','descripcion'=>'Litografía para chips.'],
+    ['ticker'=>'AIR','nombre'=>'Airbus SE','sector'=>'Industria','industria'=>'Aeronáutica','pais'=>'Francia','capitalizacion'=>95000000000,'per'=>20.10,'dividendo'=>1.80,'precio_actual'=>130.00,'moneda'=>'EUR','sitio_web'=>'https://www.airbus.com','descripcion'=>'Fabricante europeo de aviones.'],
+    ['ticker'=>'SIE','nombre'=>'Siemens AG','sector'=>'Industria','industria'=>'Tecnología industrial','pais'=>'Alemania','capitalizacion'=>110000000000,'per'=>18.40,'dividendo'=>3.50,'precio_actual'=>145.00,'moneda'=>'EUR','sitio_web'=>'https://www.siemens.com','descripcion'=>'Tecnología industrial y digitalización.'],
+    ['ticker'=>'BNP','nombre'=>'BNP Paribas','sector'=>'Banca','industria'=>'Servicios Financieros','pais'=>'Francia','capitalizacion'=>70000000000,'per'=>9.20,'dividendo'=>3.10,'precio_actual'=>55.00,'moneda'=>'EUR','sitio_web'=>'https://group.bnpparibas','descripcion'=>'Banco multinacional francés.'],
+    ['ticker'=>'ALL','nombre'=>'Allianz SE','sector'=>'Seguros','industria'=>'Seguros','pais'=>'Alemania','capitalizacion'=>95000000000,'per'=>11.20,'dividendo'=>9.60,'precio_actual'=>220.00,'moneda'=>'EUR','sitio_web'=>'https://www.allianz.com','descripcion'=>'Aseguradora y gestora de activos alemana.'],
+    ['ticker'=>'VOW','nombre'=>'Volkswagen AG','sector'=>'Automoción','industria'=>'Fabricación de automóviles','pais'=>'Alemania','capitalizacion'=>85000000000,'per'=>6.80,'dividendo'=>4.80,'precio_actual'=>145.00,'moneda'=>'EUR','sitio_web'=>'https://www.volkswagenag.com','descripcion'=>'Fabricante de automóviles alemán.'],
+    ['ticker'=>'DAI','nombre'=>'Mercedes-Benz Group','sector'=>'Automoción','industria'=>'Fabricación de automóviles','pais'=>'Alemania','capitalizacion'=>70000000000,'per'=>7.50,'dividendo'=>5.10,'precio_actual'=>68.00,'moneda'=>'EUR','sitio_web'=>'https://group.mercedes-benz.com','descripcion'=>'Fabricante de automóviles de lujo.'],
+    ['ticker'=>'LVMH','nombre'=>'LVMH Moët Hennessy Louis Vuitton','sector'=>'Consumo','industria'=>'Lujo','pais'=>'Francia','capitalizacion'=>400000000000,'per'=>25.40,'dividendo'=>12.00,'precio_actual'=>820.00,'moneda'=>'EUR','sitio_web'=>'https://www.lvmh.com','descripcion'=>'Grupo líder mundial en artículos de lujo.'],
+    ['ticker'=>'OR','nombre'=>'L’Oréal','sector'=>'Consumo','industria'=>'Cosmética','pais'=>'Francia','capitalizacion'=>220000000000,'per'=>30.20,'dividendo'=>4.50,'precio_actual'=>420.00,'moneda'=>'EUR','sitio_web'=>'https://www.loreal.com','descripcion'=>'Multinacional francesa de cosméticos.'],
+    ['ticker'=>'BN','nombre'=>'Danone','sector'=>'Consumo','industria'=>'Alimentación','pais'=>'Francia','capitalizacion'=>40000000000,'per'=>18.10,'dividendo'=>2.00,'precio_actual'=>55.00,'moneda'=>'EUR','sitio_web'=>'https://www.danone.com','descripcion'=>'Multinacional francesa de alimentación.'],
+    ['ticker'=>'ENI','nombre'=>'ENI S.p.A.','sector'=>'Energía','industria'=>'Petróleo y gas','pais'=>'Italia','capitalizacion'=>45000000000,'per'=>7.40,'dividendo'=>0.90,'precio_actual'=>14.00,'moneda'=>'EUR','sitio_web'=>'https://www.eni.com','descripcion'=>'Multinacional energética italiana.'],
+    ['ticker'=>'ISP','nombre'=>'Intesa Sanpaolo','sector'=>'Banca','industria'=>'Servicios Financieros','pais'=>'Italia','capitalizacion'=>50000000000,'per'=>8.20,'dividendo'=>0.28,'precio_actual'=>2.50,'moneda'=>'EUR','sitio_web'=>'https://www.intesasanpaolo.com','descripcion'=>'Banco líder en Italia.'],
+    ['ticker'=>'CRH','nombre'=>'CRH plc','sector'=>'Industria','industria'=>'Materiales de construcción','pais'=>'Irlanda','capitalizacion'=>35000000000,'per'=>15.00,'dividendo'=>1.20,'precio_actual'=>45.00,'moneda'=>'EUR','sitio_web'=>'https://www.crh.com','descripcion'=>'Proveedor global de materiales de construcción.'],
+    ['ticker'=>'PHIA','nombre'=>'Philips NV','sector'=>'Tecnología','industria'=>'Electrónica y salud','pais'=>'Países Bajos','capitalizacion'=>25000000000,'per'=>14.30,'dividendo'=>0.85,'precio_actual'=>20.00,'moneda'=>'EUR','sitio_web'=>'https://www.philips.com','descripcion'=>'Multinacional neerlandesa de tecnología y salud.'],
+    ['ticker'=>'ING','nombre'=>'ING Group','sector'=>'Banca','industria'=>'Servicios Financieros','pais'=>'Países Bajos','capitalizacion'=>60000000000,'per'=>9.10,'dividendo'=>0.70,'precio_actual'=>12.00,'moneda'=>'EUR','sitio_web'=>'https://www.ing.com','descripcion'=>'Banco multinacional neerlandés.'],
+    ['ticker'=>'UBS','nombre'=>'UBS Group','sector'=>'Banca','industria'=>'Servicios Financieros','pais'=>'Suiza','capitalizacion'=>65000000000,'per'=>10.20,'dividendo'=>0.55,'precio_actual'=>18.00,'moneda'=>'EUR','sitio_web'=>'https://www.ubs.com','descripcion'=>'Banco de inversión y gestión de patrimonios.'],
+    ['ticker'=>'CS','nombre'=>'Credit Suisse','sector'=>'Banca','industria'=>'Servicios Financieros','pais'=>'Suiza','capitalizacion'=>20000000000,'per'=>8.90,'dividendo'=>0.25,'precio_actual'=>3.50,'moneda'=>'EUR','sitio_web'=>'https://www.credit-suisse.com','descripcion'=>'Banco multinacional suizo.'],
+    ['ticker'=>'RYA','nombre'=>'Ryanair Holdings','sector'=>'Turismo','industria'=>'Aerolíneas','pais'=>'Irlanda','capitalizacion'=>18000000000,'per'=>12.40,'dividendo'=>0.00,'precio_actual'=>16.00,'moneda'=>'EUR','sitio_web'=>'https://www.ryanair.com','descripcion'=>'Aerolínea de bajo coste europea.'],
+    ['ticker'=>'EADSY','nombre'=>'EADS NV','sector'=>'Industria','industria'=>'Aeroespacial y defensa','pais'=>'Países Bajos','capitalizacion'=>90000000000,'per'=>19.00,'dividendo'=>1.50,'precio_actual'=>120.00,'moneda'=>'EUR','sitio_web'=>'https://www.airbus.com','descripcion'=>'Consorcio aeroespacial europeo.']
+];
+        foreach ($empresas as $empresa) {
+            Empresa::updateOrCreate(['ticker' => $empresa['ticker']], $empresa);
+        }
+    }
+}

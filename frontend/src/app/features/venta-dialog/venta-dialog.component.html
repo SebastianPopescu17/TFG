@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Vender {{ data.ticker }}</h2>
+
+<mat-dialog-content>
+  <p>Dispones de <strong>{{ data.cantidad | number : '1.2-2' }}</strong> acciones.</p>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Cantidad a vender</mat-label>
+    <input
+      matInput
+      type="number"
+      [(ngModel)]="cantidad"
+      [max]="data.cantidad"
+      min="0.01"
+      step="0.01"
+    />
+  </mat-form-field>
+
+  <p>Precio venta: <strong>{{ data.precio | number : '1.2-2' }} €</strong></p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Cancelar</button>
+  <button
+    mat-raised-button
+    color="warn"
+    [disabled]="!cantidad || cantidad <= 0 || cantidad > data.cantidad"
+    (click)="confirmarVenta()"
+  >
+    Confirmar venta
+  </button>
+</mat-dialog-actions>

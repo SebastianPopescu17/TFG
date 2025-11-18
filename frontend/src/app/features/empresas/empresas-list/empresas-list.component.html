@@ -1,0 +1,55 @@
+<mat-card class="header-card">
+  <h2>Listado de Empresas</h2>
+  <div class="filters-inline">
+    <span class="filters-label">Sector:</span>
+    <div class="toggle-group">
+      <button mat-button *ngFor="let s of sectores"
+              [class.active]="selectedSector === s"
+              (click)="selectSector(s)">
+        {{ s }}
+      </button>
+      <button mat-button [class.active]="!selectedSector" (click)="selectSector(null)">
+        Todos
+      </button>
+    </div>
+
+    <span class="filters-label">País:</span>
+    <div class="toggle-group">
+      <button mat-button *ngFor="let p of paises"
+              [class.active]="selectedPais === p"
+              (click)="selectPais(p)">
+        {{ p }}
+      </button>
+      <button mat-button [class.active]="!selectedPais" (click)="selectPais(null)">
+        Todos
+      </button>
+    </div>
+  </div>
+</mat-card>
+
+
+<div *ngIf="!empresas?.length; else gridEmpresas" class="loading-container">
+  <mat-progress-spinner mode="indeterminate" diameter="60"></mat-progress-spinner>
+  <p>Cargando empresas...</p>
+</div>
+
+<ng-template #gridEmpresas>
+  <div class="empresas-grid">
+    <mat-card *ngFor="let e of dataSource.data" class="empresa-card" (click)="verDetalles(e)">
+      <div class="card-header">
+        <div class="ticker">{{ e.ticker }}</div>
+        <div class="pais">{{ e.pais }}</div>
+      </div>
+      <h3 class="nombre">{{ e.nombre }}</h3>
+      <p class="sector">{{ e.sector }}</p>
+
+      <div class="precio-container">
+        <span class="precio">{{ e.precio_actual | number:'1.2-2' }} {{ e.moneda }}</span>
+      </div>
+
+      <button mat-raised-button color="primary" class="detalle-btn">
+        Ver Detalles
+      </button>
+    </mat-card>
+  </div>
+</ng-template>

@@ -1,0 +1,142 @@
+:host {
+  display: block;
+  padding: 2rem;
+  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  color: #f1f5f9;
+  min-height: 100vh;
+}
+
+/* Header */
+.header-card {
+  margin-bottom: 2rem;
+  padding: 2rem;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+  backdrop-filter: blur(12px);
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  animation: fadeInDown 0.8s ease;
+}
+
+.titulo-indicador {
+  margin: 0;
+  font-weight: 800;
+  font-size: 2rem;
+  background-image: linear-gradient(90deg, #38bdf8, #22c55e);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientFlow 6s ease infinite;
+}
+
+/* Filtros */
+.filters-inline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.filters-label {
+  font-size: 1rem;
+  color: #38bdf8;
+}
+
+.toggle-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.toggle-group button {
+  background: #1e293b;
+  color: #f1f5f9;
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.toggle-group button:hover {
+  background: #334155;
+  border-color: #3b82f6;
+}
+
+.toggle-group button.active {
+  background: #3b82f6;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(59,130,246,0.6);
+}
+
+/* Tabla */
+.tabla-container {
+  overflow-x: auto;
+}
+
+.tabla-indicadores {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+.tabla-indicadores thead {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.tabla-indicadores th {
+  padding: 1rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.tabla-indicadores tbody tr {
+  transition: background 0.3s ease;
+}
+
+.tabla-indicadores tbody tr:nth-child(even) {
+  background: rgba(255,255,255,0.05);
+}
+
+.tabla-indicadores tbody tr:hover {
+  background: rgba(59,130,246,0.2);
+}
+
+.tabla-indicadores td {
+  padding: 0.8rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Variaciones */
+.positivo {
+  color: #22c55e;
+  text-shadow: 0 0 6px rgba(22,163,74,0.6);
+}
+
+.negativo {
+  color: #ef4444;
+  text-shadow: 0 0 6px rgba(239,68,68,0.6);
+}
+
+/* Animaciones */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}

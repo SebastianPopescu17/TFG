@@ -1,0 +1,22 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1 class="title">{{ tagline }}</h1>
+    <p class="subtitle">{{ description }}</p>
+  </header>
+
+  <section class="cards-grid">
+    <a *ngFor="let card of navCards" [routerLink]="card.href" class="card-link">
+      <div class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <mat-icon class="card-icon">{{ card.icon }}</mat-icon>
+            <h2 class="card-title">{{ card.title }}</h2>
+          </div>
+          <div class="flip-back">
+            <p class="card-description">{{ card.description }}</p>
+          </div>
+        </div>
+      </div>
+    </a>
+  </section>
+</div>
