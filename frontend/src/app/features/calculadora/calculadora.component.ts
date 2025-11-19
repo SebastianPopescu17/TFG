@@ -29,22 +29,22 @@ export class CalculadoraComponent implements OnInit {
   form!: FormGroup;
   result: any | null = null;
 
-  // Opciones comunes para todas las gráficas para mejorar la legibilidad
+
   chartOptions: any = {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
       x: {
         ticks: {
-          maxRotation: 45, // Rotar etiquetas para que no se solapen
-          autoSkip: true,    // Saltar etiquetas si hay demasiadas
-          maxTicksLimit: 20  // Límite máximo de etiquetas en el eje X
+          maxRotation: 45,
+          autoSkip: true,
+          maxTicksLimit: 20
         }
       },
       y: {
         beginAtZero: true,
         ticks: {
-          // Formatear números grandes en el eje Y (ej: 100000 -> 100k)
+
           callback: function(value: string | number) {
             if (Number(value) >= 1000000) return (Number(value) / 1000000) + 'M';
             if (Number(value) >= 1000) return (Number(value) / 1000) + 'k';
@@ -55,8 +55,15 @@ export class CalculadoraComponent implements OnInit {
     },
     plugins: {
       legend: {
-        position: 'bottom', // Mover la leyenda abajo para dar más espacio a la gráfica
-      }
+        position: 'bottom',
+      },
+      
+    tooltip: {
+      enabled: true,
+    },
+    datalabels: {
+      display: false
+    }
     }
   };
 

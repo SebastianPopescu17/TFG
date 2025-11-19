@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 
-// Estructura para una fila de datos en una simulación simple
+
 export type Row = {
   year: number;
   aportado: number;
@@ -10,17 +10,17 @@ export type Row = {
   valorReal: number;
 };
 
-// Estructura para una fila de datos de percentiles en Monte Carlo
+
 export type PercentileRow = {
   year: number;
   p10: number;
   p25: number;
-  p50: number; // Mediana
+  p50: number;
   p75: number;
   p90: number;
 };
 
-// Resultado para una simulación simple
+
 export type SimpleSimulationResult = {
   type: 'simple';
   totalNominal: number;
@@ -30,11 +30,11 @@ export type SimpleSimulationResult = {
   rows: Row[];
 };
 
-// Resultado para una simulación de Monte Carlo
+
 export type MonteCarloSimulationResult = {
   type: 'monte_carlo';
   percentileRows: PercentileRow[];
-  // Se podrían añadir más resultados, como probabilidad de alcanzar el objetivo
+
 };
 
 @Injectable({
@@ -42,7 +42,7 @@ export type MonteCarloSimulationResult = {
 })
 export class CalculadoraService {
 
-  // El método principal ahora actúa como un despachador
+
   calcular(formValue: any): SimpleSimulationResult | MonteCarloSimulationResult {
     if (formValue.isMonteCarlo) {
       return this.runMonteCarloSimulation(formValue);
@@ -50,13 +50,13 @@ export class CalculadoraService {
     return this.runSingleSimulation(formValue);
   }
 
-  // --- SIMULACIÓN DE MONTE CARLO ---
+
   private runMonteCarloSimulation(formValue: any): MonteCarloSimulationResult {
     const { simulationCount, years, standardDeviation, interestRate } = formValue;
     const rMean = (Number(interestRate ?? 0) + Number(formValue.dividendRate ?? 0)) / 100;
     const sigma = Number(standardDeviation) / 100;
 
-    // Almacenamos el valor nominal de cada simulación para cada año
+
     const allSimulations: number[][] = [];
 
     for (let i = 0; i < simulationCount; i++) {
@@ -65,7 +65,7 @@ export class CalculadoraService {
       allSimulations.push(yearValues);
     }
 
-    // Calculamos los percentiles para cada año a partir de los resultados
+
     const percentileRows: PercentileRow[] = [];
     for (let yearIndex = 0; yearIndex < years; yearIndex++) {
       const valuesForYear = allSimulations.map(sim => sim[yearIndex] || 0);
@@ -87,7 +87,7 @@ export class CalculadoraService {
     };
   }
 
-  // --- SIMULACIÓN SIMPLE (determinista) ---
+
   private runSingleSimulation(formValue: any, rMean?: number, sigma?: number): SimpleSimulationResult {
     const {
       initialInvestment, monthlyContribution, years, interestRate, inflationRate, annualFee,
@@ -111,7 +111,7 @@ export class CalculadoraService {
     let totalAportado = P;
 
     for (let year = 1; year <= years; year++) {
-      // Fase de acumulación vs. retiro
+
       if (year < retirementStartYear) {
         const aportacionAnual = C * 12 * Math.pow(1 + growth, year - 1);
         const extras = extraContributions.filter((e: any) => e.year === year).reduce((sum: number, e: any) => sum + e.amount, 0);
@@ -124,10 +124,10 @@ export class CalculadoraService {
 
       if (valorAcumulado < 0) { valorAcumulado = 0; if (!moneyRunsOutYear) moneyRunsOutYear = year; }
 
-      // Cálculo de la rentabilidad anual
+
       let rAnual = rBase;
       if (sigma !== undefined) {
-        rAnual = this.getNormalRandom(rBase, sigma); // Volatilidad para Monte Carlo
+        rAnual = this.getNormalRandom(rBase, sigma);
       }
       if (rentabilidadesAnuales && rentabilidadesAnuales.length >= year) {
         rAnual = rentabilidadesAnuales[year - 1] / 100;
@@ -150,7 +150,7 @@ export class CalculadoraService {
 
       if (!objetivoAlcanzado && valorAcumulado >= objetivo) objetivoAlcanzado = year;
       if (moneyRunsOutYear && year >= moneyRunsOutYear) {
-        // Si el dinero se agotó, el valor para los años siguientes es 0
+
         rows[rows.length-1].valorNominal = 0;
         rows[rows.length-1].valorReal = 0;
         rows[rows.length-1].intereses = rows[rows.length-2]?.intereses || 0;
@@ -163,10 +163,10 @@ export class CalculadoraService {
     };
   }
 
-  // Generador de números aleatorios con distribución normal (Box-Muller)
+
   private getNormalRandom(mean: number, stdev: number): number {
     let u = 0, v = 0;
-    while(u === 0) u = Math.random(); // Evitando el valor 0
+    while(u === 0) u = Math.random(); 
     while(v === 0) v = Math.random();
     const z = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
     return z * stdev + mean;

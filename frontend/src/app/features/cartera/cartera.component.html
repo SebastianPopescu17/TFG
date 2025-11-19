@@ -29,7 +29,7 @@
 </div>
 
 <!-- GRID DE POSICIONES -->
-<div *ngIf="!loading && detalle?.length; else noDatos" class="empresas-grid">
+<div *ngIf="!loading && detalle.length; else noDatos" class="empresas-grid">
   <mat-card *ngFor="let pos of detalle; trackBy: trackById" class="empresa-mini">
 
     <!-- BORDE SVG ANIMADO -->

@@ -3,20 +3,24 @@
   <div class="filters-inline">
     <span class="filters-label">País:</span>
     <div class="toggle-group">
-      <button mat-button *ngFor="let p of paises"
-              [class.active]="paisSeleccionado === p"
-              (click)="paisSeleccionado = p; cargarDatos()">
-        {{ p }}
-      </button>
+      @for (p of paises; track p) {
+        <button mat-button
+                [class.active]="paisSeleccionado === p"
+                (click)="paisSeleccionado = p; cargarDatos()">
+          {{ p }}
+        </button>
+      }
     </div>
 
     <span class="filters-label">Indicador:</span>
     <div class="toggle-group">
-      <button mat-button *ngFor="let ind of indicadoresDisponibles"
-              [class.active]="indicadorSeleccionado === ind.codigo"
-              (click)="indicadorSeleccionado = ind.codigo; cargarDatos()">
-        {{ ind.nombre }}
-      </button>
+      @for (ind of indicadoresDisponibles; track ind.codigo) {
+        <button mat-button
+                [class.active]="indicadorSeleccionado === ind.codigo"
+                (click)="indicadorSeleccionado = ind.codigo; cargarDatos()">
+          {{ ind.nombre }}
+        </button>
+      }
     </div>
   </div>
 </mat-card>
@@ -26,24 +30,35 @@
     <thead>
       <tr>
         <th (click)="ordenarPor('anio')">
-          Año <span *ngIf="sortColumn==='anio'">{{ sortDirection==='asc' ? '▲' : '▼' }}</span>
+          Año
+          @if (sortColumn==='anio') {
+            <span>{{ sortDirection==='asc' ? '▲' : '▼' }}</span>
+          }
         </th>
         <th (click)="ordenarPor('valor')">
-          Valor <span *ngIf="sortColumn==='valor'">{{ sortDirection==='asc' ? '▲' : '▼' }}</span>
+          Valor
+          @if (sortColumn==='valor') {
+            <span>{{ sortDirection==='asc' ? '▲' : '▼' }}</span>
+          }
         </th>
         <th (click)="ordenarPor('variacion')">
-          Variación <span *ngIf="sortColumn==='variacion'">{{ sortDirection==='asc' ? '▲' : '▼' }}</span>
+          Variación
+          @if (sortColumn==='variacion') {
+            <span>{{ sortDirection==='asc' ? '▲' : '▼' }}</span>
+          }
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let i of registros">
-        <td>{{ i.anio }}</td>
-        <td>{{ i.valor | number:'1.0-0' }} {{ i.unidad }}</td>
-        <td [ngClass]="{'positivo': (i.variacion ?? 0) > 0, 'negativo': (i.variacion ?? 0) < 0}">
-          {{ i.variacion ?? 'N/A' }}%
-        </td>
-      </tr>
+      @for (i of registros; track i.anio) {
+        <tr>
+          <td>{{ i.anio }}</td>
+          <td>{{ i.valor | number:'1.0-0' }} {{ i.unidad }}</td>
+          <td [ngClass]="{'positivo': (i.variacion ?? 0) > 0, 'negativo': (i.variacion ?? 0) < 0}">
+            {{ i.variacion ?? 'N/A' }}%
+          </td>
+        </tr>
+      }
     </tbody>
   </table>
 </div>

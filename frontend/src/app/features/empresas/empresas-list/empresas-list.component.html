@@ -31,13 +31,12 @@
   </div>
 </mat-card>
 
-
-<div *ngIf="!empresas.length; else gridEmpresas" class="loading-container">
-  <mat-progress-spinner mode="indeterminate" diameter="60"></mat-progress-spinner>
-  <p>Cargando empresas...</p>
-</div>
-
-<ng-template #gridEmpresas>
+@if (!empresas.length) {
+  <div class="loading-container">
+    <mat-progress-spinner mode="indeterminate" diameter="60"></mat-progress-spinner>
+    <p>Cargando empresas...</p>
+  </div>
+} @else {
   <div class="empresas-grid">
     @for (e of dataSource.data; track e.ticker) {
       <mat-card class="empresa-card" (click)="verDetalles(e)">
@@ -58,4 +57,4 @@
       </mat-card>
     }
   </div>
-</ng-template>
+}
