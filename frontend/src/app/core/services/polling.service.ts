@@ -5,7 +5,7 @@ import { Api } from './api.service';
 import { AuthService } from './auth.service';
 import { Empresa } from '../models/empresa';
 import { Alerta } from '../models/alerta';
-import { NotificacionService } from './notificacion.service';
+import { AlertasService } from './alertas-service';
 
 @Injectable({ providedIn: 'root' })
 export class PollingService {
@@ -15,16 +15,13 @@ export class PollingService {
   private empresaSubject = new BehaviorSubject<Empresa | null>(null);
   empresa$ = this.empresaSubject.asObservable();
 
-  private alertasSubject = new BehaviorSubject<Alerta[]>([]);
-  alertas$ = this.alertasSubject.asObservable();
-
   private stop$ = new Subject<void>();
   private tendencia: 'alcista' | 'bajista' | 'lateral' = 'lateral';
 
   constructor(
     private api: Api,
     private auth: AuthService,
-    private notificacion: NotificacionService
+    private alertasService: AlertasService
   ) {
     interval(60000).subscribe(() => {
       const estados: Array<'alcista' | 'bajista' | 'lateral'> = ['alcista', 'bajista', 'lateral'];
@@ -37,11 +34,9 @@ export class PollingService {
     const userId = this.auth.getCurrentUserId();
     if (!userId) return;
 
-    // 1. Cargar alertas primero
     this.api.getAlertas(userId).pipe(
       catchError(() => of([] as Alerta[])),
-      tap(alertas => this.alertasSubject.next(alertas)),
-      // 2. Una vez cargadas, iniciar el polling de precios y la evaluación
+      tap(alertas => this.alertasService.setAlertas(alertas)),
       switchMap(() =>
         interval(5000).pipe(
           takeUntil(this.stop$),
@@ -56,7 +51,7 @@ export class PollingService {
       )
     ).subscribe((empresas: Empresa[]) => {
       this.empresasSubject.next(empresas);
-      this.evaluarAlertas(empresas, this.alertasSubject.getValue());
+      this.alertasService.evaluarAlertas(empresas);
     });
 
     this.startAlertas();
@@ -76,7 +71,7 @@ export class PollingService {
       mergeMap((empresa: Empresa): Observable<Empresa> => this.actualizarEmpresa(empresa))
     ).subscribe((empresa: Empresa) => {
       this.empresaSubject.next(empresa);
-      this.evaluarAlertas([empresa], this.alertasSubject.getValue());
+      this.alertasService.evaluarAlertas([empresa]);
     });
 
     this.startAlertas();
@@ -93,39 +88,11 @@ export class PollingService {
           catchError(() => of([] as Alerta[]))
         )
       )
-    ).subscribe(alertas => this.alertasSubject.next(alertas));
+    ).subscribe(alertas => this.alertasService.setAlertas(alertas));
   }
 
   stop(): void {
     this.stop$.next();
-  }
-
-  private evaluarAlertas(empresas: Empresa[], alertas: Alerta[]): void {
-    alertas.forEach(alerta => {
-      if (!alerta.activa) return; 
-
-      const empresa = empresas.find(e => e.id === alerta.empresa_id);
-      if (!empresa) return;
-
-      const precio = empresa.precio_actual ?? 0;
-      let cumple = false;
-
-      switch (alerta.condicion) {
-        case 'mayor': cumple = precio > alerta.valor; break;
-        case 'menor': cumple = precio < alerta.valor; break;
-        case 'igual': cumple = Math.abs(precio - alerta.valor) < 0.01; break;
-      }
-
-      if (cumple) {
-        this.notificacion.mostrar(
-          `⚡ Alerta cumplida: ${empresa.nombre} (${empresa.ticker}) precio ${alerta.condicion} ${alerta.valor}`
-        );
-        alerta.activa = false;
-        this.alertasSubject.next([...alertas]);
-
-        this.api.updateAlerta(this.auth.getCurrentUserId()!, alerta.id, { activa: false }).subscribe();
-      }
-    });
   }
 
   private actualizarEmpresas(empresas: Empresa[]): Observable<Empresa[]> {

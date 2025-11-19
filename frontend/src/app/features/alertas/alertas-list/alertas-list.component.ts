@@ -9,6 +9,7 @@ import { Api } from '../../../core/services/api.service';
 import { Alerta } from '../../../core/models/alerta';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { AlertasService } from '../../../core/services/alertas-service';
 
 @Component({
   selector: 'app-alertas-list',
@@ -24,14 +25,15 @@ export class AlertasListComponent implements OnInit {
   constructor(
     private polling: PollingService,
     private api: Api,
-    private auth: AuthService
+    private auth: AuthService,
+    private alertasService: AlertasService
   ) {}
 
   ngOnInit(): void {
     this.userId = this.auth.getCurrentUserId();
 
     if (this.userId) {
-      this.polling.alertas$.subscribe((alertas: Alerta[]) => {
+      this.alertasService.alertas$.subscribe((alertas: Alerta[]) => {
         this.alertas = alertas;
       });
     }
