@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { interval, BehaviorSubject, Subject, of, forkJoin, Observable } from 'rxjs';
-import { switchMap, takeUntil, catchError, map, mergeMap } from 'rxjs/operators';
+import { switchMap, takeUntil, catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { Api } from './api.service';
 import { AuthService } from './auth.service';
 import { Empresa } from '../models/empresa';
@@ -34,16 +34,26 @@ export class PollingService {
 
   startGlobal(): void {
     this.stop();
+    const userId = this.auth.getCurrentUserId();
+    if (!userId) return;
 
-    interval(5000).pipe(
-      takeUntil(this.stop$),
-      switchMap((): Observable<Empresa[]> =>
-        this.api.getEmpresas().pipe(
-          map(res => res.data as Empresa[]),
-          catchError(() => of([] as Empresa[]))
+    // 1. Cargar alertas primero
+    this.api.getAlertas(userId).pipe(
+      catchError(() => of([] as Alerta[])),
+      tap(alertas => this.alertasSubject.next(alertas)),
+      // 2. Una vez cargadas, iniciar el polling de precios y la evaluación
+      switchMap(() =>
+        interval(5000).pipe(
+          takeUntil(this.stop$),
+          switchMap((): Observable<Empresa[]> =>
+            this.api.getEmpresas().pipe(
+              map(res => res.data as Empresa[]),
+              catchError(() => of([] as Empresa[]))
+            )
+          ),
+          mergeMap((empresas: Empresa[]): Observable<Empresa[]> => this.actualizarEmpresas(empresas))
         )
-      ),
-      mergeMap((empresas: Empresa[]): Observable<Empresa[]> => this.actualizarEmpresas(empresas))
+      )
     ).subscribe((empresas: Empresa[]) => {
       this.empresasSubject.next(empresas);
       this.evaluarAlertas(empresas, this.alertasSubject.getValue());
@@ -92,8 +102,10 @@ export class PollingService {
 
   private evaluarAlertas(empresas: Empresa[], alertas: Alerta[]): void {
     alertas.forEach(alerta => {
+      if (!alerta.activa) return; 
+
       const empresa = empresas.find(e => e.id === alerta.empresa_id);
-      if (!empresa || !alerta.activa) return;
+      if (!empresa) return;
 
       const precio = empresa.precio_actual ?? 0;
       let cumple = false;

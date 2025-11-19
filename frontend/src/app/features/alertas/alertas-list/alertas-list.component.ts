@@ -9,7 +9,6 @@ import { Api } from '../../../core/services/api.service';
 import { Alerta } from '../../../core/models/alerta';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import { NotificacionService } from '../../../core/services/notificacion.service';
 
 @Component({
   selector: 'app-alertas-list',
@@ -25,38 +24,15 @@ export class AlertasListComponent implements OnInit {
   constructor(
     private polling: PollingService,
     private api: Api,
-    private auth: AuthService,
-    private notificacion: NotificacionService
+    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
     this.userId = this.auth.getCurrentUserId();
 
     if (this.userId) {
-      this.api.getAlertas(this.userId).subscribe({
-        next: (data: Alerta[]) => {
-          this.alertas = data;
-        },
-        error: (err) => console.error('Error cargando alertas', err)
-      });
-
-
-      this.polling.alertas$.subscribe(alertas => {
-        if (alertas && alertas.length) {
-          this.alertas = alertas;
-
-          alertas.forEach(a => {
-            if (!a.activa) {
-              const alertaLocal = this.alertas.find(al => al.id === a.id);
-              if (alertaLocal && alertaLocal.activa) {
-                alertaLocal.activa = false;
-                this.notificacion.mostrar(
-                  `🔔 La alerta de la empresa ${a.empresa?.nombre ?? 'X'} se ha cumplido`
-                );
-              }
-            }
-          });
-        }
+      this.polling.alertas$.subscribe((alertas: Alerta[]) => {
+        this.alertas = alertas;
       });
     }
   }
