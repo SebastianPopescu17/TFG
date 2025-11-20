@@ -6,7 +6,7 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\CalculadoraController;
 use App\Http\Controllers\CarteraController;
 use App\Http\Controllers\IndicadorMacroController;
-use App\Http\Controllers\NoticiaController;
+
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\WatchlistController;
 use App\Http\Controllers\AlertaController;
@@ -47,7 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{ticker}/grafica', [EmpresaController::class, 'grafica']);
         Route::get('/{id}/ticks', [EmpresaController::class, 'ticks']);
         Route::get('/{id}/indicadores', [EmpresaController::class, 'indicadores']);
-        Route::get('/{id}/noticias', [EmpresaController::class, 'noticias']);
+
         Route::get('/{empresa}/ticks', [TickController::class, 'ultimos']);
         Route::post('/{id}/precio', [PrecioController::class, 'store']);
     });
@@ -69,7 +69,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::get('/indicadores/disponibles', [IndicadorMacroController::class, 'disponibles']);
 
-    Route::get('/noticias', [NoticiaController::class, 'index']);
+
 
     /*
     |--------------------------------------------------------------------------
