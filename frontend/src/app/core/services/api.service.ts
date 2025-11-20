@@ -5,7 +5,6 @@ import { Empresa } from '../models/empresa';
 import { Alerta } from '../models/alerta';
 import { PrecioHistorico } from '../models/precio-historico';
 import { IndicadorFinanciero } from '../models/indicador-financiero';
-import { Noticia } from '../models/noticia';
 import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 
@@ -50,15 +49,6 @@ export class Api {
       ticker: string;
       datos: { fecha: string; cierre: number }[];
     }>(`${this.baseUrl}/empresas/${ticker}/grafica`);
-  }
-
-  // --- NOTICIAS ---
-  getNoticias(): Observable<Noticia[]> {
-    return this.http.get<Noticia[]>(`${this.baseUrl}/noticias`);
-  }
-
-  getNoticiasPorEmpresa(empresaId: number): Observable<Noticia[]> {
-    return this.http.get<Noticia[]>(`${this.baseUrl}/empresas/${empresaId}/noticias`);
   }
 
   // --- INDICADORES FINANCIEROS ---
@@ -107,10 +97,6 @@ export class Api {
 
   getIndicadoresPorTicker(ticker: string): Observable<IndicadorFinanciero[]> {
     return this.http.get<IndicadorFinanciero[]>(`${this.baseUrl}/empresas/${ticker}/indicadores`);
-  }
-
-  getNoticiasPorTicker(ticker: string): Observable<Noticia[]> {
-    return this.http.get<Noticia[]>(`${this.baseUrl}/empresas/${ticker}/noticias`);
   }
 
   getTicks(identifier: number | string): Observable<any[]> {

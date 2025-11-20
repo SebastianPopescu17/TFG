@@ -1,6 +1,5 @@
 import { PrecioHistorico } from './precio-historico';
 import { IndicadorFinanciero } from './indicador-financiero';
-import { Noticia } from './noticia';
 
 export interface Empresa {
   id: number;
@@ -20,5 +19,4 @@ export interface Empresa {
   updated_at?: string;
   preciosHistoricos?: PrecioHistorico[];
   indicadoresFinancieros?: IndicadorFinanciero[];
-  noticias?: Noticia[];
 }

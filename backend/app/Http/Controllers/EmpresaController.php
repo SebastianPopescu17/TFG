@@ -44,7 +44,7 @@ class EmpresaController extends Controller
         }
 
         //Paginación (100 por defecto)
-        $empresas = $query->paginate($request->get('per_page', 60));
+        $empresas = $query->paginate($request->get('per_page', 80));
 
         return response()->json($empresas);
     }
@@ -56,7 +56,6 @@ class EmpresaController extends Controller
             ->with([
                 'preciosHistoricos' => fn($q) => $q->orderBy('fecha', 'desc')->limit(180),
                 'indicadoresFinancieros' => fn($q) => $q->orderBy('fecha', 'desc')->limit(8),
-                'noticias' => fn($q) => $q->orderBy('fecha_publicacion', 'desc')->limit(5)
             ])
             ->firstOrFail();
     }
