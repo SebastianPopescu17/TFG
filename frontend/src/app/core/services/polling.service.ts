@@ -22,31 +22,33 @@ export class PollingService implements OnDestroy {
     private alertasService: AlertasService
   ) {}
 
-  startGlobal(): void {
-    this.stop();
+ startGlobal(): void {
+  this.stop();
 
-    if (!this.auth.isAuthenticated()) return;
+  if (!this.auth.isAuthenticated()) return;
 
-    const userId = this.auth.getCurrentUserId();
-    if (!userId) return;
+  const userId = this.auth.getCurrentUserId();
+  if (!userId) return;
 
+  // Carga inicial de empresas
+  this.api.getEmpresas().subscribe({
+    next: res => this.empresasSubject.next(res.data),
+    error: (err: any) => console.error('Error inicial cargando empresas', err)
+  });
+
+  // Refresco cada 5s
+  interval(5000).pipe(takeUntil(this.stop$)).subscribe(() => {
     this.api.getEmpresas().subscribe({
-      next: empresas => this.empresasSubject.next(empresas),
-      error: err => console.error('Error inicial cargando empresas', err)
+      next: res => this.empresasSubject.next(res.data),
+      error: (err: any) => console.error('Error cargando empresas', err)
     });
+  });
 
-    interval(5000).pipe(takeUntil(this.stop$)).subscribe(() => {
-      this.api.getEmpresas().subscribe({
-        next: empresas => this.empresasSubject.next(empresas),
-        error: err => console.error('Error cargando empresas', err)
-      });
-    });
-
-    // Evaluar alertas cada 30s (refrescado + notificación)
-    interval(30000).pipe(takeUntil(this.stop$)).subscribe(() => {
-      this.alertasService.evaluarAlertas();
-    });
-  }
+  // Evaluar alertas cada 30s
+  interval(30000).pipe(takeUntil(this.stop$)).subscribe(() => {
+    this.alertasService.evaluarAlertas();
+  });
+}
 
   startForTicker(ticker: string): void {
     this.stop();

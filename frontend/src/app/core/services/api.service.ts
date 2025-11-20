@@ -93,7 +93,9 @@ export class Api {
   return this.http.patch(`${this.baseUrl}/users/${userId}/alertas/${alertaId}`, body);
 }
 
-
+evaluarAlertas(userId: number): Observable<Alerta[]> {
+  return this.http.post<Alerta[]>(`${this.baseUrl}/users/${userId}/alertas/evaluar`, {});
+}
 
   getIndicadoresPorTicker(ticker: string): Observable<IndicadorFinanciero[]> {
     return this.http.get<IndicadorFinanciero[]>(`${this.baseUrl}/empresas/${ticker}/indicadores`);

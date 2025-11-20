@@ -53,9 +53,9 @@ export class AlertaFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.api.getEmpresas().subscribe((data) => {
-      this.empresas = data;
-    });
+    this.api.getEmpresas().subscribe(res => {
+  this.empresas = res.data;
+});
   }
 
  crearAlerta() {
