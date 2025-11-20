@@ -8,7 +8,7 @@ use App\Models\IndicadorMacro;
 
 class ImportarIndicadoresMacro extends Command
 {
-    protected $signature = 'indicadores:importar {pais?} {--desde=2000}';
+    protected $signature = 'indicadores:importar {pais?} {--desde=2010}';
     protected $description = 'Importa indicadores macroeconómicos del Banco Mundial, múltiples países, enriquecidos con EUR y variaciones';
 
     private array $indicadores = [
@@ -17,36 +17,37 @@ class ImportarIndicadoresMacro extends Command
         'NY.GDP.PCAP.CD'    => 'PIB per cápita (US$ corrientes)',
         'NY.GDP.MKTP.KD.ZG' => 'Crecimiento del PIB (%)',
         'FP.CPI.TOTL.ZG'    => 'Inflación (IPC, %)',
-        'NE.EXP.GNFS.ZS'    => 'Exportaciones (% PIB)',
-        'NE.IMP.GNFS.ZS'    => 'Importaciones (% PIB)',
         'NE.GDI.FTOT.ZS'    => 'Formación bruta de capital fijo (% PIB)',
         'NY.GNS.ICTR.ZS'    => 'Ahorro nacional bruto (% PIB)',
         'BN.CAB.XOKA.GD.ZS' => 'Cuenta corriente (% PIB)',
 
         // Finanzas públicas
         'GC.DOD.TOTL.GD.ZS' => 'Deuda pública (% PIB)',
-        'GC.REV.XGRT.GD.ZS' => 'Ingresos del gobierno (% PIB)',
         'GC.XPN.TOTL.GD.ZS' => 'Gasto del gobierno (% PIB)',
         'GC.BAL.CASH.GD.ZS' => 'Balance fiscal (% PIB)',
         'GC.TAX.TOTL.GD.ZS' => 'Ingresos tributarios (% PIB)',
-        'GC.XPN.INTP.RV.ZS' => 'Gasto en intereses (% ingresos)',
 
-        // Extras
-        'SE.XPD.TOTL.GD.ZS' => 'Gasto en educación (% PIB)',
-        'SH.XPD.CHEX.GD.ZS' => 'Gasto en salud (% PIB)',
-        'FI.RES.TOTL.CD'    => 'Reservas internacionales (US$)',
-        'SL.UEM.TOTL.ZS'    => 'Desempleo total (% población activa)',
-        'SP.POP.TOTL'       => 'Población total',
     ];
 
     private array $paises = [
-        'US'=>'USA','CN'=>'CHN','JP'=>'JPN','DE'=>'DEU','IN'=>'IND','GB'=>'GBR','FR'=>'FRA','IT'=>'ITA','CA'=>'CAN',
-        'KR'=>'KOR','RU'=>'RUS','BR'=>'BRA','AU'=>'AUS','ES'=>'ESP','MX'=>'MEX','ID'=>'IDN','TR'=>'TUR','NL'=>'NLD',
-        'SA'=>'SAU','CH'=>'CHE','SE'=>'SWE','PL'=>'POL','BE'=>'BEL','TH'=>'THA','AR'=>'ARG','NG'=>'NGA','AT'=>'AUT',
-        'AE'=>'ARE','NO'=>'NOR','IE'=>'IRL','IL'=>'ISR','MY'=>'MYS','PH'=>'PHL','CO'=>'COL','ZA'=>'ZAF','EG'=>'EGY',
-        'DK'=>'DNK','RO'=>'ROU','CZ'=>'CZE','PT'=>'PRT','GR'=>'GRC','HU'=>'HUN','PK'=>'PAK','VN'=>'VNM','BD'=>'BGD',
-        'CL'=>'CHL','PE'=>'PER','QA'=>'QAT','KW'=>'KWT','NZ'=>'NZL',
-    ];
+    'US' => 'USA',  // Estados Unidos
+    'CN' => 'CHN',  // China
+    'JP' => 'JPN',  // Japón
+    'DE' => 'DEU',  // Alemania
+    'IN' => 'IND',  // India
+    'GB' => 'GBR',  // Reino Unido
+    'FR' => 'FRA',  // Francia
+    'IT' => 'ITA',  // Italia
+    'CA' => 'CAN',  // Canadá
+    'KR' => 'KOR',  // Corea del Sur
+    'ES' => 'ESP',  // España
+    'TR' => 'TUR',  // Turquía
+    'NL' => 'NLD',  // Países Bajos
+    'CH' => 'CHE',  // Suiza
+    'SE' => 'SWE',  // Suecia
+    'AR' => 'ARG',  // Argentina
+];
+
 
     public function handle()
     {
@@ -60,7 +61,10 @@ class ImportarIndicadoresMacro extends Command
             $this->info("Importando país: {$iso3}");
             foreach ($this->indicadores as $codigo => $nombre) {
                 $url = "https://api.worldbank.org/v2/country/{$iso2}/indicator/{$codigo}?format=json&per_page=2000";
-                $response = Http::get($url);
+                $response = Http::withOptions([
+    'verify' => 'C:/xampp/php/extras/ssl/cacert.pem'
+])->get($url);
+
 
                 if (!$response->successful()) {
                     $this->error("Error {$iso3} - {$codigo}");
