@@ -44,12 +44,6 @@ class Empresa extends Model
         return $this->hasMany(IndicadorFinanciero::class);
     }
 
-    // Relación: una empresa tiene muchas noticias
-    public function noticias()
-    {
-        return $this->hasMany(Noticia::class);
-    }
-
     // Relación: una empresa puede estar en muchas watchlists
     public function watchlists()
     {

@@ -4,98 +4,89 @@ namespace App\Http\Controllers;
 
 use App\Models\Empresa;
 use Illuminate\Http\Request;
-use App\Models\Tick;
 
 class EmpresaController extends Controller
 {
-    //Listado de empresas con filtros, búsqueda y paginación
+    // Listado de empresas con filtros, búsqueda y paginación
     public function index(Request $request)
     {
         $query = Empresa::select('id','ticker','nombre','sector','pais','precio_actual');
 
-        //Filtro por sector
-        if ($request->has('sector')) {
+        if ($request->filled('sector')) {
             $query->where('sector', $request->sector);
         }
 
-        //Filtro por país
-        if ($request->has('pais')) {
+        if ($request->filled('pais')) {
             $query->where('pais', $request->pais);
         }
 
-        //Búsqueda por nombre o ticker
-        if ($request->has('search')) {
+        if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function($q) use ($search) {
-                $q->where('nombre', 'like', "%$search%")
-                  ->orWhere('ticker', 'like', "%$search%");
+                $q->where('nombre', 'like', "%{$search}%")
+                  ->orWhere('ticker', 'like', "%{$search}%");
             });
         }
 
-        //Ordenar por capitalización, precio o nombre
-        if ($request->has('sort')) {
+        if ($request->filled('sort')) {
             $sort = $request->sort;
-            $direction = $request->get('direction', 'asc');
-            if (in_array($sort, ['capitalizacion','precio_actual','nombre'])) {
+            $direction = $request->direction === 'desc' ? 'desc' : 'asc';
+            $sortable = ['capitalizacion','precio_actual','nombre'];
+            if (in_array($sort, $sortable)) {
                 $query->orderBy($sort, $direction);
             }
         } else {
             $query->orderBy('nombre', 'asc');
         }
 
-        //Paginación (100 por defecto)
-        $empresas = $query->paginate($request->get('per_page', 60));
+        $empresas = $query->paginate($request->get('per_page', 80));
 
         return response()->json($empresas);
     }
 
-    //Detalle de empresa con históricos, indicadores y noticias
+    // Detalle de empresa
     public function show($ticker)
     {
-        return Empresa::where('ticker', strtoupper($ticker))
+        $ticker = strtoupper($ticker);
+        return Empresa::where('ticker', $ticker)
             ->with([
                 'preciosHistoricos' => fn($q) => $q->orderBy('fecha', 'desc')->limit(180),
                 'indicadoresFinancieros' => fn($q) => $q->orderBy('fecha', 'desc')->limit(8),
-                'noticias' => fn($q) => $q->orderBy('fecha_publicacion', 'desc')->limit(5)
             ])
             ->firstOrFail();
     }
 
-    //Solo histórico de precios
+    // Histórico de precios
     public function historico($ticker)
     {
         $empresa = Empresa::where('ticker', strtoupper($ticker))->firstOrFail();
-        return $empresa->preciosHistoricos()->orderBy('fecha', 'desc')->get();
+        return $empresa->preciosHistoricos()->orderBy('fecha','desc')->get();
     }
 
-    //Datos para gráfica de la empresa
+    // Datos para gráfica
     public function grafica($ticker)
     {
         $empresa = Empresa::where('ticker', strtoupper($ticker))->firstOrFail();
-
-        $historico = $empresa->preciosHistoricos()
-            ->orderBy('fecha', 'asc')
-            ->get(['fecha', 'cierre']);
-
+        $historico = $empresa->preciosHistoricos()->orderBy('fecha','asc')->get(['fecha','cierre']);
         return response()->json([
             'empresa' => $empresa->nombre,
             'ticker' => $empresa->ticker,
             'datos' => $historico
         ]);
     }
+
+    // Últimos ticks
     public function ticks($ticker)
-{
-    $empresa = Empresa::where('ticker', $ticker)->firstOrFail();
+    {
+        $empresa = Empresa::where('ticker', strtoupper($ticker))->firstOrFail();
+        $ticks = $empresa->ticks()->orderBy('registrado_en','desc')->limit(50)->get()->reverse()->values();
+        return response()->json($ticks);
+    }
 
-    $ticks = $empresa->ticks()
-        ->orderBy('registrado_en', 'desc')
-        ->limit(50)
-        ->get()
-        ->reverse()
-        ->values();
-
-    return response()->json($ticks);
+    // Indicadores
+    public function indicadores($ticker)
+    {
+        $empresa = Empresa::where('ticker', strtoupper($ticker))->firstOrFail();
+        return $empresa->indicadoresFinancieros()->orderBy('fecha','desc')->limit(8)->get();
+    }
 }
-
-}
-

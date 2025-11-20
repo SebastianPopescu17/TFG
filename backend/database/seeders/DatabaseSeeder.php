@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
             PrecioHistoricoSeeder::class,
             IndicadorFinancieroSeeder::class,
             IndicadorMacroSeeder::class,
-            NoticiaSeeder::class,
             UserSeeder::class,
             AdminUserSeeder::class, 
         ]);
