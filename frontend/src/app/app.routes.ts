@@ -5,7 +5,6 @@ import { RegisterComponent } from './features/register/register.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { EmpresasListComponent } from './features/empresas/empresas-list/empresas-list.component';
 import { EmpresaDetailComponent } from './features/empresas/empresa-detail/empresa-detail.component';
-import { NoticiasListComponent } from './features/noticias/noticias-list/noticias-list.component';
 import { AlertasListComponent } from './features/alertas/alertas-list/alertas-list.component';
 import { AlertaFormComponent } from './features/alertas/alerta-form/alerta-form.component';
 import { WatchlistComponent } from './features/watchlist/watchlist/watchlist.component';
@@ -37,7 +36,6 @@ export const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'empresas', component: EmpresasListComponent },
       { path: 'empresas/:ticker', component: EmpresaDetailComponent },
-      { path: 'noticias', component: NoticiasListComponent },
       { path: 'alertas', component: AlertasListComponent },
       { path: 'alertas/nueva', component: AlertaFormComponent },
       { path: 'watchlist', component: WatchlistComponent },

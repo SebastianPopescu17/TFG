@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
 @Injectable({
@@ -67,7 +67,9 @@ export class AuthService {
   }
 
   me(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/me`).pipe(
+    return this.http.get(`${this.baseUrl}/me`, {
+      headers: { Authorization: `Bearer ${this.getToken()}` }
+    }).pipe(
       tap(user => {
         this.currentUser = user;
         localStorage.setItem(this.userKey, JSON.stringify(user));
@@ -82,8 +84,8 @@ export class AuthService {
   getCurrentUserId(): number | null {
     return this.currentUser ? this.currentUser.id : null;
   }
-  resetPassword(data: { usuario: string; password: string; password_confirmation: string }) {
-  return this.http.post(`${this.baseUrl}/reset-password`, data);
-}
 
+  resetPassword(data: { usuario: string; password: string; password_confirmation: string }) {
+    return this.http.post(`${this.baseUrl}/reset-password`, data);
+  }
 }
