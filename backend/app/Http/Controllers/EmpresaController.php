@@ -40,7 +40,7 @@ class EmpresaController extends Controller
         }
 
         //Paginación (100 por defecto)
-        $empresas = $query->paginate($request->get('per_page', 60));
+        $empresas = $query->paginate($request->get('per_page', 80));
 
         return response()->json($empresas);
     }
