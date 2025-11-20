@@ -71,8 +71,8 @@ export class WatchlistComponent implements OnInit, OnDestroy {
     if (!this.userId) return;
     this.loading = true;
     this.api.getWatchlist(this.userId).subscribe({
-      next: (data: any[]) => {
-        this.watchlist = data.map(item => item.empresa);
+      next: (empresas: Empresa[]) => {
+        this.watchlist = empresas;
         this.loading = false;
       },
       error: (err) => {
@@ -82,19 +82,19 @@ export class WatchlistComponent implements OnInit, OnDestroy {
     });
   }
 
-  eliminarDeWatchlist(empresaId?: number, nombre?: string): void {
-    if (!this.userId || !empresaId) return;
+  eliminarDeWatchlist(empresa: Empresa): void {
+    if (!this.userId || !empresa.id) return;
 
     this.dialog.open(ConfirmarDialogComponent, {
       data: {
         title: 'Confirmar eliminación',
-        message: `¿Seguro que quieres eliminar esta empresa de tu lista de favoritos?`
+        message: `¿Seguro que quieres eliminar ${empresa.nombre} de tu lista de favoritos?`
       }
     }).afterClosed().subscribe(result => {
       if (result) {
-        this.api.removeFromWatchlist(this.userId!, empresaId).subscribe({
+        this.api.removeFromWatchlist(this.userId!, empresa.id).subscribe({
           next: () => {
-            this.watchlist = this.watchlist.filter(e => e.id !== empresaId);
+            this.watchlist = this.watchlist.filter(e => e.id !== empresa.id);
           },
           error: (err) => console.error('Error eliminando de watchlist', err)
         });
@@ -103,6 +103,7 @@ export class WatchlistComponent implements OnInit, OnDestroy {
   }
 
   irADetalle(ticker: string): void {
+    
     this.router.navigate(['/empresas', ticker]);
   }
 }

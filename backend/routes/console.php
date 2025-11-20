@@ -13,3 +13,6 @@ Schedule::command('indicadores:importar --desde=2000')
 
 Schedule::command('indicadores:importar ES --desde=2000')
     ->dailyAt('04:00');
+
+Schedule::command('simular:precios')
+    ->everyMinute();

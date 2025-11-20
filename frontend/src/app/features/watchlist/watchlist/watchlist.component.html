@@ -14,7 +14,7 @@
   <figure
     class="product-wrapper"
     *ngFor="let empresa of watchlist"
-    (click)="irADetalle(empresa.ticker)"   
+    (click)="irADetalle(empresa.ticker)"
   >
     <svg
       class="border-svg"
@@ -60,12 +60,13 @@
       <div class="product-text">
         <p>Sector: {{ empresa.sector }}<br />Precio: {{ empresa.precio_actual }}</p>
       </div>
-      <div class="product-price-btn" (click)="$event.stopPropagation(); eliminarDeWatchlist(empresa.id)">
+      <div class="product-price-btn" (click)="$event.stopPropagation(); eliminarDeWatchlist(empresa)">
         <button type="button">Eliminar</button>
       </div>
     </div>
   </figure>
 </div>
+
 
 
   <div *ngIf="!loading && !watchlist.length" class="empty">

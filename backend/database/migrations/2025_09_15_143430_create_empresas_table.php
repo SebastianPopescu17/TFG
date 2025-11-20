@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('sector', 100)->nullable();
             $table->string('industria', 100)->nullable();
             $table->string('pais', 100)->nullable();
-            $table->unsignedBigInteger('capitalizacion')->nullable();
+            $table->string('capitalizacion', 50)->nullable();
             $table->decimal('per', 10, 2)->nullable();
             $table->decimal('dividendo', 5, 2)->nullable();
             $table->decimal('precio_actual', 10, 2)->nullable();

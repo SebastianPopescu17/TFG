@@ -17,7 +17,15 @@ class Alerta extends Model
         'tipo',
         'condicion',
         'valor',
-        'activa'
+        'activa',
+        'fecha_cumplida'
+    ];
+
+    
+    protected $casts = [
+        'valor' => 'array',
+        'activa' => 'boolean',
+        'fecha_cumplida' => 'datetime',
     ];
 
     public function empresa()

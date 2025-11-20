@@ -1,49 +1,62 @@
-import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+
+import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
+import { inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { catchError, throwError } from 'rxjs';
 
-@Injectable()
-export class ErrorHandlerInterceptor implements HttpInterceptor {
-  constructor(private snackBar: MatSnackBar) {}
+export const errorHandlerInterceptor: HttpInterceptorFn = (req, next) => {
+  const snackBar = inject(MatSnackBar);
+  const router = inject(Router);
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(request).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = 'Ha ocurrido un error';
-        
-        if (error.error instanceof ErrorEvent) {
-          // Error del cliente
-          errorMessage = `Error: ${error.error.message}`;
-        } else {
-          // Error del servidor
-          switch (error.status) {
-            case 401:
-              errorMessage = 'No autorizado. Por favor, inicie sesión.';
-              break;
-            case 403:
-              errorMessage = 'Acceso denegado.';
-              break;
-            case 404:
-              errorMessage = 'Recurso no encontrado.';
-              break;
-            case 500:
-              errorMessage = 'Error del servidor. Por favor, inténtelo más tarde.';
-              break;
-            default:
-              errorMessage = `Error ${error.status}: ${error.error.message || 'Error desconocido'}`;
-          }
+  return next(req).pipe(
+    catchError((error: HttpErrorResponse) => {
+      let errorMessage = 'Ha ocurrido un error inesperado';
+
+      if (error.error instanceof ErrorEvent) {
+        errorMessage = `Error de cliente: ${error.error.message}`;
+      } else {
+        switch (error.status) {
+          case 0:
+            errorMessage = 'No hay conexión con el servidor.';
+            break;
+          case 400:
+            errorMessage = 'Solicitud incorrecta.';
+            break;
+          case 401:
+            errorMessage = 'No autorizado. Redirigiendo al login...';
+            router.navigate(['/login']);
+            break;
+          case 403:
+            errorMessage = 'Acceso denegado.';
+            break;
+          case 404:
+            errorMessage = 'Recurso no encontrado.';
+            break;
+          case 422:
+            errorMessage = 'Error de validación.';
+            break;
+          case 429:
+            errorMessage = 'Demasiadas solicitudes. Espere un momento.';
+            break;
+          case 500:
+            errorMessage = 'Error interno del servidor.';
+            break;
+          case 503:
+            errorMessage = 'Servicio no disponible.';
+            break;
+          default:
+            errorMessage = `Error ${error.status}: ${error.message || 'Error desconocido'}`;
         }
+      }
 
-        this.snackBar.open(errorMessage, 'Cerrar', {
-          duration: 5000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom',
-        });
+      snackBar.open(errorMessage, 'Cerrar', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+      });
 
-        return throwError(() => error);
-      })
-    );
-  }
-}
+      return throwError(() => error);
+    })
+  );
+};

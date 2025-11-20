@@ -17,14 +17,28 @@
         <mat-option value="mayor">Mayor que</mat-option>
         <mat-option value="menor">Menor que</mat-option>
         <mat-option value="igual">Igual a</mat-option>
+        <mat-option value="entre">Entre valores</mat-option>
       </mat-select>
     </mat-form-field>
 
-    <!-- Valor -->
-    <mat-form-field appearance="outline" class="full-width">
+    <!-- Valor único -->
+    <mat-form-field *ngIf="condicion !== 'entre'" appearance="outline" class="full-width">
       <mat-label>Valor</mat-label>
       <input matInput type="number" [(ngModel)]="valor" name="valor" required>
     </mat-form-field>
+
+    <!-- Valores mínimo y máximo -->
+    <div *ngIf="condicion === 'entre'" class="entre-container">
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Valor mínimo</mat-label>
+        <input matInput type="number" [(ngModel)]="valorMin" name="valorMin" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Valor máximo</mat-label>
+        <input matInput type="number" [(ngModel)]="valorMax" name="valorMax" required>
+      </mat-form-field>
+    </div>
 
     <!-- Botones -->
     <div class="acciones">

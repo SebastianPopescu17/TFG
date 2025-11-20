@@ -15,13 +15,11 @@ return new class extends Migration
     $table->foreignId('user_id')->constrained()->onDelete('cascade');
     $table->foreignId('empresa_id')->constrained()->onDelete('cascade');
     $table->enum('tipo', ['precio', 'noticia', 'otro']);
-    $table->enum('condicion', ['mayor', 'menor', 'igual']);
-    $table->decimal('valor', 12, 2);
+    $table->enum('condicion', ['mayor', 'menor', 'igual', 'entre']);
+    $table->text('valor');
     $table->boolean('activa')->default(true);
+    $table->timestamp('fecha_cumplida')->nullable();
     $table->timestamps();
-
-    $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-    $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
 });
 
 }

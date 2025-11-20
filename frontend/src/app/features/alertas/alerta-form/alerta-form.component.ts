@@ -11,6 +11,8 @@ import { AuthService } from '../../../core/services/auth.service';
 import { Empresa } from '../../../core/models/empresa';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { Alerta } from '../../../core/models/alerta';
+
 
 @Component({
   selector: 'app-alerta-form',
@@ -23,17 +25,19 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './alerta-form.component.html',
-  styleUrls: ['./alerta-form.component.css']
+  styleUrls: ['./alerta-form.component.css'],
 })
 export class AlertaFormComponent implements OnInit {
   userId: number | null = null;
   empresaId: number | null = null;
   tipo: 'precio' = 'precio';
-  condicion: 'mayor' | 'menor' | 'igual' = 'mayor';
+  condicion: 'mayor' | 'menor' | 'igual' | 'entre' = 'mayor';
   valor = 0;
+  valorMin = 0;
+  valorMax = 0;
   activa = true;
 
   empresas: Empresa[] = [];
@@ -49,31 +53,32 @@ export class AlertaFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.api.getEmpresas().subscribe(data => {
-      this.empresas = data.data;
+    this.api.getEmpresas().subscribe((data) => {
+      this.empresas = data;
     });
   }
 
-  crearAlerta() {
-    if (!this.userId || !this.empresaId) return;
+ crearAlerta() {
+  if (!this.userId || !this.empresaId) return;
 
-    const data = {
-      empresa_id: this.empresaId,
-      tipo: this.tipo,
-      condicion: this.condicion,
-      valor: this.valor,
-      activa: this.activa
-    };
-
-    this.api.createAlerta(this.userId, data).subscribe({
-      next: (alertaCreada) => {
-        this.dialogRef.close(alertaCreada);
-      },
-      error: (err) => {
-        console.error('Error creando alerta', err);
-      }
-    });
+  let valor: number | [number, number] = this.valor;
+  if (this.condicion === 'entre') {
+    valor = [this.valorMin, this.valorMax]; // ✅ tupla exacta
   }
+
+  const data: Partial<Alerta> = {
+    empresa_id: this.empresaId,
+    tipo: this.tipo,
+    condicion: this.condicion,
+    valor,
+    activa: this.activa
+  };
+
+  this.api.createAlerta(this.userId, data).subscribe({
+    next: (alertaCreada) => this.dialogRef.close(alertaCreada),
+    error: (err) => console.error('Error creando alerta', err)
+  });
+}
 
   cancelar() {
     this.dialogRef.close();
