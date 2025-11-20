@@ -60,8 +60,7 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
         type: 'line',
         label: 'Precio',
         data: [] as { x: number; y: number }[],
-        borderColor: '#4CAF50',
-        backgroundColor: 'rgba(76, 175, 80, 0.2)',
+        borderColor: '#FF00FF',
         fill: true,
         tension: 0.2,
         pointRadius: 0,
@@ -75,7 +74,7 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
           const value = ctx.raw as any;
           return value?.sube ? '#4CAF50' : '#F44336';
         },
-        pointRadius: 6,
+        pointRadius: 0,
         showLine: false,
       },
     ],
@@ -98,8 +97,8 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
       },
     },
     scales: {
-      x: { type: 'time', time: { unit: 'second' } },
-      y: { beginAtZero: false },
+      x: { type: 'time', time: { unit: 'second' },  grid: { display: false }, ticks: { color: '#666' } },
+      y: { beginAtZero: false, grid: { display: false }, ticks: { color: '#666' }},
     },
   };
 
