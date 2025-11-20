@@ -9,7 +9,9 @@
       <mat-form-field appearance="outline">
         <mat-label>Empresa</mat-label>
         <mat-select [(ngModel)]="empresaSeleccionadaId" (selectionChange)="cargarPrecios()">
-          <mat-option *ngFor="let e of empresas" [value]="e.id">{{ e.nombre }}</mat-option>
+          @for (e of empresas; track e.id) {
+            <mat-option [value]="e.id">{{ e.nombre }}</mat-option>
+          }
         </mat-select>
       </mat-form-field>
 
@@ -25,24 +27,30 @@
     </div>
 
     <!-- Indicadores de carga y error -->
-    <div *ngIf="cargando">
-      <span class="spinner-border spinner-border-sm"></span> Cargando...
-    </div>
+    @if (cargando) {
+      <div>
+        <span class="spinner-border spinner-border-sm"></span> Cargando...
+      </div>
+    }
 
-    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+    @if (error) {
+      <div class="alert alert-danger">{{ error }}</div>
+    }
 
     <!-- Gráfico -->
-    <div *ngIf="precios.length" style="margin-top:2rem;">
-      <canvas baseChart
-              [data]="lineChartData"
-              [options]="lineChartOptions"
-              [type]="'line'">
-      </canvas>
-    </div>
-
-    <div *ngIf="!cargando && !error && precios.length === 0" class="text-center">
-      No hay datos históricos disponibles.
-    </div>
+    @if (precios.length > 0) {
+      <div style="margin-top:2rem;">
+        <canvas baseChart
+                [data]="lineChartData"
+                [options]="lineChartOptions"
+                [type]="'line'">
+        </canvas>
+      </div>
+    } @else if (!cargando && !error && precios.length === 0) {
+      <div class="text-center">
+        No hay datos históricos disponibles.
+      </div>
+    }
 
   </div>
 </div>
