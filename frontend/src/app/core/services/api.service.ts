@@ -33,6 +33,7 @@ export class Api {
       map((e: any) => ({
         ...e,
         id: e.id ?? e.empresa_id ?? e.id_empresa ?? e.ticker,
+        indicadoresFinancieros: e.indicadoresFinancieros ?? e.indicadores_financieros ?? [],
       }))
     );
   }
@@ -58,10 +59,19 @@ export class Api {
     );
   }
 
+
   // --- PRECIOS HISTÓRICOS ---
-  getPreciosHistoricos(empresaId: number): Observable<PrecioHistorico[]> {
-    return this.http.get<PrecioHistorico[]>(`${this.baseUrl}/empresas/${empresaId}/precios`);
-  }
+getPreciosHistoricos(
+  empresaId: number,
+  params?: { desde?: string; hasta?: string }
+): Observable<PrecioHistorico[]> {
+  return this.http.get<PrecioHistorico[]>(
+    `${this.baseUrl}/empresas/${empresaId}/precios-historicos`,
+    { params }
+  );
+}
+
+
 
   // --- WATCHLIST ---
   getWatchlist(userId: number): Observable<Empresa[]> {
@@ -90,13 +100,12 @@ export class Api {
   }
 
   updateAlerta(userId: number, alertaId: number, body: any) {
-  return this.http.patch(`${this.baseUrl}/users/${userId}/alertas/${alertaId}`, body);
-}
+    return this.http.patch(`${this.baseUrl}/users/${userId}/alertas/${alertaId}`, body);
+  }
 
-evaluarAlertas(userId: number) {
-  return this.http.post<Alerta[]>(`${this.baseUrl}/users/${userId}/alertas/evaluar`, {});
-}
-
+  evaluarAlertas(userId: number) {
+    return this.http.post<Alerta[]>(`${this.baseUrl}/users/${userId}/alertas/evaluar`, {});
+  }
 
   getIndicadoresPorTicker(ticker: string): Observable<IndicadorFinanciero[]> {
     return this.http.get<IndicadorFinanciero[]>(`${this.baseUrl}/empresas/${ticker}/indicadores`);

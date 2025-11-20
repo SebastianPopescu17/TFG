@@ -1,0 +1,48 @@
+<div class="card">
+  <div class="card-header">
+    <h5>Precios Históricos</h5>
+  </div>
+
+  <div class="card-body">
+
+    <div class="controls" style="display:flex; gap:1rem; align-items:center; margin-bottom:1rem;">
+      <mat-form-field appearance="outline">
+        <mat-label>Empresa</mat-label>
+        <mat-select [(ngModel)]="empresaSeleccionadaId" (selectionChange)="cargarPrecios()">
+          <mat-option *ngFor="let e of empresas" [value]="e.id">{{ e.nombre }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Desde</mat-label>
+        <input matInput type="date" [(ngModel)]="desde" (change)="cargarPrecios()">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Hasta</mat-label>
+        <input matInput type="date" [(ngModel)]="hasta" (change)="cargarPrecios()">
+      </mat-form-field>
+    </div>
+
+    <!-- Indicadores de carga y error -->
+    <div *ngIf="cargando">
+      <span class="spinner-border spinner-border-sm"></span> Cargando...
+    </div>
+
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+    <!-- Gráfico -->
+    <div *ngIf="precios.length" style="margin-top:2rem;">
+      <canvas baseChart
+              [data]="lineChartData"
+              [options]="lineChartOptions"
+              [type]="'line'">
+      </canvas>
+    </div>
+
+    <div *ngIf="!cargando && !error && precios.length === 0" class="text-center">
+      No hay datos históricos disponibles.
+    </div>
+
+  </div>
+</div>

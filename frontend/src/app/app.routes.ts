@@ -15,7 +15,7 @@ import { CarteraComponent } from './features/cartera/cartera.component';
 import { OperacionesComponent } from './features/operaciones/operaciones.component';
 import { SaldoComponent } from './features/saldo/saldo.component';
 import { IndicadoresMacroComponent } from './features/indicadores-macro/indicadores-macro.component';
-
+import { PreciosHistoricosComponent } from './features/precios-historicos/precios-historicos.component';
 import { authGuard } from './core/guards/auth-guard.guard';
 import { roleGuard } from './core/guards/role-guard.guard';
 
@@ -42,6 +42,7 @@ export const routes: Routes = [
       { path: 'cartera', component: CarteraComponent },
       { path: 'cartera/operaciones', component: OperacionesComponent },
       { path: 'saldo', component: SaldoComponent },
+      { path: 'historico', component: PreciosHistoricosComponent},
       { path: 'macros', component: IndicadoresMacroComponent },
       {
         path: 'admin',

@@ -87,6 +87,7 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
     plugins: {
       legend: { display: true },
       datalabels: {
+        display: false,
         align: 'top',
         color: (ctx) => {
           const value = ctx.dataset.data[ctx.dataIndex] as any;

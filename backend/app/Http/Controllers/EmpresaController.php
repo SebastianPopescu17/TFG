@@ -85,9 +85,10 @@ class EmpresaController extends Controller
     }
 
     // Indicadores
-    public function indicadores($ticker)
-    {
-        $empresa = Empresa::where('ticker', strtoupper($ticker))->firstOrFail();
-        return $empresa->indicadoresFinancieros()->orderBy('fecha','desc')->limit(8)->get();
-    }
+    public function indicadores($id)
+{
+    $empresa = Empresa::findOrFail($id);
+    return $empresa->indicadoresFinancieros()->orderBy('fecha','desc')->limit(8)->get();
+}
+
 }

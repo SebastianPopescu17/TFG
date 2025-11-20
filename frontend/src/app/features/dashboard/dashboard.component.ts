@@ -50,6 +50,12 @@ export class DashboardComponent {
       icon: 'account_balance_wallet',
     },
     {
+      title: 'Histórico',
+      description: 'Visualiza tus posiciones pasadas de las empresas.',
+      href: '/historico',
+      icon: 'account_balance_wallet',
+    },
+    {
       title: 'Saldo',
       description: 'Consulta tu saldo disponible, ingresa fondos o realiza retiros.',
       href: '/saldo',
