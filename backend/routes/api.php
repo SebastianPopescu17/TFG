@@ -125,6 +125,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [AlertaController::class, 'store']);
         Route::delete('/{alertaId}', [AlertaController::class, 'destroy']);
         Route::patch('/{alertaId}', [AlertaController::class, 'update']);
+        Route::post('/evaluar', [AlertaController::class, 'evaluar']);
+
 
     });
 
