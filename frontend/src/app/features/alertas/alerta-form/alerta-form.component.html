@@ -1,53 +1,50 @@
-<mat-card class="alerta-card">
+<div class="alerta-card">
   <h2 class="titulo">Crear Alerta</h2>
 
   <form (ngSubmit)="crearAlerta()" #alertaForm="ngForm">
     <!-- Tipo de alerta -->
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Tipo de alerta</mat-label>
-      <mat-select [(ngModel)]="tipo" name="tipo" required>
-        <mat-option value="precio">Precio</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div class="form-group">
+      <label for="tipo">Tipo de alerta <span class="required">*</span></label>
+      <select [(ngModel)]="tipo" name="tipo" id="tipo" required>
+        <option value="precio">Precio</option>
+      </select>
+    </div>
 
     <!-- Condición -->
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Condición</mat-label>
-      <mat-select [(ngModel)]="condicion" name="condicion" required>
-        <mat-option value="mayor">Mayor que</mat-option>
-        <mat-option value="menor">Menor que</mat-option>
-        <mat-option value="igual">Igual a</mat-option>
-        <mat-option value="entre">Entre valores</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <!-- Valor único -->
-    <mat-form-field *ngIf="condicion !== 'entre'" appearance="outline" class="full-width">
-      <mat-label>Valor</mat-label>
-      <input matInput type="number" [(ngModel)]="valor" name="valor" required>
-    </mat-form-field>
-
-    <!-- Valores mínimo y máximo -->
-    <div *ngIf="condicion === 'entre'" class="entre-container">
-      <mat-form-field appearance="outline" class="half-width">
-        <mat-label>Valor mínimo</mat-label>
-        <input matInput type="number" [(ngModel)]="valorMin" name="valorMin" required>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="half-width">
-        <mat-label>Valor máximo</mat-label>
-        <input matInput type="number" [(ngModel)]="valorMax" name="valorMax" required>
-      </mat-form-field>
+    <div class="form-group">
+      <label for="condicion">Condición <span class="required">*</span></label>
+      <select [(ngModel)]="condicion" name="condicion" id="condicion" required>
+        <option value="mayor">Mayor que</option>
+        <option value="menor">Menor que</option>
+        <option value="igual">Igual a</option>
+        <option value="entre">Entre valores</option>
+      </select>
     </div>
+
+    <!-- Valor único o valores mínimo/máximo -->
+    @if (condicion !== 'entre') {
+      <div class="form-group">
+        <label for="valor">Valor <span class="required">*</span></label>
+        <input type="number" [(ngModel)]="valor" name="valor" id="valor" required>
+      </div>
+    } @else {
+      <div class="form-row">
+        <div class="form-group half-width">
+          <label for="valorMin">Valor mínimo <span class="required">*</span></label>
+          <input type="number" [(ngModel)]="valorMin" name="valorMin" id="valorMin" required>
+        </div>
+
+        <div class="form-group half-width">
+          <label for="valorMax">Valor máximo <span class="required">*</span></label>
+          <input type="number" [(ngModel)]="valorMax" name="valorMax" id="valorMax" required>
+        </div>
+      </div>
+    }
 
     <!-- Botones -->
     <div class="acciones">
-      <button mat-raised-button color="primary" type="submit">
-        <mat-icon>check</mat-icon> Crear
-      </button>
-      <button mat-raised-button color="warn" type="button" (click)="cancelar()">
-        <mat-icon>close</mat-icon> Cancelar
-      </button>
+      <button type="submit" class="btn btn-primary">✔ Crear</button>
+      <button type="button" class="btn btn-warn" (click)="cancelar()">✖ Cancelar</button>
     </div>
   </form>
-</mat-card>
+</div>

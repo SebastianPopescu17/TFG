@@ -54,7 +54,7 @@ export class AlertasListComponent implements OnInit {
     if (!this.userId) return;
     this.api.deleteAlerta(this.userId, id).subscribe({
       next: () => {
-        // ✅ Refrescar lista tras eliminar
+       
         this.alertas = this.alertas.filter(a => a.id !== id);
         this.alertasService.setAlertas(this.alertas);
       },

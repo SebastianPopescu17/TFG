@@ -44,12 +44,6 @@ export class DashboardComponent {
       icon: 'notifications',
     },
     {
-      title: 'Noticias',
-      description: 'Mantente actualizado con las últimas noticias económicas y bursátiles.',
-      href: '/noticias',
-      icon: 'article',
-    },
-    {
       title: 'Cartera',
       description: 'Visualiza tus posiciones, movimientos y rentabilidad en tiempo real.',
       href: '/cartera',
