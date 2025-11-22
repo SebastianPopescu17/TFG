@@ -112,7 +112,22 @@ export class PreciosHistoricosComponent implements OnInit {
   }
 
   private actualizarGrafico(): void {
-    this.lineChartData.labels = this.precios.map((p) => new Date(p.fecha).toLocaleDateString());
-    this.lineChartData.datasets[0].data = this.precios.map((p) => p.cierre);
-  }
+  const labels = this.precios.map((p) => new Date(p.fecha).toLocaleDateString());
+  const data = this.precios.map((p) => p.cierre);
+
+  this.lineChartData = {
+    labels,
+    datasets: [
+      {
+        data,
+        label: `Cierre ${this.empresas.find(e => e.id === this.empresaSeleccionadaId)?.nombre}`,
+        fill: false,
+        borderColor: '#3f51b5',
+        pointRadius: 0,
+        pointHoverRadius: 0,
+      },
+    ],
+  };
+}
+
 }

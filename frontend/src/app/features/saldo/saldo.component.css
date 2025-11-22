@@ -1,9 +1,16 @@
+:root {
+  --bg-gradient: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+  --accent-gradient: linear-gradient(90deg, #38bdf8, #22c55e);
+  --ingreso-gradient: linear-gradient(90deg, #22c55e, #16a34a);
+  --retiro-gradient: linear-gradient(90deg, #ef4444, #dc2626);
+}
+
 .saldo-dashboard {
   display: flex;
   flex-direction: column;
   gap: 2rem;
   padding: 2rem;
-  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+  background: var(--bg-gradient);
   border-radius: 20px;
   box-shadow: 0 8px 28px rgba(0,0,0,0.4);
   color: #f1f5f9;
@@ -14,9 +21,10 @@
   text-align: center;
   padding: 2rem;
   border-radius: 18px;
-  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+  background: var(--bg-gradient);
   backdrop-filter: blur(12px);
-  box-shadow: 0 6px 20px rgba(59,130,246,0.3);
+  border: 1px solid rgba(56,189,248,0.3);
+  box-shadow: 0 0 20px rgba(56,189,248,0.2), 0 6px 20px rgba(59,130,246,0.3);
   animation: fadeInDown 0.8s ease;
 }
 
@@ -24,7 +32,7 @@
   font-size: 2rem;
   font-weight: 800;
   margin-bottom: 1rem;
-  background-image: linear-gradient(90deg, #38bdf8, #22c55e);
+  background-image: var(--accent-gradient);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -47,8 +55,8 @@
   font-size: 1.8rem;
   font-weight: 800;
   color: #22c55e;
-  text-shadow: 0 0 10px rgba(22,163,74,0.4);
   margin-left: 0.5rem;
+  animation: glowPulse 3s ease-in-out infinite;
 }
 
 .saldo-actions {
@@ -60,8 +68,8 @@
 
 .monto-field {
   width: 60%;
+  color: #f1f5f9 !important;
 }
-
 
 .acciones {
   display: flex;
@@ -79,35 +87,36 @@
   transition: all 0.3s ease;
 }
 
-/* Botón Ingresar */
 .acciones button[color="primary"] {
-  background: linear-gradient(90deg, #22c55e, #16a34a);
+  background: var(--ingreso-gradient);
   color: #fff !important;
   box-shadow: 0 4px 14px rgba(34,197,94,0.4);
 }
+
 .acciones button[color="primary"]:hover {
   background: linear-gradient(90deg, #15803d, #16a34a);
   transform: translateY(-2px) scale(1.04);
   box-shadow: 0 6px 18px rgba(34,197,94,0.6);
+  animation: pulse 0.6s ease;
 }
 
-/* Botón Retirar */
 .acciones button[color="warn"] {
-  background: linear-gradient(90deg, #ef4444, #dc2626);
+  background: var(--retiro-gradient);
   color: #fff !important;
   box-shadow: 0 4px 14px rgba(220,38,38,0.4);
 }
+
 .acciones button[color="warn"]:hover {
   background: linear-gradient(90deg, #b91c1c, #dc2626);
   transform: translateY(-2px) scale(1.04);
   box-shadow: 0 6px 18px rgba(220,38,38,0.6);
+  animation: pulse 0.6s ease;
 }
 
-/* === Histórico === */
 .movimientos-section {
   padding: 1.5rem;
   border-radius: 18px;
-  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+  background: var(--bg-gradient);
   backdrop-filter: blur(10px);
   box-shadow: 0 6px 20px rgba(59,130,246,0.3);
   animation: fadeInUp 0.8s ease;
@@ -118,7 +127,7 @@
   font-weight: 800;
   text-align: center;
   margin-bottom: 1.2rem;
-  background-image: linear-gradient(90deg, #38bdf8, #22c55e);
+  background-image: var(--accent-gradient);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -131,7 +140,6 @@
   border-radius: 12px;
 }
 
-/* Tabla */
 .mat-header-cell {
   background: linear-gradient(90deg, #3b82f6, #2563eb);
   color: #fff !important;
@@ -151,37 +159,70 @@
 .mat-row:nth-child(even) .mat-cell {
   background: rgba(255,255,255,0.02);
 }
+
 .mat-row:nth-child(odd) .mat-cell {
   background: rgba(255,255,255,0.04);
 }
+
 .mat-row:hover .mat-cell {
   background: rgba(59,130,246,0.15);
-  transition: background 0.25s ease;
+  transform: scale(1.01);
+  transition: background 0.25s ease, transform 0.25s ease;
 }
 
-/* Ingreso / Retiro */
 .ingreso {
   color: #22c55e !important;
   font-weight: 700;
   text-shadow: 0 0 6px rgba(34,197,94,0.4);
 }
+
 .retiro {
   color: #ef4444 !important;
   font-weight: 700;
   text-shadow: 0 0 6px rgba(239,68,68,0.4);
 }
 
-/* Animaciones */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
+
 @keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(-20px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
+
 @keyframes gradientFlow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { text-shadow: 0 0 10px rgba(22,163,74,0.4); }
+  50% { text-shadow: 0 0 20px rgba(22,163,74,0.7); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.tabla-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.tabla-wrapper::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 4px;
+}
+
+@media (max-width: 600px) {
+  .saldo-hero {
+    padding: 1rem;
+  }
+  .monto-field {
+    width: 100%;
+  }
 }
