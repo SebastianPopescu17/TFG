@@ -7,12 +7,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable, map, shareReplay, Subject, takeUntil } from 'rxjs';
+import { Observable, map, shareReplay, Subject, takeUntil, interval } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
 import { PollingService } from '../../../core/services/polling.service';
 import { AlertasService } from '../../../core/services/alertas-service';
 import { Alerta } from '../../../core/models/alerta';
-import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-layout',
@@ -60,15 +59,20 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-  this.polling.startGlobal();
+  this.auth.currentUser$.subscribe(user => {
+    if (user) {
+      this.polling.startGlobal();
+    }
+  });
 
   this.alertasService.alertas$.subscribe(a => this.alertasActivas = a);
   this.alertasService.alertasCumplidas$.subscribe(a => this.alertasCumplidas = a);
-  this.alertasService.evaluarAlertas();
+
   interval(30000).pipe(takeUntil(this.destroy$)).subscribe(() => {
     this.alertasService.evaluarAlertas();
   });
 }
+
 
   ngOnDestroy(): void {
     this.destroy$.next();

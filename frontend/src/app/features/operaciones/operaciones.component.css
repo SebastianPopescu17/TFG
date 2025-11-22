@@ -11,14 +11,9 @@
   text-align: center !important;
   width: 100%;
   display: block;
+
 }
-::ng-deep .mat-card-subtitle {
-  font-size: 1rem;
-  color: #ffffff !important;
-  text-align: center !important;
-  width: 100%;
-  display: block;
-}
+
 .operaciones-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));

@@ -4,40 +4,46 @@
     Mis Alertas
   </h2>
 
-  <!-- Tabla de alertas -->
-  <table class="full-width-table" *ngIf="alertas.length; else noAlertas">
-    <thead>
-      <tr>
-        <th>Empresa</th>
-        <th>Tipo</th>
-        <th>Condición</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let alerta of alertas">
-        <td>{{ alerta.empresa?.nombre }}</td>
-        <td>{{ alerta.tipo | titlecase }}</td>
-        <td>{{ alerta.condicion }} {{ alerta.valor }}</td>
-        <td>
-          <span [ngClass]="alerta.activa ? 'activa' : 'inactiva'">
-            {{ alerta.activa ? 'Activa' : 'Inactiva' }}
-          </span>
-        </td>
-        <td>
-          <button class="icon-btn warn" (click)="eliminarAlerta(alerta.id)" title="Eliminar alerta">
-            🗑
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  @if (alertas.length > 0) {
+    <table class="full-width-table">
+      <thead>
+        <tr>
+          <th>Empresa</th>
+          <th>Tipo</th>
+          <th>Condición</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
 
-  <!-- Mensaje vacío -->
-  <ng-template #noAlertas>
+      <tbody>
+        @for (alerta of alertas; track alerta.id) {
+          <tr>
+            <td>{{ alerta.empresa?.nombre }}</td>
+            <td>{{ alerta.tipo | titlecase }}</td>
+            <td>{{ alerta.condicion }} {{ alerta.valor }}</td>
+            <td>
+              <span [ngClass]="alerta.activa ? 'activa' : 'inactiva'">
+                {{ alerta.activa ? 'Activa' : 'Inactiva' }}
+              </span>
+            </td>
+            <td>
+              <button
+                class="icon-btn warn"
+                (click)="eliminarAlerta(alerta.id)"
+                title="Eliminar alerta"
+              >
+                🗑
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+  @else {
     <p class="empty">
       No tienes alertas creadas.
     </p>
-  </ng-template>
+  }
 </div>

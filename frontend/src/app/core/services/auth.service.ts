@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, tap, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,12 +9,14 @@ export class AuthService {
   private baseUrl = 'http://localhost:8000/api';
   private tokenKey = 'auth_token';
   private userKey = 'auth_user';
-  private currentUser: any = null;
+
+  private currentUserSubject = new BehaviorSubject<any>(null);
+  currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {
     const savedUser = localStorage.getItem(this.userKey);
     if (savedUser) {
-      this.currentUser = JSON.parse(savedUser);
+      this.currentUserSubject.next(JSON.parse(savedUser));
     }
   }
 
@@ -24,7 +26,7 @@ export class AuthService {
     );
   }
 
-  register(data: { name: string; email: string; password: string; password_confirmation: string }): Observable<any> {
+  register(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/register`, data).pipe(
       tap((res: any) => this.setSession(res))
     );
@@ -34,58 +36,34 @@ export class AuthService {
     if (res.token) {
       localStorage.setItem(this.tokenKey, res.token);
       localStorage.setItem(this.userKey, JSON.stringify(res.user));
-      this.currentUser = res.user;
+      this.currentUserSubject.next(res.user);
     }
   }
 
   logout(): void {
-    const token = this.getToken();
-    if (token) {
-      this.http.post(`${this.baseUrl}/logout`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      }).subscribe({
-        next: () => this.clearSession(),
-        error: () => this.clearSession()
-      });
-    } else {
-      this.clearSession();
-    }
-  }
-
-  private clearSession() {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.userKey);
-    this.currentUser = null;
+    this.currentUserSubject.next(null);
   }
 
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem(this.tokenKey);
+  }
+
+  getCurrentUser() {
+    return this.currentUserSubject.value;
+  }
+
+  // -------- MÉTODOS ADICIONALES PARA COMPATIBILIDAD --------
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
 
-  isAuthenticated(): boolean {
-    return !!this.getToken();
-  }
-
-  me(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/me`, {
-      headers: { Authorization: `Bearer ${this.getToken()}` }
-    }).pipe(
-      tap(user => {
-        this.currentUser = user;
-        localStorage.setItem(this.userKey, JSON.stringify(user));
-      })
-    );
-  }
-
-  getCurrentUser() {
-    return this.currentUser;
-  }
-
   getCurrentUserId(): number | null {
-    return this.currentUser ? this.currentUser.id : null;
+    return this.currentUserSubject.value ? this.currentUserSubject.value.id : null;
   }
 
-  resetPassword(data: { usuario: string; password: string; password_confirmation: string }) {
+  resetPassword(data: { usuario: string; password: string; password_confirmation: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/reset-password`, data);
   }
 }

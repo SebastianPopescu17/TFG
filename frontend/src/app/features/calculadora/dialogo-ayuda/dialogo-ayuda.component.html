@@ -1,119 +1,120 @@
-<h2 mat-dialog-title>📘 Guía completa de la Calculadora de Inversión</h2>
+<h2 mat-dialog-title>📘 Guía de Uso — Calculadora de Inversión</h2>
 
 <mat-dialog-content class="help-content">
 
+  <!-- INTRODUCCIÓN -->
   <section>
-    <h3>¿Qué es esta calculadora?</h3>
+    <h3>¿Qué hace esta calculadora?</h3>
     <p>
-      Esta calculadora es una herramienta educativa y práctica que te permite simular la evolución de una inversión
-      a lo largo del tiempo. Considera factores como aportaciones periódicas, inflación, comisiones, impuestos,
-      dividendos, aportaciones extraordinarias e incluso caídas de mercado. Su objetivo es ayudarte a comprender
-      cómo funciona el interés compuesto y cómo influyen las decisiones financieras en tu patrimonio futuro.
+      Esta herramienta te permite proyectar cómo evolucionará tu inversión a lo largo del tiempo,
+      teniendo en cuenta factores reales como aportaciones periódicas, inflación, dividendos,
+      comisiones, impuestos, variaciones de rentabilidad e incluso caídas de mercado.
+      Su objetivo es ayudarte a tomar decisiones financieras informadas basadas en simulaciones
+      realistas del interés compuesto.
     </p>
   </section>
 
+  <!-- CAMPOS PRINCIPALES -->
   <section>
     <h3>Campos principales</h3>
     <ul>
       <li>
         <strong>💰 Inversión inicial (€):</strong>
-        El capital con el que comienzas. Ejemplo: si ya tienes 10.000 € ahorrados e invertidos, pon 10000.
+        El dinero con el que comienzas. Tener un capital inicial mayor acelera el crecimiento por
+        interés compuesto.
       </li>
       <li>
         <strong>📅 Contribución mensual (€):</strong>
-        La cantidad que aportarás cada mes. Ejemplo: 500 €/mes.
+        El importe que añades periódicamente. Es el factor más determinante para aumentar tu capital a largo plazo.
       </li>
       <li>
         <strong>⏳ Años:</strong>
-        El horizonte temporal de la inversión. Ejemplo: 20 años.
+        Tiempo que mantendrás la inversión. Cuantos más años, mayor impacto del interés compuesto.
       </li>
       <li>
         <strong>📈 Rentabilidad anual (%):</strong>
-        El rendimiento esperado de la inversión (sin dividendos). Ejemplo: 7% anual.
+        Crecimiento esperado de la inversión sin contar dividendos.
       </li>
       <li>
         <strong>🏦 Dividendos (%):</strong>
-        Porcentaje adicional recibido en dividendos. Ejemplo: 2%.
+        Rentabilidad adicional por reparto de beneficios. Se reinvierte automáticamente.
       </li>
       <li>
         <strong>🔥 Inflación (%):</strong>
-        La pérdida de poder adquisitivo del dinero. Ejemplo: 2%.
+        Permite calcular cuánto valdrá tu dinero en términos reales (poder adquisitivo).
       </li>
       <li>
         <strong>⚙️ Comisión (%):</strong>
-        Coste de gestión anual del producto financiero. Ejemplo: 1%.
+        Coste anual del producto (fondos, ETFs, brokers). Se descuenta de la rentabilidad.
       </li>
       <li>
         <strong>🔄 Frecuencia de aportación:</strong>
-        Cada cuántos meses realizas la aportación. Ejemplo: 1 = mensual, 3 = trimestral, 12 = anual.
+        Cada cuántos meses realizas tus aportaciones (1 = mensual, 3 = trimestral, 12 = anual).
       </li>
     </ul>
   </section>
 
+  <!-- OPCIONES AVANZADAS -->
   <section>
     <h3>Opciones avanzadas</h3>
     <ul>
       <li>
         <strong>📊 Aportaciones crecientes (%):</strong>
-        Simula que cada año aumentas tu aportación (ej: +2% anual).
+        Cada año aumentas tu aportación según el porcentaje indicado (simula subidas salariales).
       </li>
       <li>
         <strong>💸 Impuestos (%):</strong>
-        Retención sobre beneficios o dividendos. Ejemplo: 19% en España.
+        Retenciones aplicadas sobre ganancias o dividendos para obtener una simulación más realista.
       </li>
       <li>
         <strong>🎯 Objetivo de capital (€):</strong>
-        Meta que quieres alcanzar. El sistema te dirá en qué año lo logras.
+        Cantidad que quieres alcanzar. La calculadora indica si lo logras y en qué año.
       </li>
       <li>
-        <strong>📉 Rentabilidades anuales:</strong>
-        Lista de % separados por coma para simular años buenos y malos. Ejemplo: 8, -5, 12, 7.
+        <strong>📉 Rentabilidades anuales personalizadas:</strong>
+        Introduce una lista de % separados por comas para simular años reales, buenos y malos.
+        Ej.: <em>8, -5, 12, 7</em>.
       </li>
       <li>
         <strong>⚠️ Caída de mercado:</strong>
-        Año y % de caída simulada. Ejemplo: año 5, -20%.
+        Simula una caída puntual indicando el año y el porcentaje.
+        Ej.: Año 5 ➝ −20 %.
       </li>
     </ul>
   </section>
 
+  <!-- APORTACIONES EXTRA -->
   <section>
     <h3>Aportaciones extraordinarias</h3>
     <p>
-      Además de las aportaciones periódicas, puedes añadir aportaciones puntuales en años concretos.
-      Esto refleja situaciones reales como recibir una herencia, un bonus laboral o una venta de activos.
-      Ejemplo: en el año 3 aportas 5000 € adicionales.
+      Permite añadir ingresos puntuales (bonus, herencias, ventas de activos) en un año concreto.
+      Se suman al capital del año correspondiente y modifican la proyección futura.
     </p>
   </section>
 
+  <!-- RESULTADOS -->
   <section>
-    <h3>Resultados que obtendrás</h3>
+    <h3>¿Qué calcula exactamente la herramienta?</h3>
     <ul>
-      <li>
-        <strong>📊 Totales:</strong>
-        Cuánto has aportado, cuánto son intereses, valor nominal y valor real (ajustado por inflación).
-      </li>
-      <li>
-        <strong>📈 Gráficas:</strong>
-        Evolución de la inversión y desglose de aportaciones vs. intereses.
-      </li>
-      <li>
-        <strong>📋 Tabla anual:</strong>
-        Detalle año a año de aportado, intereses, valor nominal y real.
-      </li>
-      <li>
-        <strong>🎯 Objetivo:</strong>
-        Si lo alcanzas, en qué año ocurre.
-      </li>
+      <li><strong>📊 Total aportado</strong> a lo largo del tiempo.</li>
+      <li><strong>📈 Intereses generados</strong> por el crecimiento de la inversión.</li>
+      <li><strong>🏦 Dividendos generados</strong> y reinvertidos.</li>
+      <li><strong>💸 Impacto de comisiones</strong> en la rentabilidad.</li>
+      <li><strong>🔥 Valor real ajustado por inflación</strong> (lo que realmente vale tu dinero).</li>
+      <li><strong>📋 Tabla anual completa</strong>: aportación, rentabilidad, valor final nominal y real.</li>
+      <li><strong>🎯 Año en el que alcanzas tu objetivo</strong> (si está configurado).</li>
+      <li><strong>⚠️ Año en el que se agota el capital</strong> si las condiciones lo provocan.</li>
     </ul>
   </section>
 
+  <!-- CONSEJOS -->
   <section>
     <h3>Consejos de uso</h3>
     <ul>
-      <li>Prueba distintos escenarios para ver cómo afectan tus decisiones.</li>
-      <li>Compara el valor nominal con el real para entender el impacto de la inflación.</li>
-      <li>Simula caídas de mercado para comprobar la resiliencia de tu estrategia.</li>
-      <li>Usa el objetivo de capital para planificar metas concretas (ej: jubilación, compra de vivienda).</li>
+      <li>Prueba distintos escenarios para entender cómo pequeñas variaciones afectan al resultado.</li>
+      <li>Compara siempre el valor nominal con el real para identificar el efecto de la inflación.</li>
+      <li>Simula caídas realistas para evaluar la resiliencia de tu estrategia a largo plazo.</li>
+      <li>Define metas concretas para saber si tu ritmo de inversión es suficiente.</li>
     </ul>
   </section>
 

@@ -2,15 +2,12 @@
   <h2 class="titulo">Crear Alerta</h2>
 
   <form (ngSubmit)="crearAlerta()" #alertaForm="ngForm">
-    <!-- Tipo de alerta -->
     <div class="form-group">
       <label for="tipo">Tipo de alerta <span class="required">*</span></label>
       <select [(ngModel)]="tipo" name="tipo" id="tipo" required>
         <option value="precio">Precio</option>
       </select>
     </div>
-
-    <!-- Condición -->
     <div class="form-group">
       <label for="condicion">Condición <span class="required">*</span></label>
       <select [(ngModel)]="condicion" name="condicion" id="condicion" required>
@@ -20,8 +17,6 @@
         <option value="entre">Entre valores</option>
       </select>
     </div>
-
-    <!-- Valor único o valores mínimo/máximo -->
     @if (condicion !== 'entre') {
       <div class="form-group">
         <label for="valor">Valor <span class="required">*</span></label>
@@ -41,10 +36,9 @@
       </div>
     }
 
-    <!-- Botones -->
     <div class="acciones">
-      <button type="submit" class="btn btn-primary">✔ Crear</button>
-      <button type="button" class="btn btn-warn" (click)="cancelar()">✖ Cancelar</button>
+      <button type="submit" class="btn btn-primary">Crear</button>
+      <button type="button" class="btn btn-warn" (click)="cancelar()">Cancelar</button>
     </div>
   </form>
 </div>
