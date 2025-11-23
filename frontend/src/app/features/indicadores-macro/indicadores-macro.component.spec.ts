@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideHttpClient } from '@angular/common/http';
 import { IndicadoresMacroComponent } from './indicadores-macro.component';
 
 describe('IndicadoresMacroComponent', () => {
@@ -8,9 +8,9 @@ describe('IndicadoresMacroComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [IndicadoresMacroComponent]
-    })
-    .compileComponents();
+      imports: [IndicadoresMacroComponent],
+      providers: [provideHttpClient()]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(IndicadoresMacroComponent);
     component = fixture.componentInstance;

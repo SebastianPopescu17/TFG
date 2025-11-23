@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideHttpClient } from '@angular/common/http';
 import { CarteraComponent } from './cartera.component';
 
 describe('CarteraComponent', () => {
@@ -8,9 +8,9 @@ describe('CarteraComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CarteraComponent]
-    })
-    .compileComponents();
+      imports: [CarteraComponent],
+      providers: [provideHttpClient()]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CarteraComponent);
     component = fixture.componentInstance;

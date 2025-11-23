@@ -6,14 +6,14 @@ export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
   const auth = inject(AuthService);
   const router = inject(Router);
 
-  const expectedRole = route.data['role']; // rol esperado en la ruta
+  const expectedRole = route.data['role'];
   const user = auth.getCurrentUser();
 
   if (auth.isAuthenticated() && user && user.role === expectedRole) {
     return true;
   }
 
-  // Si no cumple, redirigimos
+  
   router.navigate(['/dashboard']);
   return false;
 };

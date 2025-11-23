@@ -1,56 +1,38 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './features/layout/layout/layout.component';
-import { LoginComponent } from './features/login/login.component';
-import { RegisterComponent } from './features/register/register.component';
-import { DashboardComponent } from './features/dashboard/dashboard.component';
-import { EmpresasListComponent } from './features/empresas/empresas-list/empresas-list.component';
-import { EmpresaDetailComponent } from './features/empresas/empresa-detail/empresa-detail.component';
-import { AlertasListComponent } from './features/alertas/alertas-list/alertas-list.component';
-import { AlertaFormComponent } from './features/alertas/alerta-form/alerta-form.component';
-import { WatchlistComponent } from './features/watchlist/watchlist/watchlist.component';
-import { AdminDashboardComponent } from './features/admin-dashboard/admin-dashboard.component';
-import { CalculadoraComponent } from './features/calculadora/calculadora.component';
-import { RecuperarContrasenaComponent } from './features/recuperar-contrasena/recuperar-contrasena.component';
-import { CarteraComponent } from './features/cartera/cartera.component';
-import { OperacionesComponent } from './features/operaciones/operaciones.component';
-import { SaldoComponent } from './features/saldo/saldo.component';
-import { IndicadoresMacroComponent } from './features/indicadores-macro/indicadores-macro.component';
-import { PreciosHistoricosComponent } from './features/precios-historicos/precios-historicos.component';
 import { authGuard } from './core/guards/auth-guard.guard';
 import { roleGuard } from './core/guards/role-guard.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 
-
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'recuperar-contrasena', component: RecuperarContrasenaComponent },
-
+  { path: 'login', loadComponent: () => import('./features/login/login.component').then(m => m.LoginComponent) },
+  { path: 'register', loadComponent: () => import('./features/register/register.component').then(m => m.RegisterComponent) },
+  { path: 'recuperar-contrasena', loadComponent: () => import('./features/recuperar-contrasena/recuperar-contrasena.component').then(m => m.RecuperarContrasenaComponent) },
 
   {
     path: '',
     component: LayoutComponent,
     canActivate: [authGuard],
     children: [
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'empresas', component: EmpresasListComponent },
-      { path: 'empresas/:ticker', component: EmpresaDetailComponent },
-      { path: 'alertas', component: AlertasListComponent },
-      { path: 'alertas/nueva', component: AlertaFormComponent },
-      { path: 'watchlist', component: WatchlistComponent },
-      { path: 'cartera', component: CarteraComponent },
-      { path: 'cartera/operaciones', component: OperacionesComponent },
-      { path: 'saldo', component: SaldoComponent },
-      { path: 'historico', component: PreciosHistoricosComponent},
-      { path: 'macros', component: IndicadoresMacroComponent },
+      { path: 'dashboard', loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent) },
+      { path: 'empresas', loadComponent: () => import('./features/empresas/empresas-list/empresas-list.component').then(m => m.EmpresasListComponent) },
+      { path: 'empresas/:ticker', loadComponent: () => import('./features/empresas/empresa-detail/empresa-detail.component').then(m => m.EmpresaDetailComponent) },
+      { path: 'alertas', loadComponent: () => import('./features/alertas/alertas-list/alertas-list.component').then(m => m.AlertasListComponent) },
+      { path: 'alertas/nueva', loadComponent: () => import('./features/alertas/alerta-form/alerta-form.component').then(m => m.AlertaFormComponent) },
+      { path: 'watchlist', loadComponent: () => import('./features/watchlist/watchlist/watchlist.component').then(m => m.WatchlistComponent) },
+      { path: 'cartera', loadComponent: () => import('./features/cartera/cartera.component').then(m => m.CarteraComponent) },
+      { path: 'cartera/operaciones', loadComponent: () => import('./features/operaciones/operaciones.component').then(m => m.OperacionesComponent) },
+      { path: 'saldo', loadComponent: () => import('./features/saldo/saldo.component').then(m => m.SaldoComponent) },
+      { path: 'historico', loadComponent: () => import('./features/precios-historicos/precios-historicos.component').then(m => m.PreciosHistoricosComponent) },
+      { path: 'macros', loadComponent: () => import('./features/indicadores-macro/indicadores-macro.component').then(m => m.IndicadoresMacroComponent) },
       {
         path: 'admin',
-        component: AdminDashboardComponent,
         canActivate: [authGuard, roleGuard],
-        data: { role: 'admin' }
+        data: { role: 'admin' },
+        loadComponent: () => import('./features/admin-dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent)
       },
-      { path: 'calculadora', component: CalculadoraComponent }
+      { path: 'calculadora', loadComponent: () => import('./features/calculadora/calculadora.component').then(m => m.CalculadoraComponent) }
     ]
   },
 

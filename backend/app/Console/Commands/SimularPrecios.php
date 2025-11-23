@@ -9,19 +9,20 @@ use App\Models\Tick;
 class SimularPrecios extends Command
 {
     protected $signature = 'simular:precios {--loop} {--interval=5}';
-    protected $description = 'Simula cambios de precios de empresas con dinámica de mercado avanzada';
+    protected $description = 'Simula cambios de precios de empresas con dinámica de mercado realista';
 
     private array $comportamientoPorSector = [
-        'Energía'            => ['volatilidad' => 0.6, 'tendencia' => 0.0],
-        'Tecnología'         => ['volatilidad' => 1.2, 'tendencia' => 0.0002],
-        'Banca'              => ['volatilidad' => 0.4, 'tendencia' => -0.0002],
-        'Salud'              => ['volatilidad' => 0.5, 'tendencia' => 0.0001],
-        'Turismo'            => ['volatilidad' => 1.0, 'tendencia' => -0.0001],
-        'Automoción'         => ['volatilidad' => 0.8, 'tendencia' => 0.0000],
-        'Infraestructuras'   => ['volatilidad' => 0.3, 'tendencia' => 0.0000],
-        'Consumo'            => ['volatilidad' => 0.7, 'tendencia' => 0.0001],
-        'Telecomunicaciones' => ['volatilidad' => 0.5, 'tendencia' => -0.0001],
-        'Inmobiliario'       => ['volatilidad' => 0.6, 'tendencia' => -0.0003],
+        'Energía'            => ['volatilidad' => 0.4, 'tendencia' => 0.0001],
+        'Tecnología'         => ['volatilidad' => 0.6, 'tendencia' => 0.0002],
+        'Banca'              => ['volatilidad' => 0.3, 'tendencia' => 0.0],
+        'Salud'              => ['volatilidad' => 0.35, 'tendencia' => 0.0001],
+        'Turismo'            => ['volatilidad' => 0.5, 'tendencia' => 0.0],
+        'Automoción'         => ['volatilidad' => 0.45, 'tendencia' => 0.0],
+        'Infraestructuras'   => ['volatilidad' => 0.25, 'tendencia' => 0.0],
+        'Consumo'            => ['volatilidad' => 0.4, 'tendencia' => 0.0001],
+        'Telecomunicaciones' => ['volatilidad' => 0.35, 'tendencia' => 0.0],
+        'Inmobiliario'       => ['volatilidad' => 0.35, 'tendencia' => -0.0001],
+        'General'            => ['volatilidad' => 0.35, 'tendencia' => 0.0],
     ];
 
     public function handle()
@@ -44,60 +45,58 @@ class SimularPrecios extends Command
     {
         $empresas = Empresa::all();
 
-        // Factor global de mercado (índice)
-        $indiceMercado = $this->generarVariacionNormal(0, 0.001);
+        // Factor global de mercado pequeño y constante
+        $indiceMercado = $this->generarVariacionNormal(0, 0.0005);
 
-        // Ciclo de mercado (bull/bear)
-        $faseMercado = (int)(now()->timestamp / 3600) % 4 < 2 ? 0.0003 : -0.0003;
+        // Ciclo de mercado (bull/bear muy suave)
+        $faseMercado = (int)(now()->timestamp / 3600) % 4 < 2 ? 0.0002 : -0.0002;
 
         foreach ($empresas as $empresa) {
             $precioAnterior = $empresa->precio_actual;
             $sector = $empresa->sector ?? 'General';
 
-            $config = $this->comportamientoPorSector[$sector] ?? ['volatilidad' => 0.7, 'tendencia' => 0.0000];
+            $config = $this->comportamientoPorSector[$sector] ?? ['volatilidad' => 0.35, 'tendencia' => 0.0];
             $volatilidad = $config['volatilidad'];
             $tendencia   = $config['tendencia'];
 
-            // Ajuste por horario de mercado
+            // Ajuste por horario de mercado (moderado)
             $hora = now()->hour;
-            if ($hora >= 9 && $hora <= 17) {
-                $volatilidad *= 1.5; // más volatilidad en horario de mercado
-            } else {
-                $volatilidad *= 0.3; // menos volatilidad fuera de mercado
-            }
+            $volHorario = ($hora >= 9 && $hora <= 17) ? $volatilidad * 1.2 : $volatilidad * 0.5;
 
-            // Volatilidad adaptativa (tipo GARCH simplificado)
+            // Volatilidad adaptativa basada en último tick (menos agresiva)
             $ultimoTick = $empresa->ticks()->latest()->first();
             if ($ultimoTick) {
                 $cambio = abs($ultimoTick->cierre - $precioAnterior) / max(0.01, $precioAnterior);
-                $volatilidad *= 1 + $cambio * 5;
+                $volHorario *= 1 + $cambio * 1.5;
             }
 
-            // Variación normal + tendencia + índice global + ciclo de mercado
-            $variacion = $precioAnterior * $this->generarVariacionNormal(0, $volatilidad / 100);
+            // Variación base
+            $variacion = $precioAnterior * $this->generarVariacionNormal(0, $volHorario / 100);
+
+            // Añadir tendencia, índice global y fase de mercado
             $variacion += $precioAnterior * $tendencia;
             $variacion += $precioAnterior * $indiceMercado;
             $variacion += $precioAnterior * $faseMercado;
 
-            // Eventos externos (shocks)
-            if (rand(0,500) < 2) { // 0.4% probabilidad
-                $evento = rand(-1,1); // negativo o positivo
-                $variacion *= 1 + ($evento * rand(5,20) / 100); // ±5–20%
-            }
+            // Limitar la variación máxima por tick ±2-3%
+            $maxDelta = 0.03 * $precioAnterior;
+            $variacion = max(-$maxDelta, min($maxDelta, $variacion));
 
-            // Correcciones si el precio se dispara demasiado
-            if ($precioAnterior > 300) {
-                $variacion -= $precioAnterior * 0.005;
+            // Eventos externos muy suaves
+            if (rand(0,500) < 2) {
+                $evento = rand(-1,1);
+                $variacion += $precioAnterior * $evento * rand(1,2) / 100; // ±1-2%
             }
 
             $nuevoPrecio = max(0.01, $precioAnterior + $variacion);
             $empresa->update(['precio_actual' => round($nuevoPrecio, 2)]);
 
-            // Generar tick OHLC
+            // Generar tick OHLC con delta relativo al precio
             $apertura = $precioAnterior;
             $cierre   = $empresa->precio_actual;
-            $maximo   = round(max($apertura, $cierre) + abs(rand(-10,10)/100), 2);
-            $minimo   = round(min($apertura, $cierre) - abs(rand(-10,10)/100), 2);
+            $delta = $precioAnterior * 0.005; // ±0.5%
+            $maximo = max($apertura, $cierre) + mt_rand(-$delta*100, $delta*100)/100;
+            $minimo = min($apertura, $cierre) - mt_rand(-$delta*100, $delta*100)/100;
 
             Tick::create([
                 'empresa_id'    => $empresa->id,
@@ -109,7 +108,7 @@ class SimularPrecios extends Command
             ]);
         }
 
-        $this->info('Precios simulados con dinámica avanzada: ciclos, shocks, volatilidad adaptativa y correcciones.');
+        $this->info('Precios simulados de forma realista: movimientos suaves, ciclos y shocks controlados.');
     }
 
     private function generarVariacionNormal($media = 0, $desviacion = 1): float

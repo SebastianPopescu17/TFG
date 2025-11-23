@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideHttpClient } from '@angular/common/http';
 import { SaldoComponent } from './saldo.component';
 
 describe('SaldoComponent', () => {
@@ -8,9 +8,9 @@ describe('SaldoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SaldoComponent]
-    })
-    .compileComponents();
+      imports: [SaldoComponent],
+      providers: [provideHttpClient()]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SaldoComponent);
     component = fixture.componentInstance;
