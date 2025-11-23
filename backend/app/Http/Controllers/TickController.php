@@ -12,7 +12,6 @@ class TickController extends Controller
         // últimos 50 ticks ordenados por fecha
         $ticks = $empresa->ticks()
             ->orderByDesc('registrado_en')
-            ->take(50)
             ->get()
             ->reverse()
             ->values();

@@ -77,9 +77,9 @@ class EmpresaController extends Controller
     }
 
     // Últimos ticks
-    public function ticks($ticker)
+    public function ticks($id)
     {
-        $empresa = Empresa::where('ticker', strtoupper($ticker))->firstOrFail();
+        $empresa = Empresa::where('ticker', strtoupper($id))->firstOrFail();
         $ticks = $empresa->ticks()->orderBy('registrado_en','desc')->limit(50)->get()->reverse()->values();
         return response()->json($ticks);
     }

@@ -45,7 +45,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{ticker}', [EmpresaController::class, 'show']);
         Route::get('/{ticker}/historico', [EmpresaController::class, 'historico']);
         Route::get('/{ticker}/grafica', [EmpresaController::class, 'grafica']);
-        Route::get('/{id}/ticks', [EmpresaController::class, 'ticks']);
         Route::get('/{id}/indicadores', [EmpresaController::class, 'indicadores']);
 
         Route::get('/{empresa}/ticks', [TickController::class, 'ultimos']);

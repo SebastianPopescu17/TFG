@@ -5,7 +5,7 @@ import { Empresa } from '../models/empresa';
 import { Alerta } from '../models/alerta';
 import { PrecioHistorico } from '../models/precio-historico';
 import { IndicadorFinanciero } from '../models/indicador-financiero';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.development';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -111,15 +111,12 @@ getPreciosHistoricos(
     return this.http.get<IndicadorFinanciero[]>(`${this.baseUrl}/empresas/${ticker}/indicadores`);
   }
 
-  getTicks(identifier: number | string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/empresas/${identifier}/ticks`).pipe(
+  getTicks(id: number | string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/empresas/${id}/ticks`).pipe(
       map((ticks) =>
         ticks.map((t) => ({
-          x: new Date(t.registrado_en).getTime(), // 👈 timestamp en ms
-          o: t.apertura,
-          h: t.maximo,
-          l: t.minimo,
-          c: t.cierre,
+          x: new Date(t.registrado_en).getTime(),
+          y: t.cierre,
         }))
       )
     );

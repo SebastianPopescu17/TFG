@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PollingService } from './polling.service';
+import { ChartCacheService } from './chart-cache.service';
 
-describe('Polling', () => {
-  let service: PollingService;
+describe('ChartCacheService', () => {
+  let service: ChartCacheService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(PollingService);
+    service = TestBed.inject(ChartCacheService);
   });
 
   it('should be created', () => {
