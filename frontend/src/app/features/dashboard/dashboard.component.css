@@ -3,9 +3,6 @@
   flex-direction: column;
   gap: 2rem;
   padding: 2rem 1rem;
-  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
-  min-height: 100vh;
-  color: #f1f5f9;
   overflow: hidden;
 }
 
@@ -122,12 +119,6 @@
   line-height: 1.5;
   opacity: 0.9;
   color: #e2e8f0;
-}
-
-@keyframes gradientFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
 }
 
 @media (max-width: 768px) {

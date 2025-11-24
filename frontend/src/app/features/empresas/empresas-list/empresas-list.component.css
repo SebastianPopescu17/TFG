@@ -1,17 +1,12 @@
 :host {
   display: block;
   padding: 2rem;
-  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
-  font-family: 'Segoe UI', Roboto, sans-serif;
-  color: #f1f5f9;
-  min-height: 100vh;
 }
 
 .header-card {
   margin-bottom: 2rem;
   padding: 2rem;
   border-radius: 16px;
-  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
   backdrop-filter: blur(12px);
   text-align: center;
   box-shadow: 0 6px 18px rgba(0,0,0,0.4);
@@ -156,10 +151,7 @@
 
 
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+
 
 @keyframes fadeInDown {
   from { opacity: 0; transform: translateY(-20px); }
