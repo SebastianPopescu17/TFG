@@ -11,9 +11,8 @@
   text-align: center;
   padding: 2rem;
   border-radius: 12px;
-  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
-  color: #f1f5f9;
   box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  background: var(--bg-gradient);
 }
 
 .header-card {
@@ -22,9 +21,40 @@
   gap: 1rem;
   padding: 1.5rem;
   border-radius: 14px;
-  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
-  color: #f1f5f9;
   box-shadow: 0 6px 20px rgba(59,130,246,0.4);
+  background: var(--panel-bg);
+}
+
+/* Botón 'volver' en la cabecera: fondo grisáceo y icono de flecha en rojo para buen contraste */
+.header-card button[mat-raised-button] {
+  background: var(--panel-bg);
+  color: var(--text-main);
+  min-width: 48px;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 10px;
+  box-shadow: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-card button[mat-raised-button] mat-icon,
+.header-card button[mat-raised-button] .mat-icon {
+  color: #ef4444 !important; /* rojo para la flecha */
+  font-size: 28px;
+}
+
+.header-card button[mat-raised-button]:hover {
+  background: rgba(255,255,255,0.03);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+}
+
+.header-card button[mat-raised-button]:focus {
+  outline: 2px solid rgba(239,68,68,0.15);
+  outline-offset: 2px;
 }
 
 .titulo-empresa {
@@ -115,7 +145,6 @@
 .empresa-tabs {
   margin-top: 1.5rem;
   border-radius: 10px;
-  background: #1e293b;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
@@ -157,11 +186,10 @@
 }
 
 .contenido-tab {
-  background: #1e293b;
   border-radius: 10px;
   padding: 1.5rem;
-  color: #f1f5f9;
   box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  background: var(--panel-bg);
 }
 
 .indicadores-table {
@@ -209,12 +237,8 @@
   text-align: center;
   padding: 2rem;
   border-radius: 12px;
-  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
-  color: #f1f5f9;
   box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  background: var(--panel-bg);
 }
 
-@keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+

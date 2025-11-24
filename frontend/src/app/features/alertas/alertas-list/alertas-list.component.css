@@ -1,11 +1,8 @@
 .alertas-card {
   border-radius: 16px;
   padding: 20px;
-  background: linear-gradient(180deg, #0f172a 0%, #0b1020 100%);
-  color: #e2e8f0;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.55),
-              inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.55), inset 0 0 0 1px rgba(255,255,255,0.04);
 }
 
 .titulo {
@@ -117,10 +114,7 @@
 }
 
 /* Variables */
-:root {
-  --accent-1: #0ea5e9;
-  --accent-2: #1d4ed8;
-}
+
 
 /* Responsive */
 @media (max-width: 768px) {

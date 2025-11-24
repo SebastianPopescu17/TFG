@@ -1,8 +1,5 @@
 :root {
-  --bg-gradient: linear-gradient(135deg, #1e3a8a, #3b82f6, #60a5fa);
-  --accent-gradient: linear-gradient(90deg, #38bdf8, #22c55e);
-  --ingreso-gradient: linear-gradient(90deg, #22c55e, #16a34a);
-  --retiro-gradient: linear-gradient(90deg, #ef4444, #dc2626);
+  /* local variables removed; use global theme variables */
 }
 
 .saldo-dashboard {
@@ -94,7 +91,7 @@
 }
 
 .acciones button[color="primary"]:hover {
-  background: linear-gradient(90deg, #15803d, #16a34a);
+  background: var(--accent-green);
   transform: translateY(-2px) scale(1.04);
   box-shadow: 0 6px 18px rgba(34,197,94,0.6);
   animation: pulse 0.6s ease;
@@ -107,7 +104,7 @@
 }
 
 .acciones button[color="warn"]:hover {
-  background: linear-gradient(90deg, #b91c1c, #dc2626);
+  background: linear-gradient(90deg, #ef4444, #dc2626);
   transform: translateY(-2px) scale(1.04);
   box-shadow: 0 6px 18px rgba(220,38,38,0.6);
   animation: pulse 0.6s ease;
@@ -141,7 +138,7 @@
 }
 
 .mat-header-cell {
-  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  background: linear-gradient(90deg, var(--accent-blue), #2563eb);
   color: #fff !important;
   font-weight: 800;
   text-transform: uppercase;

@@ -1,9 +1,7 @@
 .watchlist-card {
   padding: 20px;
-  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
   box-shadow: 0 8px 24px rgba(0,0,0,0.4);
   animation: fadeIn 0.8s ease;
-  color: #f1f5f9;
 }
 
 .titulo-container {
@@ -39,7 +37,6 @@
   min-height: 180px;
   border-radius: 12px;
   overflow: visible;
-  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
   box-shadow: rgba(0,0,0,0.4) 0px 4px 12px;
   transition: transform 0.4s ease;
 }
@@ -153,8 +150,6 @@
   text-align: center;
   padding: 2rem;
   border-radius: 12px;
-  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
-  color: #f1f5f9;
   box-shadow: 0 6px 18px rgba(0,0,0,0.4);
 }
 
@@ -163,8 +158,4 @@
   to { opacity: 1; }
 }
 
-@keyframes gradientFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+

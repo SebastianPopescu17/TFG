@@ -1,8 +1,8 @@
 .operaciones-card {
   border-radius: 14px;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: var(--panel-bg);
   box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-  color: #f1f5f9;
+  color: var(--text-main);
 }
 ::ng-deep .mat-card-title {
   font-size: 1.4rem;
@@ -21,7 +21,7 @@
   margin-top: 1rem;
 }
 .operacion-card {
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: var(--panel-bg);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.35);
   padding: 1rem 1.2rem;
@@ -82,7 +82,7 @@
   align-items: center;
   justify-content: center;
   height: 60vh;
-  color: #ffffff;
+  color: var(--text-main);
 }
 .loader-text {
   margin-top: 1rem;
@@ -105,7 +105,7 @@
   text-align: center;
   padding: 2rem;
   border-radius: 12px;
-  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
-  color: #f1f5f9;
+  background: var(--panel-bg);
+  color: var(--text-main);
   box-shadow: 0 6px 18px rgba(0,0,0,0.4);
 }

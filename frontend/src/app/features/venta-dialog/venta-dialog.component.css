@@ -1,8 +1,8 @@
 ::ng-deep .mat-dialog-container {
   border-radius: 12px;
   padding: 24px;
-  background: linear-gradient(145deg, #1e1e2f, #2a2a3d) !important;
-  color: #3b82f6 !important;
+  background: var(--panel-bg) !important;
+  color: var(--text-main) !important;
   box-shadow: 0 8px 24px rgba(0,0,0,0.4);
   font-family: 'Segoe UI', Roboto, sans-serif;
 }
@@ -10,7 +10,7 @@
 ::ng-deep .mat-dialog-title {
   font-size: 1.4rem;
   font-weight: 600;
-  color: #3b82f6 !important;
+  color: var(--accent-blue) !important;
   margin-bottom: 16px;
   text-align: center;
   letter-spacing: 0.5px;
@@ -19,7 +19,7 @@
 ::ng-deep mat-dialog-content p {
   margin: 12px 0;
   font-size: 1rem;
-  color: #3b82f6 !important;
+  color: var(--text-main) !important;
 }
 
 ::ng-deep mat-dialog-content strong {
@@ -37,11 +37,11 @@
 }
 
 ::ng-deep .mat-label {
-  color: #3b82f6 !important;
+  color: var(--accent-blue) !important;
 }
 
 ::ng-deep input[matInput] {
-  color: #3b82f6 !important;
+  color: var(--text-main) !important;
   font-weight: 500;
 }
 

@@ -6,15 +6,16 @@
 .dialog-title {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--text-dark);
   margin-bottom: 0.5rem;
 }
 
 .dialog-content {
-  background-color: #f3f4f6;
+  background-color: var(--panel-light-bg);
   padding: 1rem;
   border-radius: 8px;
   min-width: 400px;
+  color: var(--text-dark);
 }
 
 .full-width {
@@ -40,7 +41,7 @@ button[mat-stroked-button] {
 }
 
 button[mat-raised-button] {
-  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  background: linear-gradient(90deg, var(--accent-blue), #2563eb);
   color: white;
   font-weight: 600;
 }

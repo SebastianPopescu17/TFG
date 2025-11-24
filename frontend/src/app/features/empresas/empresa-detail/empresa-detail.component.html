@@ -1,121 +1,122 @@
 @if (loading) {
-  <div class="loading-container">
-    <mat-card class="loading-card">
-      <mat-progress-spinner mode="indeterminate" diameter="60"></mat-progress-spinner>
-      <p>Cargando datos de la empresa...</p>
-    </mat-card>
+<div class="loading-container">
+  <mat-card class="loading-card">
+    <mat-progress-spinner mode="indeterminate" diameter="60"></mat-progress-spinner>
+    <p>Cargando datos de la empresa...</p>
+  </mat-card>
+</div>
+} @else { @if (empresa) {
+<mat-card class="mb-3 header-card">
+  <button mat-raised-button color="#1e293b" [routerLink]="['/empresas']">
+    <mat-icon style="font-size: 36px">arrow_back</mat-icon>
+  </button>
+
+  <div class="titulo-empresa">
+    <h2>{{ empresa.nombre }} ({{ empresa.ticker }})</h2>
+    <h3>
+      Precio actual:
+      <span class="precio" [ngClass]="{ sube: precioSube, baja: precioSube === false }">
+        {{ empresa.precio_actual | number : '1.2-2' }} {{ empresa.moneda }}
+      </span>
+    </h3>
+    <p class="saldo"><strong>Saldo disponible:</strong> {{ saldo | number : '1.2-2' }} €</p>
   </div>
-} @else {
-  @if (empresa) {
-    <mat-card class="mb-3 header-card">
-      <button mat-icon-button color="primary" [routerLink]="['/empresas']" aria-label="Volver al listado">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
 
-      <div class="titulo-empresa">
-        <h2>{{ empresa.nombre }} ({{ empresa.ticker }})</h2>
-        <h3>
-          Precio actual:
-          <span class="precio" [ngClass]="{ sube: precioSube, baja: precioSube === false }">
-            {{ empresa.precio_actual | number:'1.2-2' }} {{ empresa.moneda }}
-          </span>
-        </h3>
-        <p class="saldo"><strong>Saldo disponible:</strong> {{ saldo | number:'1.2-2' }} €</p>
-      </div>
+  <div class="acciones-empresa">
+    <button mat-stroked-button color="primary" (click)="agregarAWathlist()">
+      <mat-icon>playlist_add</mat-icon>
+      Añadir a Lista de Favoritos
+    </button>
 
-      <div class="acciones-empresa">
-        <button mat-stroked-button color="primary" (click)="agregarAWathlist()">
-          <mat-icon>playlist_add</mat-icon>
-          Añadir a Lista de Favoritos
-        </button>
+    <button mat-stroked-button color="accent" (click)="abrirDialogoAlerta()">
+      <mat-icon>notifications</mat-icon>
+      Crear alerta
+    </button>
 
-        <button mat-stroked-button color="accent" (click)="abrirDialogoAlerta()">
-          <mat-icon>notifications</mat-icon>
-          Crear alerta
-        </button>
+    <button mat-stroked-button color="primary" (click)="abrirCompra()" [disabled]="saldo <= 0">
+      <mat-icon>shopping_cart</mat-icon>
+      Comprar
+    </button>
+  </div>
+</mat-card>
 
-        <button mat-stroked-button color="primary" (click)="abrirCompra()" [disabled]="saldo <= 0">
-          <mat-icon>shopping_cart</mat-icon>
-          Comprar
-        </button>
-      </div>
+<mat-tab-group class="empresa-tabs">
+  <mat-tab label="Resumen">
+    <mat-card class="contenido-tab">
+      <p><strong>Sector:</strong> {{ empresa.sector }}</p>
+      <p><strong>Industria:</strong> {{ empresa.industria }}</p>
+      <p><strong>País:</strong> {{ empresa.pais }}</p>
+      <p><strong>Capitalización:</strong> {{ empresa.capitalizacion }}</p>
+      <p><strong>PER:</strong> {{ empresa.per }}</p>
+      <p><strong>Dividendo:</strong> {{ empresa.dividendo }} %</p>
+      <p>
+        <strong>Sitio web:</strong>
+        <a [href]="empresa.sitio_web" target="_blank">{{ empresa.sitio_web }}</a>
+      </p>
+      <p><strong>Descripción:</strong> {{ empresa.descripcion }}</p>
     </mat-card>
+  </mat-tab>
 
-    <mat-tab-group class="empresa-tabs">
-      <mat-tab label="Resumen">
-        <mat-card class="contenido-tab">
-          <p><strong>Sector:</strong> {{ empresa.sector }}</p>
-          <p><strong>Industria:</strong> {{ empresa.industria }}</p>
-          <p><strong>País:</strong> {{ empresa.pais }}</p>
-          <p><strong>Capitalización:</strong> {{ empresa.capitalizacion }}</p>
-          <p><strong>PER:</strong> {{ empresa.per }}</p>
-          <p><strong>Dividendo:</strong> {{ empresa.dividendo }} %</p>
-          <p><strong>Sitio web:</strong> <a [href]="empresa.sitio_web" target="_blank">{{ empresa.sitio_web }}</a></p>
-          <p><strong>Descripción:</strong> {{ empresa.descripcion }}</p>
-        </mat-card>
-      </mat-tab>
+  <mat-tab label="Gráficos">
+    <mat-card class="contenido-tab">
+      <h3>Evolución en tiempo real</h3>
+      <canvas baseChart [data]="lineData" [options]="lineOptions" chartType="line"></canvas>
+    </mat-card>
+  </mat-tab>
 
-      <mat-tab label="Gráficos">
-        <mat-card class="contenido-tab">
-          <h3>Evolución en tiempo real</h3>
-          <canvas baseChart [data]="lineData" [options]="lineOptions" chartType="line"></canvas>
-        </mat-card>
-      </mat-tab>
+  <mat-tab label="Indicadores">
+    @if (indicadores && indicadores.length) {
+    <mat-card class="contenido-tab">
+      <table mat-table [dataSource]="indicadores" class="mat-elevation-z8 indicadores-table">
+        <ng-container matColumnDef="fecha">
+          <th mat-header-cell *matHeaderCellDef>Fecha</th>
+          <td mat-cell *matCellDef="let i">{{ i.fecha | date }}</td>
+        </ng-container>
 
-      <mat-tab label="Indicadores">
-        @if (indicadores && indicadores.length) {
-          <mat-card class="contenido-tab">
-            <table mat-table [dataSource]="indicadores" class="mat-elevation-z8 indicadores-table">
-              <ng-container matColumnDef="fecha">
-                <th mat-header-cell *matHeaderCellDef>Fecha</th>
-                <td mat-cell *matCellDef="let i">{{ i.fecha | date }}</td>
-              </ng-container>
+        <ng-container matColumnDef="roe">
+          <th mat-header-cell *matHeaderCellDef>ROE</th>
+          <td mat-cell *matCellDef="let i" class="numeric">{{ i.roe | number : '1.2-2' }} %</td>
+        </ng-container>
 
-              <ng-container matColumnDef="roe">
-                <th mat-header-cell *matHeaderCellDef>ROE</th>
-                <td mat-cell *matCellDef="let i" class="numeric">{{ i.roe | number:'1.2-2' }} %</td>
-              </ng-container>
+        <ng-container matColumnDef="roa">
+          <th mat-header-cell *matHeaderCellDef>ROA</th>
+          <td mat-cell *matCellDef="let i" class="numeric">{{ i.roa | number : '1.2-2' }} %</td>
+        </ng-container>
 
-              <ng-container matColumnDef="roa">
-                <th mat-header-cell *matHeaderCellDef>ROA</th>
-                <td mat-cell *matCellDef="let i" class="numeric">{{ i.roa | number:'1.2-2' }} %</td>
-              </ng-container>
+        <ng-container matColumnDef="margen">
+          <th mat-header-cell *matHeaderCellDef>Margen</th>
+          <td mat-cell *matCellDef="let i" class="numeric">{{ i.margen | number : '1.2-2' }} %</td>
+        </ng-container>
 
-              <ng-container matColumnDef="margen">
-                <th mat-header-cell *matHeaderCellDef>Margen</th>
-                <td mat-cell *matCellDef="let i" class="numeric">{{ i.margen | number:'1.2-2' }} %</td>
-              </ng-container>
+        <ng-container matColumnDef="deuda">
+          <th mat-header-cell *matHeaderCellDef>Deuda</th>
+          <td mat-cell *matCellDef="let i" class="numeric">{{ i.deuda | number : '1.2-2' }} %</td>
+        </ng-container>
 
-              <ng-container matColumnDef="deuda">
-                <th mat-header-cell *matHeaderCellDef>Deuda</th>
-                <td mat-cell *matCellDef="let i" class="numeric">{{ i.deuda | number:'1.2-2' }} %</td>
-              </ng-container>
+        <ng-container matColumnDef="ingresos">
+          <th mat-header-cell *matHeaderCellDef>Ingresos</th>
+          <td mat-cell *matCellDef="let i" class="numeric">{{ i.ingresos | number }}</td>
+        </ng-container>
 
-              <ng-container matColumnDef="ingresos">
-                <th mat-header-cell *matHeaderCellDef>Ingresos</th>
-                <td mat-cell *matCellDef="let i" class="numeric">{{ i.ingresos | number }}</td>
-              </ng-container>
+        <ng-container matColumnDef="beneficio">
+          <th mat-header-cell *matHeaderCellDef>Beneficio</th>
+          <td mat-cell *matCellDef="let i" class="numeric">{{ i.beneficio_neto | number }}</td>
+        </ng-container>
 
-              <ng-container matColumnDef="beneficio">
-                <th mat-header-cell *matHeaderCellDef>Beneficio</th>
-                <td mat-cell *matCellDef="let i" class="numeric">{{ i.beneficio_neto | number }}</td>
-              </ng-container>
+        <ng-container matColumnDef="eps">
+          <th mat-header-cell *matHeaderCellDef>EPS</th>
+          <td mat-cell *matCellDef="let i" class="numeric">{{ i.eps | number : '1.2-2' }}</td>
+        </ng-container>
 
-              <ng-container matColumnDef="eps">
-                <th mat-header-cell *matHeaderCellDef>EPS</th>
-                <td mat-cell *matCellDef="let i" class="numeric">{{ i.eps | number:'1.2-2' }}</td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
-          </mat-card>
-        } @else {
-          <p>No hay indicadores disponibles para esta empresa.</p>
-        }
-      </mat-tab>
-    </mat-tab-group>
-  } @else {
-    <p>No se encontró la empresa.</p>
-  }
-}
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </mat-card>
+    } @else {
+    <p>No hay indicadores disponibles para esta empresa.</p>
+    }
+  </mat-tab>
+</mat-tab-group>
+} @else {
+<p>No se encontró la empresa.</p>
+} }
