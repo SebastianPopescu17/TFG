@@ -17,6 +17,7 @@ class Tick extends Model
         'registrado_en',
     ];
 
+
     public function empresa()
     {
         return $this->belongsTo(Empresa::class);

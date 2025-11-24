@@ -64,7 +64,8 @@ class SimularPrecios extends Command
             $volHorario = ($hora >= 9 && $hora <= 17) ? $volatilidad * 1.2 : $volatilidad * 0.5;
 
             // Volatilidad adaptativa basada en último tick (menos agresiva)
-            $ultimoTick = $empresa->ticks()->latest()->first();
+           $ultimoTick = $empresa->ticks()->latest('registrado_en')->first();
+
             if ($ultimoTick) {
                 $cambio = abs($ultimoTick->cierre - $precioAnterior) / max(0.01, $precioAnterior);
                 $volHorario *= 1 + $cambio * 1.5;
