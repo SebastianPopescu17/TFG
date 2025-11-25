@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ChartOptions, ChartData, ChartType } from 'chart.js';
+import type { ChartOptions, ChartData, ChartType } from 'chart.js';
 import { Api } from '../../core/services/api.service';
 import { PrecioHistorico } from '../../core/models/precio-historico';
 import { BaseChartDirective } from 'ng2-charts';
@@ -67,7 +67,17 @@ export class PreciosHistoricosComponent implements OnInit {
 
   constructor(private api: Api) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+
+    try {
+      const { Chart, registerables } = await import('chart.js');
+      const ChartDataLabels = (await import('chartjs-plugin-datalabels')).default;
+      Chart.register(...registerables, ChartDataLabels);
+      await import('chartjs-adapter-date-fns');
+    } catch (err) {
+      console.warn('No se pudo cargar Chart.js dinámicamente:', err);
+    }
+
     this.cargarEmpresas();
   }
 

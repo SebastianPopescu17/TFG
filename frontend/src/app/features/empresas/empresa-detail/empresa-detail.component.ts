@@ -12,9 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { BaseChartDirective } from 'ng2-charts';
-import { Chart, ChartConfiguration } from 'chart.js';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
-import 'chartjs-adapter-date-fns';
+import type { ChartConfiguration } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { PollingService } from '../../../core/services/polling.service';
 import { Api } from '../../../core/services/api.service';
@@ -25,7 +23,6 @@ import { OrdenDialogComponent } from '../../orden-dialog/orden-dialog.component'
 import { MensajeDialogComponent } from '../../mensaje-dialog/mensaje-dialog.component';
 import { ConfirmarDialogComponent } from '../../confirmar-dialog/confirmar-dialog.component';
 
-Chart.register(ChartDataLabels);
 
 @Component({
   selector: 'app-empresa-detail',
@@ -123,12 +120,23 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
     private dialog: MatDialog
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const ticker = this.route.snapshot.paramMap.get('ticker');
     if (!ticker) return;
 
     this.userId = this.auth.getCurrentUserId();
     this.loading = true;
+
+    // Registrar Chart.js dinámicamente para reducir el bundle inicial
+    try {
+      const { Chart, registerables } = await import('chart.js');
+      const ChartDataLabels = (await import('chartjs-plugin-datalabels')).default;
+      await import('chartjs-adapter-date-fns');
+      Chart.register(...registerables, ChartDataLabels);
+    } catch (err) {
+      // Si la carga dinámica falla, continuar sin crash (los gráficos fallarán hasta recargar)
+      console.warn('No se pudo registrar Chart.js dinámicamente:', err);
+    }
 
     this.api.getEmpresa(ticker).subscribe({
       next: (empresa: Empresa & { historicoPrecios?: { fecha: string; valor: any }[] }) => {

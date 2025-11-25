@@ -18,6 +18,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --card-radius: 12px;
   --panel-light-bg: #ffffff;
   --text-dark: #0b1220;
+  --text-red: #6b1a08;
 }
 
 /* Global utilities */
@@ -100,7 +101,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 input, textarea, select, button, .mat-mdc-input-element {
-  color: var(--text-main) !important;
+  color: var(--text-red) !important;
 }
 
 

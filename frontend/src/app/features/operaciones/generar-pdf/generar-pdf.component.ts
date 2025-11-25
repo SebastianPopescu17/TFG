@@ -1,11 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
-import { Chart, registerables } from 'chart.js';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
-
-Chart.register(...registerables, ChartDataLabels);
 
 @Component({
   selector: 'app-generar-pdf',
@@ -68,6 +62,10 @@ export class GenerarPdfComponent {
     const ctx = canvas.getContext('2d');
     if (!ctx) throw new Error('No se pudo obtener el contexto 2D');
 
+    const { Chart, registerables } = await import('chart.js');
+    const ChartDataLabels = (await import('chartjs-plugin-datalabels')).default;
+    Chart.register(...registerables, ChartDataLabels);
+
     const chart = new Chart(ctx, {
       type: 'bar',
       data: {
@@ -111,6 +109,10 @@ export class GenerarPdfComponent {
     canvas.height = 600;
     const ctx = canvas.getContext('2d');
     if (!ctx) throw new Error('No se pudo obtener el contexto 2D');
+
+    const { Chart, registerables } = await import('chart.js');
+    const ChartDataLabels = (await import('chartjs-plugin-datalabels')).default;
+    Chart.register(...registerables, ChartDataLabels);
 
     const chart = new Chart(ctx, {
       type: 'pie',
@@ -160,6 +162,9 @@ export class GenerarPdfComponent {
     this.generatingPdf = true;
     try {
       const resumen = this.calcularResumen();
+      const { default: jsPDF } = await import('jspdf');
+      const autoTable = (await import('jspdf-autotable')).default;
+
       const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' });
 
       // Título principal
@@ -234,7 +239,7 @@ export class GenerarPdfComponent {
         styles: { fontSize: 8, cellPadding: 4 },
         headStyles: { fillColor: [30, 80, 160], textColor: [255, 255, 255] },
         columnStyles: { 3: { halign: 'right' }, 4: { halign: 'right' }, 5: { halign: 'right' }, 6: { halign: 'right' } },
-        didParseCell: data => {
+        didParseCell: (data: any) => {
           if (data.section === 'body' && data.column.index === 6) {
             const val = parseFloat(String(data.cell.raw));
             if (!isNaN(val)) data.cell.styles.textColor = val >= 0 ? [22, 163, 74] : [220, 38, 38];
