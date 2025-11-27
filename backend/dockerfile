@@ -1,17 +1,41 @@
+# Dockerfile para Laravel + Render (Hobby Free)
+
+# 1️⃣ Imagen base con PHP y extensiones necesarias
 FROM php:8.2-fpm
 
-WORKDIR /app
-
+# 2️⃣ Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
-    git unzip libzip-dev libpng-dev libonig-dev libxml2-dev \
-    && docker-php-ext-install pdo pdo_mysql zip mbstring gd
+    git \
+    unzip \
+    curl \
+    libzip-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    && docker-php-ext-install pdo_mysql mbstring zip exif pcntl bcmath
 
-COPY . .
+# 3️⃣ Instalar Composer globalmente
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# 4️⃣ Crear directorio de la app
+WORKDIR /var/www/html
 
+# 5️⃣ Copiar archivos de la app
+COPY ./backend/ ./
+
+# 6️⃣ Instalar dependencias PHP
 RUN composer install --no-dev --optimize-autoloader
 
-RUN php artisan key:generate --force
+# 7️⃣ Copiar archivo de entorno (opcional, Render usa variables)
+# COPY .env .env
+# NOTA: Si usas Render, puedes omitir este paso y definir env vars en la plataforma
 
+# 8️⃣ Dar permisos a storage y bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
+# 9️⃣ Exponer puerto
+EXPOSE 9000
+
+# 10️⃣ Comando de inicio
 CMD ["php-fpm"]
