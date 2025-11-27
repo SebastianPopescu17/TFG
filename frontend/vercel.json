@@ -1,9 +1,13 @@
 {
   "version": 2,
-  "routes": [
+  "builds": [
     {
-      "src": "/(.*)",
-      "dest": "Frontend/dist/frontend/browser/$1"
+      "src": "Frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist/frontend/browser" }
     }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "dist/frontend/browser/index.html" }
   ]
 }
