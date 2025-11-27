@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Api } from '../../../core/services/api.service';
 import { Empresa } from '../../../core/models/empresa';
 import { MatCardModule } from '@angular/material/card';
@@ -19,14 +19,13 @@ import { ConfirmarDialogComponent } from '../../confirmar-dialog/confirmar-dialo
   selector: 'app-watchlist',
   standalone: true,
   imports: [
-    CommonModule,
     MatCardModule,
     MatTableModule,
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
     MatProgressSpinnerModule
-  ],
+],
   templateUrl: './watchlist.component.html',
   styleUrls: ['./watchlist.component.css']
 })

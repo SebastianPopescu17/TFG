@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { Api } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/services/auth.service';
@@ -12,9 +12,8 @@ import { Alerta } from '../../../core/models/alerta';
   selector: 'app-alerta-form',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule
-  ],
+],
   templateUrl: './alerta-form.component.html',
   styleUrls: ['./alerta-form.component.css'],
 

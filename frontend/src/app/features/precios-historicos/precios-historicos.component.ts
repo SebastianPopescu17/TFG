@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,13 +13,12 @@ import { BaseChartDirective } from 'ng2-charts';
   selector: 'app-precios-historicos',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     MatSelectModule,
     MatFormFieldModule,
     MatInputModule,
-    BaseChartDirective,
-  ],
+    BaseChartDirective
+],
   templateUrl: './precios-historicos.component.html',
   styleUrls: ['./precios-historicos.component.css'],
 })

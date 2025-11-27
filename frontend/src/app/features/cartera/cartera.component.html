@@ -36,62 +36,60 @@
 <!-- GRID DE POSICIONES -->
 @if (!loading && detalle.length > 0) {
   <div class="empresas-grid">
-    <div *ngFor="let pos of detalle; trackBy: trackById" class="empresa-mini">
-      <!-- BORDE SVG ANIMADO -->
-      <svg class="border-svg" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-        <rect
-          x="0" y="0" width="300" height="200" rx="12"
-          stroke="url(#gradientStroke)"
-          stroke-width="3"
-          fill="transparent"
-          stroke-dasharray="960"
-          stroke-dashoffset="960">
-          <animate
-            attributeName="stroke-dashoffset"
-            values="960;0;960"
-            dur="5s"
-            repeatCount="indefinite"/>
-        </rect>
-        <defs>
-          <linearGradient id="gradientStroke" x1="0" y1="0" x2="300" y2="0">
-            <stop stop-color="#38bdf8"/>
-            <stop offset="1" stop-color="#22c55e"/>
-          </linearGradient>
-        </defs>
-      </svg>
-
-      <!-- HEADER EMPRESA -->
-      <div class="empresa-top">
-        <span class="ticker">{{ pos.ticker }}</span>
-        <span class="empresa-nombre">{{ pos.empresa }}</span>
-      </div>
-
-      <!-- INFORMACIÓN DE LA POSICIÓN -->
-      <div class="empresa-info">
-        <span>Cantidad: {{ pos.cantidad | number:'1.2-2' }} acciones</span>
-        <span>Precio compra: {{ pos.precio_medio | number:'1.2-2' }} €</span>
-        <span>Inversión: {{ pos.valor_invertido | number:'1.2-2' }} €</span>
-        <span>Precio actual: {{ pos.precio_actual | number:'1.2-2' }} €</span>
-        <span>Actual: {{ pos.valor_actual | number:'1.2-2' }} €</span>
-      </div>
-
-      <!-- RENTABILIDAD -->
-      <div class="empresa-rentabilidad" [ngClass]="pos.rentabilidad >= 0 ? 'positivo' : 'negativo'">
-        <span class="label">Rentabilidad: </span>
-        <span class="valor">{{ pos.rentabilidad | number:'1.2-2' }} € ({{ pos.rentabilidad_pct | number:'1.2-2' }}%)</span>
-      </div>
-
-      <!-- ACCIONES -->
-      <div class="empresa-acciones">
-        <button class="btn btn-primary"
-                (click)="abrirVenta(pos)"
-                [disabled]="pos.cantidad <= 0">
-          Vender
-        </button>
-      </div>
+    @for (pos of detalle; track trackById($index, pos)) {
+      <div class="empresa-mini">
+        <!-- BORDE SVG ANIMADO -->
+        <svg class="border-svg" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <rect
+            x="0" y="0" width="300" height="200" rx="12"
+            stroke="url(#gradientStroke)"
+            stroke-width="3"
+            fill="transparent"
+            stroke-dasharray="960"
+            stroke-dashoffset="960">
+            <animate
+              attributeName="stroke-dashoffset"
+              values="960;0;960"
+              dur="5s"
+              repeatCount="indefinite"/>
+            </rect>
+            <defs>
+              <linearGradient id="gradientStroke" x1="0" y1="0" x2="300" y2="0">
+                <stop stop-color="#38bdf8"/>
+                <stop offset="1" stop-color="#22c55e"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <!-- HEADER EMPRESA -->
+          <div class="empresa-top">
+            <span class="ticker">{{ pos.ticker }}</span>
+            <span class="empresa-nombre">{{ pos.empresa }}</span>
+          </div>
+          <!-- INFORMACIÓN DE LA POSICIÓN -->
+          <div class="empresa-info">
+            <span>Cantidad: {{ pos.cantidad | number:'1.2-2' }} acciones</span>
+            <span>Precio compra: {{ pos.precio_medio | number:'1.2-2' }} €</span>
+            <span>Inversión: {{ pos.valor_invertido | number:'1.2-2' }} €</span>
+            <span>Precio actual: {{ pos.precio_actual | number:'1.2-2' }} €</span>
+            <span>Actual: {{ pos.valor_actual | number:'1.2-2' }} €</span>
+          </div>
+          <!-- RENTABILIDAD -->
+          <div class="empresa-rentabilidad" [ngClass]="pos.rentabilidad >= 0 ? 'positivo' : 'negativo'">
+            <span class="label">Rentabilidad: </span>
+            <span class="valor">{{ pos.rentabilidad | number:'1.2-2' }} € ({{ pos.rentabilidad_pct | number:'1.2-2' }}%)</span>
+          </div>
+          <!-- ACCIONES -->
+          <div class="empresa-acciones">
+            <button class="btn btn-primary"
+              (click)="abrirVenta(pos)"
+              [disabled]="pos.cantidad <= 0">
+              Vender
+            </button>
+          </div>
+        </div>
+      }
     </div>
-  </div>
-} @else {
+  } @else {
 
-  <p class="empty"></p>
-}
+    <p class="empty"></p>
+  }
