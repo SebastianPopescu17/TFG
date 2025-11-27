@@ -1,8 +1,15 @@
 {
+  "version": 2,
   "builds": [
-    { "src": "Frontend/package.json", "use": "@vercel/cli" }
+    {
+      "src": "Frontend/package.json",
+      "use": "@vercel/cli"
+    }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "Frontend/dist/frontend/$1" }
+    {
+      "src": "/(.*)",
+      "dest": "Frontend/dist/frontend/$1"
+    }
   ]
 }
