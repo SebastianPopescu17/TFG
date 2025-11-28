@@ -1,11 +1,5 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "dist/frontend/browser/**",
-      "use": "@vercel/static"
-    }
-  ],
+  "version": 3,
   "routes": [
     {
       "src": "/(.*)",
