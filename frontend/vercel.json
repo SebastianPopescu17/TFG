@@ -2,16 +2,11 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
-      "use": "@vercel/node",
-      "config": { "zeroConfig": true }
-    },
-    {
-      "src": "dist/frontend/**",
-      "use": "@vercel/static"
+      "src": "angular.json",
+      "use": "@vercel/angular"
     }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "src": "/(.*)", "dest": "/" }
   ]
 }
