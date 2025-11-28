@@ -1,41 +1,37 @@
-# Dockerfile para Laravel + Render (Hobby Free)
+# Usa una imagen oficial de PHP con Apache
+FROM php:8.2-apache
 
-# 1️⃣ Imagen base con PHP y extensiones necesarias
-FROM php:8.2-fpm
-
-# 2️⃣ Instalar dependencias del sistema
+# Instala extensiones necesarias para Laravel
 RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    curl \
     libzip-dev \
-    libonig-dev \
-    libxml2-dev \
     zip \
-    && docker-php-ext-install pdo_mysql mbstring zip exif pcntl bcmath
+    unzip \
+    git \
+    && docker-php-ext-install pdo pdo_mysql zip
 
-# 3️⃣ Instalar Composer globalmente
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# Habilita mod_rewrite de Apache
+RUN a2enmod rewrite
 
-# 4️⃣ Crear directorio de la app
+# Copia todo el proyecto al contenedor
+COPY . /var/www/html
+
+# Establece el directorio de trabajo
 WORKDIR /var/www/html
 
-# 5️⃣ Copiar archivos de la app
-COPY ./backend/ ./
+# Instala Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 6️⃣ Instalar dependencias PHP
+# Instala dependencias de Laravel
 RUN composer install --no-dev --optimize-autoloader
 
-# 7️⃣ Copiar archivo de entorno (opcional, Render usa variables)
-# COPY .env .env
-# NOTA: Si usas Render, puedes omitir este paso y definir env vars en la plataforma
+# Copia archivo de configuración de Apache para Laravel (opcional)
+# Puedes crear un archivo 000-default.conf si necesitas
 
-# 8️⃣ Dar permisos a storage y bootstrap/cache
-RUN chown -R www-data:www-data storage bootstrap/cache \
-    && chmod -R 775 storage bootstrap/cache
+# Da permisos correctos a storage y bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache
 
-# 9️⃣ Exponer puerto
-EXPOSE 9000
+# Expone el puerto de Apache
+EXPOSE 8080
 
-# 10️⃣ Comando de inicio
-CMD ["php-fpm"]
+# Comando para iniciar Apache en primer plano
+CMD ["apache2-foreground"]
