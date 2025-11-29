@@ -15,7 +15,7 @@ export class ChartService {
         {
           data: rows.map((r) => r.valorNominal),
           label: 'Valor Nominal',
-          borderColor: '#1E3A8A', 
+          borderColor: '#1E3A8A',
           backgroundColor: '#1E3A8A20',
           tension: 0.2,
           fill: false,
@@ -125,7 +125,7 @@ export class ChartService {
         {
           data: percentileRows.map(r => r.p10),
           label: 'P10',
-          backgroundColor: '#EF4444',
+          backgroundColor: '#1e90ff',
         },
         {
           data: percentileRows.map(r => r.p25),

@@ -27,11 +27,6 @@ RUN chmod -R 775 storage bootstrap/cache
 # ENV APP_ENV=production
 # ENV APP_DEBUG=false
 
-# Limpiar caches de Laravel al iniciar (opcional pero recomendado)
-RUN php artisan config:clear \
-    && php artisan route:clear \
-    && php artisan cache:clear \
-    && php artisan view:clear
 
 EXPOSE 80
 CMD ["apache2-foreground"]

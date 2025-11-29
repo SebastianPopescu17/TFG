@@ -1,12 +1,33 @@
 mat-dialog-content {
   font-size: 15px;
-  color: #333;
+  color: blue;
   margin-bottom: 10px;
+
 }
 
 mat-dialog-actions {
   margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px; 
 }
+
+mat-dialog-actions button {
+  min-width: 100px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+mat-dialog-actions button:first-child {
+  background-color: #1976d2;
+  color: #fff;
+}
+
+mat-dialog-actions button:last-child {
+  background-color: #d32f2f;
+  color: #fff;
+}
+
 
 button {
   min-width: 100px;

@@ -49,8 +49,8 @@
 }
 
 .toggle-group button {
-  background: #1e293b;
-  color: #f1f5f9;
+  background: #e3e4e6;
+  color: #0b4176;
   border-radius: 8px;
   font-weight: 600;
   padding: 0.4rem 0.8rem;
@@ -59,7 +59,7 @@
 }
 
 .toggle-group button:hover {
-  background: #334155;
+  background: #a48af2;
   border-color: #3b82f6;
 }
 

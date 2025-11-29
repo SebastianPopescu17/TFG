@@ -1,8 +1,8 @@
 ::ng-deep .mat-dialog-container {
   border-radius: 12px;
   padding: 24px;
-  background: var(--panel-bg) !important;
-  color: var(--text-main) !important;
+  background: var(--panel-bg);
+  color: var(--text-main);
   box-shadow: 0 8px 24px rgba(0,0,0,0.4);
   font-family: 'Segoe UI', Roboto, sans-serif;
 }
@@ -10,7 +10,7 @@
 ::ng-deep .mat-dialog-title {
   font-size: 1.4rem;
   font-weight: 600;
-  color: var(--accent-blue) !important;
+  color: var(--accent-blue);
   margin-bottom: 16px;
   text-align: center;
   letter-spacing: 0.5px;
@@ -19,11 +19,11 @@
 ::ng-deep mat-dialog-content p {
   margin: 12px 0;
   font-size: 1rem;
-  color: var(--text-main) !important;
+  color: var( --panel-bg);
 }
 
 ::ng-deep mat-dialog-content strong {
-  color: #2563eb !important;
+  color: #2563eb;
   font-weight: 700;
 }
 
@@ -37,26 +37,37 @@
 }
 
 ::ng-deep .mat-label {
-  color: var(--accent-blue) !important;
+  color: var(--accent-blue);
 }
 
 ::ng-deep input[matInput] {
-  color: var(--text-main) !important;
+  color: var(--accent-blue) !important;
+  background-color: #f9fafb;
   font-weight: 500;
+}
+
+::ng-deep mat-form-field.full-width .mat-form-field-flex {
+  background-color: #f9fafb;
+  border-radius: 6px;
 }
 
 ::ng-deep mat-dialog-actions {
   margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
 }
 
 ::ng-deep button[mat-button] {
-  color: #3b82f6 !important;
+  color: #3b82f6;
   font-weight: 500;
+  border-radius: 6px;
+  padding: 6px 16px;
 }
 
 ::ng-deep button[mat-raised-button][color="warn"] {
   background: linear-gradient(90deg, #ef476f, #d62828);
-  color: #fff;
+  color: #ffffff;
   font-weight: 600;
   border-radius: 8px;
   padding: 6px 18px;

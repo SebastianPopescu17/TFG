@@ -7,7 +7,6 @@
   background: var(--panel-bg);
 }
 
-/* Cabecera más sobria */
 .card-header {
   padding: 1rem;
   text-align: center;
@@ -21,50 +20,66 @@
   letter-spacing: 0.5px;
 }
 
-/* Cuerpo */
 .card-body {
   padding: 1.5rem;
 }
 
-/* Controles */
 .controls {
   display: flex;
   gap: 1rem;
   align-items: center;
   margin-bottom: 1rem;
-  color: #1e90ff; /* azul eléctrico más suave */
+  color: #b91018;
 }
 
 mat-form-field {
   flex: 1;
 }
 
-/* Spinner */
 .spinner-border {
   color: #1e90ff;
 }
 
-/* Alertas */
 .alert-danger {
   background: rgba(244, 67, 54, 0.15);
   border: 1px solid #F44336;
-  color: #ff6f61; /* rojo más legible sobre fondo oscuro */
+  color: #ff6f61;
   padding: 0.75rem;
   border-radius: 6px;
   margin-top: 1rem;
 }
 
-/* Mensajes */
 .text-center {
   margin-top: 1rem;
   font-style: italic;
-  color: #b0b0b0; /* gris claro para contraste */
+  color: #b0b0b0;
 }
 
-/* Gráfico */
 canvas {
   width: 100% !important;
   height: 400px !important;
   border-radius: 8px;
   padding: 0.5rem;
+}
+
+.mat-select-value {
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.mat-option {
+  color: var(--text-main);
+  background-color: var(--panel-bg);
+}
+
+.mat-select-panel {
+  background-color: var(--panel-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.mat-option:hover,
+.mat-option.mat-selected {
+  background-color: rgba(30, 144, 255, 0.15);
+  color: var(--text-main);
 }

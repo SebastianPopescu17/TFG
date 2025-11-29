@@ -53,7 +53,7 @@
 
           <mat-card-subtitle class="section-title">Eventos Personalizados</mat-card-subtitle>
           @if (!form.get('isMonteCarlo')?.value) {
-            <mat-form-field appearance="outline" class="full-width">
+            <mat-form-field appearance="outline" class="rentabilidades-field">
               <mat-label>Rentabilidades anuales específicas (%, separadas por coma)</mat-label>
               <textarea matInput rows="1" placeholder="Ej: 8, -5, 12..." (blur)="onRentabilidadesBlur($event)" formControlName="rentabilidadesAnuales"></textarea>
             </mat-form-field>
@@ -96,9 +96,6 @@
   <div class="resultados">
     @if (result) {
 
-      <!-- =======================
-           RESULTADO SIMPLE
-      ======================== -->
       @if (result.type === 'simple') {
         <mat-tab-group>
 
@@ -106,7 +103,7 @@
             <mat-card class="resultado">
               <mat-card-content>
 
-                <!-- Bloque corregido -->
+
                 @let agotamiento = result.moneyRunsOutYear;
                 @if (agotamiento) {
                   <div class="alert-card warning">
@@ -115,7 +112,7 @@
                   </div>
                 }
 
-                <!-- Bloque corregido -->
+
                 @let objetivo = result.objetivoAlcanzado;
                 @if (objetivo) {
                   <div class="alert-card success">
@@ -188,10 +185,6 @@
 
         </mat-tab-group>
       }
-
-      <!-- =======================
-           RESULTADO MONTE CARLO
-      ======================== -->
       @if (result.type === 'monte_carlo') {
         <mat-tab-group>
           <mat-tab label="Resumen de Probabilidad">

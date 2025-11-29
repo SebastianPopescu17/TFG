@@ -1,11 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
-
 html, body, app-root {
   height: 100%;
   margin: 0;
 }
 
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 /* Theme variables */
 :root {
@@ -67,7 +68,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-weight: 600;
 }
 
-
 .panel-dark {
   background: var(--panel-bg);
   color: var(--text-main);
@@ -84,13 +84,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   box-shadow: 0 6px 18px rgba(2,6,23,0.06);
 }
 
-
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
 }
-
 
 @media (max-width: 768px) {
   :root {
@@ -99,30 +97,31 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   body { font-size: 14px; }
 }
 
-
-input, textarea, select, button, .mat-mdc-input-element {
-  color: var(--text-red) !important;
+/* Inputs y campos */
+.panel input,
+.panel textarea,
+.panel select,
+.panel button,
+.panel .mat-mdc-input-element {
+  color: var(--text-red);
 }
-
 
 .mat-mdc-text-field-wrapper {
   background-color: rgba(255,255,255,0.02);
   border-radius: 8px;
 }
 
-
 .panel-light input,
 .panel-light textarea,
 .panel-light select,
 .panel-light .mat-mdc-input-element {
-  color: var(--text-dark) !important;
+  color: var(--text-dark);
 }
 
-
-input::placeholder, textarea::placeholder {
-  color: rgba(241,245,249,0.6) !important;
+input::placeholder,
+textarea::placeholder {
+  color: rgba(241,245,249,0.6);
 }
-
 
 .mat-mdc-text-field .mat-mdc-input-element,
 .mat-mdc-text-field input,
@@ -131,11 +130,15 @@ textarea.mat-input-element,
 input,
 textarea,
 select {
-  color: var(--text-main) !important;
+  color: var(--text-main);
 }
 
-
-.panel, .panel-dark, .saldo-dashboard, .card, .panel-resumen, .empresa-mini {
+.panel,
+.panel-dark,
+.saldo-dashboard,
+.card,
+.panel-resumen,
+.empresa-mini {
   --input-bg: rgba(255,255,255,0.02);
 }
 
@@ -144,31 +147,39 @@ select {
 .saldo-dashboard .mat-mdc-text-field-wrapper,
 .card .mat-mdc-text-field-wrapper,
 .empresa-mini .mat-mdc-text-field-wrapper {
-  background-color: var(--input-bg) !important;
+  background-color: var(--input-bg);
   border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.04);
 }
-
 
 .mat-mdc-text-field-wrapper.mat-mdc-text-field-focused {
-  box-shadow: 0 0 0 4px rgba(59,130,246,0.12) !important;
-  border-color: rgba(59,130,246,0.8) !important;
+  box-shadow: 0 0 0 4px rgba(59,130,246,0.12);
+  border-color: rgba(59,130,246,0.8);
 }
 
-
-input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: rgba(241,245,249,0.6) !important; }
-input:-moz-placeholder, textarea:-moz-placeholder { color: rgba(241,245,249,0.6) !important; }
-input::-moz-placeholder, textarea::-moz-placeholder { color: rgba(241,245,249,0.6) !important; }
-input:-ms-input-placeholder, textarea:-ms-input-placeholder { color: rgba(241,245,249,0.6) !important; }
-
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: rgba(241,245,249,0.6);
+}
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+  color: rgba(241,245,249,0.6);
+}
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+  color: rgba(241,245,249,0.6);
+}
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  color: rgba(241,245,249,0.6);
+}
 
 .panel-light input,
 .panel-light textarea,
 .panel-light select,
 .panel-light .mat-mdc-input-element {
-  color: var(--text-dark) !important;
+  color: var(--text-dark);
 }
-
 
 .saldo-dashboard input,
 .saldo-dashboard textarea,
@@ -176,11 +187,11 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder { color: rgba(241,24
 .card input,
 .card textarea,
 .card .mat-mdc-input-element {
-  color: var(--text-main) !important;
+  color: var(--text-main);
   background-color: var(--input-bg);
 }
 
-
+/* Snackbar */
 .alerta-snackbar {
   background: linear-gradient(90deg, var(--accent-yellow), #eab308);
   color: #111;
@@ -192,6 +203,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder { color: rgba(241,24
   text-align: center;
 }
 
+/* Animaciones */
 @keyframes gradientFlow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -207,6 +219,3 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder { color: rgba(241,24
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
-
-
