@@ -2,8 +2,20 @@
   "version": 2,
   "routes": [
     {
+      "src": "/assets/(.*)",
+      "dest": "/dist/frontend/assets/$1"
+    },
+    {
+      "src": "/(.*\\.js)",
+      "dest": "/dist/frontend/$1"
+    },
+    {
+      "src": "/(.*\\.css)",
+      "dest": "/dist/frontend/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/dist/frontend/index.html"
     }
   ]
 }
