@@ -1,6 +1,6 @@
 [build]
   base = "frontend"
-  command = "cd frontend && npm install --legacy-peer-deps && ng build --configuration production"
+  command = "npm install && ng build --configuration production"
   publish = "frontend/dist/frontend/browser"
 
 [[redirects]]
