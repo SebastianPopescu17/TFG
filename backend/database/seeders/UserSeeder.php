@@ -8,21 +8,25 @@ use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
-    public function run(): void
-    {
-        User::create([
+   public function run(): void
+{
+    User::firstOrCreate(
+        ['email' => 'demo@investrack.local'],
+        [
             'name' => 'Usuario Demo',
-            'email' => 'demo@investrack.local',
             'password' => Hash::make('password')
-        ]);
+        ]
+    );
 
-        // Si quieres más usuarios de prueba:
-        for ($i = 1; $i <= 5; $i++) {
-            User::create([
+    for ($i = 1; $i <= 2; $i++) {
+        User::firstOrCreate(
+            ['email' => "usuario{$i}@investrack.local"],
+            [
                 'name' => "Usuario {$i}",
-                'email' => "usuario{$i}@investrack.local",
                 'password' => Hash::make('123456')
-            ]);
-        }
+            ]
+        );
     }
+}
+
 }
