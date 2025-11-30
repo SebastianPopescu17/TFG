@@ -1,8 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "frontend/dist/frontend/**", "use": "@vercel/static" }
-  ],
   "routes": [
     { "src": "/assets/(.*)", "dest": "frontend/dist/frontend/assets/$1" },
     { "src": "/(.*\\.js)", "dest": "frontend/dist/frontend/$1" },
