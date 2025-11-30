@@ -5,7 +5,7 @@ import { Empresa } from '../models/empresa';
 import { Alerta } from '../models/alerta';
 import { PrecioHistorico } from '../models/precio-historico';
 import { IndicadorFinanciero } from '../models/indicador-financiero';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 
 @Injectable({
