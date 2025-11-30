@@ -56,7 +56,6 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  // -------- MÉTODOS ADICIONALES PARA COMPATIBILIDAD --------
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
