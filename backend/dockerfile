@@ -1,32 +1,32 @@
 FROM php:8.2-apache
 
-# Instalar extensiones necesarias
 RUN apt-get update && apt-get install -y \
-    libzip-dev zip unzip git \
-    && docker-php-ext-install pdo pdo_mysql zip
+    unzip \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    curl \
+    git
 
-# Activar mod_rewrite de Apache
+RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
+
 RUN a2enmod rewrite
 
-# Cambiar DocumentRoot a /public
-RUN sed -i 's#/var/www/html#/var/www/html/public#g' /etc/apache2/sites-available/000-default.conf
+# Copiar config limpia de apache
+COPY apache-laravel.conf /etc/apache2/conf-available/laravel.conf
+RUN a2enconf laravel
 
-# Copiar archivos del proyecto
-COPY . /var/www/html
 WORKDIR /var/www/html
 
-# Instalar Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+COPY . .
 
-# Permisos correctos para Laravel
-RUN chown -R www-data:www-data storage bootstrap/cache
 RUN chmod -R 775 storage bootstrap/cache
+RUN chmod +x /var/www/html/start.sh
 
-# Variables de entorno de Laravel (si quieres puedes precargar .env)
-# ENV APP_ENV=production
-# ENV APP_DEBUG=false
-
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN composer install --no-dev --optimize-autoloader
 
 EXPOSE 80
-CMD ["apache2-foreground"]
+
+CMD ["/bin/bash", "/var/www/html/start.sh"]
