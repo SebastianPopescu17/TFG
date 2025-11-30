@@ -1,4 +1,4 @@
 export const environmentProd = {
   production: true,
-  apiUrl: 'http://localhost:8000/api'
+  apiUrl: 'https://fingrado-backend-production-e99b.up.railway.app/'
 };
