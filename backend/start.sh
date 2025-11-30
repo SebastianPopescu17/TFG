@@ -9,4 +9,5 @@ php artisan db:seed --force
 php artisan simular:precios --loop --interval=5 &
 
 # Mantener Apache en foreground
-exec apache2-foreground
+exec php artisan serve --host=0.0.0.0 --port=$PORT
+
