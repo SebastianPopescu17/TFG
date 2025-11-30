@@ -1,21 +1,12 @@
 {
   "version": 2,
+  "builds": [
+    { "src": "frontend/dist/frontend/**", "use": "@vercel/static" }
+  ],
   "routes": [
-    {
-      "src": "/assets/(.*)",
-      "dest": "/dist/frontend/assets/$1"
-    },
-    {
-      "src": "/(.*\\.js)",
-      "dest": "/dist/frontend/$1"
-    },
-    {
-      "src": "/(.*\\.css)",
-      "dest": "/dist/frontend/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/dist/frontend/index.html"
-    }
+    { "src": "/assets/(.*)", "dest": "frontend/dist/frontend/assets/$1" },
+    { "src": "/(.*\\.js)", "dest": "frontend/dist/frontend/$1" },
+    { "src": "/(.*\\.css)", "dest": "frontend/dist/frontend/$1" },
+    { "src": "/(.*)", "dest": "frontend/dist/frontend/index.html" }
   ]
 }
