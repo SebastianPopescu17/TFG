@@ -8,7 +8,7 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-/* Theme variables */
+
 :root {
   --bg-gradient: linear-gradient(135deg, #0f172a, #1e293b, #334155);
   --panel-bg: #1e293b;
@@ -22,7 +22,7 @@ body {
   --text-red: #6b1a08;
 }
 
-/* Global utilities */
+
 .app-bg {
   background: var(--bg-gradient);
   color: var(--text-main);
@@ -100,7 +100,6 @@ body {
 /* Inputs y campos */
 .panel input,
 .panel textarea,
-.panel select,
 .panel button,
 .panel .mat-mdc-input-element {
   color: var(--text-red);

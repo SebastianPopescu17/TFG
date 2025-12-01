@@ -6,7 +6,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://studio-3053804889-a5dfb.web.app'],
+    'allowed_origins' => ['https://studio-3053804889-a5dfb.web.app', 'http://localhost:4200'],
 
     'allowed_headers' => ['*'],
 

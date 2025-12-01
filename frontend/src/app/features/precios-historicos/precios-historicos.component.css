@@ -62,26 +62,45 @@ canvas {
   padding: 0.5rem;
 }
 
+/* Valor seleccionado dentro del mat-select */
 .mat-select-value {
-  color: var(--text-main);
+  color: var(--text-main) !important;
   font-weight: 500;
 }
 
-.mat-option {
-  color: var(--text-main);
-  background-color: var(--panel-bg);
-}
 
 .mat-select-panel {
-  background-color: var(--panel-bg);
+  background-color: var(--panel-bg) !important;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  padding: 0.25rem 0;
 }
 
-.mat-option:hover,
+
+.mat-option {
+  color: var(--text-main) !important;
+  background-color: var(--panel-bg) !important;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+
+.mat-option:hover {
+  background-color: rgba(30, 144, 255, 0.2) !important;
+  color: #1e90ff !important;
+}
+
 .mat-option.mat-selected {
-  background-color: rgba(30, 144, 255, 0.15);
-  color: var(--text-main);
+  background-color: rgba(30, 144, 255, 0.25) !important;
+  color: #1e90ff !important;
+  font-weight: 600;
+}
+
+
+mat-form-field .mat-form-field-label {
+  color: var(--text-main) !important;
+  font-weight: 500;
 }
 
 

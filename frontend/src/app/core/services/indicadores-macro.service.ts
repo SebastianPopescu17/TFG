@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IndicadorMacro } from '../models/indicadores';
-import { Kpi } from '../models/indicadores';
+
 import { environment } from '../../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class IndicadoresMacroService {
   private baseUrl = environment.apiUrl;
+;
+;
 
   constructor(private http: HttpClient) {}
 
@@ -19,8 +21,9 @@ getIndicadoresDisponibles(): Observable<{ codigo: string; nombre: string }[]> {
 }
 
 getIndicadores(params: { pais: string; desde: number }): Observable<IndicadorMacro[]> {
-  return this.http.get<IndicadorMacro[]>(`/indicadores`, { params });
+  return this.http.get<IndicadorMacro[]>(`${this.baseUrl}/indicadores`, { params });
 }
+
 
 
 

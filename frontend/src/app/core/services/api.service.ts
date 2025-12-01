@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class Api {
-  private baseUrl = environment.apiUrl;
+   private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
