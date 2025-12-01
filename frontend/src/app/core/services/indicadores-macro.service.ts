@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { IndicadorMacro } from '../models/indicadores';
 import { Kpi } from '../models/indicadores';
 import { environment } from '../../../environments/environment';
-
 @Injectable({ providedIn: 'root' })
 export class IndicadoresMacroService {
   private baseUrl = environment.apiUrl;
@@ -12,26 +11,20 @@ export class IndicadoresMacroService {
   constructor(private http: HttpClient) {}
 
   getPaises(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.baseUrl}/paises`);
+    return this.http.get<string[]>(`${this.baseUrl}/indicadores/paises`);
   }
 
   getIndicadoresDisponibles(): Observable<{ codigo: string; nombre: string }[]> {
-    return this.http.get<{ codigo: string; nombre: string }[]>(`${this.baseUrl}/disponibles`);
+    return this.http.get<{ codigo: string; nombre: string }[]>(
+      `${this.baseUrl}/indicadores/disponibles`
+    );
   }
 
-  getIndicadores(params: { pais?: string; desde?: number; hasta?: number }): Observable<IndicadorMacro[]> {
-    return this.http.get<IndicadorMacro[]>(`${this.baseUrl}`, { params: params as any });
+  getIndicadores(params: any): Observable<IndicadorMacro[]> {
+    return this.http.get<IndicadorMacro[]>(`${this.baseUrl}/indicadores`, {
+      params,
+    });
   }
 
-  getSeries(params: { paises?: string; codigos?: string; desde?: number; hasta?: number }): Observable<Record<string, Record<string, IndicadorMacro[]>>> {
-    return this.http.get<Record<string, Record<string, IndicadorMacro[]>>>(`${this.baseUrl}/series`, { params: params as any });
-  }
-
-  getKpi(params: { pais: string; codigos: string }): Observable<Record<string, Kpi>> {
-    return this.http.get<Record<string, Kpi>>(`${this.baseUrl}/kpi`, { params: params as any });
-  }
-
-  getCompare(params: { codigo: string; anio: number; paises?: string }): Observable<IndicadorMacro[]> {
-    return this.http.get<IndicadorMacro[]>(`${this.baseUrl}/compare`, { params: params as any });
-  }
 }
+
