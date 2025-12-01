@@ -140,7 +140,7 @@
     transform: none !important;
   }
 
-  
+
   .flip-front,
   .flip-back {
     position: relative;
@@ -211,40 +211,3 @@
 }
 
 
-@media (min-width: 1025px) {
-  .dashboard-container {
-    padding: 2rem 1rem;
-    gap: 2rem;
-  }
-
-  .title {
-    font-size: 2.8rem;
-  }
-
-  .subtitle {
-    font-size: 1.2rem;
-  }
-
-  .cards-grid {
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 2rem;
-  }
-
-  .flip-inner {
-    height: 280px;
-  }
-
-  .card-icon {
-    font-size: 80px;
-    height: 100px;
-    width: 100px;
-  }
-
-  .card-title {
-    font-size: 1.4rem;
-  }
-
-  .card-description {
-    font-size: 1rem;
-  }
-}

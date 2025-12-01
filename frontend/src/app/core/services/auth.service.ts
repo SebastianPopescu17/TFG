@@ -15,12 +15,8 @@ export class AuthService {
   currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {
-    
-    const savedUser = localStorage.getItem(this.userKey);
-    if (savedUser) {
-      this.currentUserSubject.next(JSON.parse(savedUser));
-    }
-  }
+     this.currentUserSubject.next(null);
+}
 
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/login`, { email, password }).pipe(
