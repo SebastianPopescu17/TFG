@@ -123,43 +123,53 @@
 
 
 @media (max-width: 600px) {
-  .dashboard-container {
-    padding: 1rem;
-    gap: 1.2rem;
-  }
-
-  .title {
-    font-size: 1.8rem;
-    letter-spacing: 0.5px;
-  }
-
-  .subtitle {
-    font-size: 0.9rem;
-  }
 
   .cards-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.2rem;
+    padding: 0 0.5rem;
+  }
+
+  .flip-card {
+    width: 100%;
   }
 
   .flip-inner {
-    height: 200px;
+    height: auto !important;
+    min-height: 260px;
+    transform: none !important;
+  }
+
+  /* Ambas caras usan flujo normal */
+  .flip-front,
+  .flip-back {
+    position: relative;
+    inset: unset;
+    transform: none !important;
+    height: auto;
+    overflow: hidden;
+    backface-visibility: visible;
   }
 
   .card-icon {
-    font-size: 48px;
+    font-size: 64px;
     height: 80px;
     width: 80px;
+    margin-bottom: 0.8rem;
   }
 
   .card-title {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
   }
 
   .card-description {
-    font-size: 0.85rem;
+    font-size: 1rem;
+    padding: 0 0.5rem;
   }
 }
+
+
+
 
 
 @media (min-width: 601px) and (max-width: 1024px) {

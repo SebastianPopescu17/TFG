@@ -24,11 +24,11 @@
 
 
 .cards-container {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: 16px;
-  justify-content: flex-start;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
+
 
 .product-wrapper {
   position: relative;
@@ -158,9 +158,9 @@
   to { opacity: 1; }
 }
 
-/* 📱 Responsive ajustes */
+
 @media (max-width: 768px) {
-  .cards-container {
+ .cards-container {
     grid-template-columns: 1fr;
   }
 

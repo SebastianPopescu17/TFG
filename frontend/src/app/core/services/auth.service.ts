@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap, BehaviorSubject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +15,7 @@ export class AuthService {
   currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {
+    
     const savedUser = localStorage.getItem(this.userKey);
     if (savedUser) {
       this.currentUserSubject.next(JSON.parse(savedUser));
@@ -52,17 +52,20 @@ export class AuthService {
     return !!localStorage.getItem(this.tokenKey);
   }
 
-  getCurrentUser() {
-    return this.currentUserSubject.value;
-  }
-
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
 
-  getCurrentUserId(): number | null {
-    return this.currentUserSubject.value ? this.currentUserSubject.value.id : null;
+  getCurrentUser() {
+    return this.currentUserSubject.value;
   }
+
+
+  getCurrentUserId(): number | null {
+    const user = this.currentUserSubject.value;
+    return user ? user.id : null;
+  }
+
 
   resetPassword(data: { usuario: string; password: string; password_confirmation: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/reset-password`, data);

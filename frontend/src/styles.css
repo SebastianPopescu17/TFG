@@ -1,6 +1,7 @@
 html, body, app-root {
   height: 100%;
   margin: 0;
+  width: 100%;
 }
 
 body {
@@ -90,12 +91,7 @@ body {
   padding: 1rem;
 }
 
-@media (max-width: 768px) {
-  :root {
-    --card-radius: 10px;
-  }
-  body { font-size: 14px; }
-}
+
 
 /* Inputs y campos */
 .panel input,
