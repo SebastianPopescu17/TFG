@@ -20,7 +20,7 @@ export const routes: Routes = [
       { path: 'empresas/:ticker', loadComponent: () => import('./features/empresas/empresa-detail/empresa-detail.component').then(m => m.EmpresaDetailComponent) },
       { path: 'alertas', loadComponent: () => import('./features/alertas/alertas-list/alertas-list.component').then(m => m.AlertasListComponent) },
       { path: 'alertas/nueva', loadComponent: () => import('./features/alertas/alerta-form/alerta-form.component').then(m => m.AlertaFormComponent) },
-      { path: 'watchlist', loadComponent: () => import('./features/watchlist/watchlist/watchlist.component').then(m => m.WatchlistComponent) },
+      { path: 'watchlist', loadComponent: () => import('./features/watchlist/watchlist.component').then(m => m.WatchlistComponent) },
       { path: 'cartera', loadComponent: () => import('./features/cartera/cartera.component').then(m => m.CarteraComponent) },
       { path: 'cartera/operaciones', loadComponent: () => import('./features/operaciones/operaciones.component').then(m => m.OperacionesComponent) },
       { path: 'saldo', loadComponent: () => import('./features/saldo/saldo.component').then(m => m.SaldoComponent) },

@@ -53,7 +53,7 @@ export class DashboardComponent {
       title: 'Histórico',
       description: 'Visualiza tus posiciones pasadas de las empresas.',
       href: '/historico',
-      icon: 'account_balance_wallet',
+      icon: 'query_stats',
     },
     {
       title: 'Saldo',

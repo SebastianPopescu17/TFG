@@ -18,9 +18,10 @@ getIndicadoresDisponibles(): Observable<{ codigo: string; nombre: string }[]> {
   return this.http.get<{ codigo: string; nombre: string }[]>(`${this.baseUrl}/indicadores/disponibles`);
 }
 
-getIndicadores(params: any) {
-  return this.http.get(`${this.baseUrl}/indicadores`, { params });
+getIndicadores(params: { pais: string; desde: number }): Observable<IndicadorMacro[]> {
+  return this.http.get<IndicadorMacro[]>(`/indicadores`, { params });
 }
+
 
 
 }
