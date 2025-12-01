@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap, BehaviorSubject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,8 +16,11 @@ export class AuthService {
   currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {
-     this.currentUserSubject.next(null);
-}
+    const savedUser = localStorage.getItem(this.userKey);
+    if (savedUser) {
+      this.currentUserSubject.next(JSON.parse(savedUser));
+    }
+  }
 
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/login`, { email, password }).pipe(
@@ -24,12 +28,11 @@ export class AuthService {
     );
   }
 
-  register(data: { name: string; email: string; password: string; password_confirmation: string }): Observable<any> {
-  return this.http.post(`${this.baseUrl}/register`, data).pipe(
-    tap((res: any) => this.setSession(res))
-  );
-}
-
+  register(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/register`, data).pipe(
+      tap((res: any) => this.setSession(res))
+    );
+  }
 
   private setSession(res: any) {
     if (res.token) {
@@ -49,20 +52,17 @@ export class AuthService {
     return !!localStorage.getItem(this.tokenKey);
   }
 
-  getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
-  }
-
   getCurrentUser() {
     return this.currentUserSubject.value;
   }
 
-
-  getCurrentUserId(): number | null {
-    const user = this.currentUserSubject.value;
-    return user ? user.id : null;
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
   }
 
+  getCurrentUserId(): number | null {
+    return this.currentUserSubject.value ? this.currentUserSubject.value.id : null;
+  }
 
   resetPassword(data: { usuario: string; password: string; password_confirmation: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/reset-password`, data);
