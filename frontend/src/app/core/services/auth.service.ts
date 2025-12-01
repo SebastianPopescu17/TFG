@@ -24,11 +24,12 @@ export class AuthService {
     );
   }
 
-  register(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/register`, data).pipe(
-      tap((res: any) => this.setSession(res))
-    );
-  }
+  register(data: { name: string; email: string; password: string; password_confirmation: string }): Observable<any> {
+  return this.http.post(`${this.baseUrl}/register`, data).pipe(
+    tap((res: any) => this.setSession(res))
+  );
+}
+
 
   private setSession(res: any) {
     if (res.token) {

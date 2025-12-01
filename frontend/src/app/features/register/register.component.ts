@@ -78,14 +78,16 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.form.valid) {
-      this.auth.register(this.form.value).subscribe({
-        next: () => this.router.navigate(['/dashboard']),
-        error: (err) => {
-          console.log('Error Laravel:', err);
-          this.error = err.error?.message || 'Datos inválidos';
-        },
-      });
-    }
+  if (this.form.valid) {
+    const { name, email, password, password_confirmation } = this.form.value;
+    this.auth.register({ name, email, password, password_confirmation }).subscribe({
+      next: () => this.router.navigate(['/dashboard']),
+      error: (err) => {
+        console.log('Error Laravel:', err);
+        this.error = err.error?.message || 'Datos inválidos';
+      },
+    });
   }
+}
+
 }
