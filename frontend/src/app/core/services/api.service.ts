@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class Api {
-   private baseUrl = environment.apiUrl;
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -59,31 +59,28 @@ export class Api {
     );
   }
 
-
   // --- PRECIOS HISTÓRICOS ---
-getPreciosHistoricos(
-  empresaId: number,
-  params?: { desde?: string; hasta?: string }
-): Observable<PrecioHistorico[]> {
-  return this.http.get<PrecioHistorico[]>(
-    `${this.baseUrl}/empresas/${empresaId}/precios-historicos`,
-    { params }
-  );
-}
-
-
+  getPreciosHistoricos(
+    empresaId: number,
+    params?: { desde?: string; hasta?: string }
+  ): Observable<PrecioHistorico[]> {
+    return this.http.get<PrecioHistorico[]>(
+      `${this.baseUrl}/empresas/${empresaId}/precios-historicos`,
+      { params }
+    );
+  }
 
   // --- WATCHLIST ---
-  getWatchlist(userId: number): Observable<Empresa[]> {
-    return this.http.get<Empresa[]>(`${this.baseUrl}/users/${userId}/watchlist`);
+  getWatchlist(): Observable<Empresa[]> {
+    return this.http.get<Empresa[]>(`${this.baseUrl}/watchlist`);
   }
 
-  addToWatchlist(userId: number, ticker: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/users/${userId}/watchlist`, { ticker });
+  addToWatchlist(ticker: string) {
+    return this.http.post(`${this.baseUrl}/watchlist`, { ticker });
   }
 
-  removeFromWatchlist(userId: number, empresa: number | string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/users/${userId}/watchlist/${empresa}`);
+  removeFromWatchlist(empresaIdOrTicker: number | string) {
+    return this.http.delete(`${this.baseUrl}/watchlist/${empresaIdOrTicker}`);
   }
 
   // --- ALERTAS ---

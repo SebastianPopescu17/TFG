@@ -110,11 +110,11 @@ Route::middleware('auth:sanctum')->group(function () {
     | Watchlist
     |--------------------------------------------------------------------------
     */
-    Route::prefix('users/{id}/watchlist')->group(function () {
-        Route::get('/', [WatchlistController::class, 'index']);
-        Route::post('/', [WatchlistController::class, 'store']);
-        Route::delete('/{empresa}', [WatchlistController::class, 'destroy']);
-    });
+   Route::prefix('watchlist')->group(function () {
+    Route::get('/', [WatchlistController::class, 'index']);
+    Route::post('/', [WatchlistController::class, 'store']);
+    Route::delete('/{empresa}', [WatchlistController::class, 'destroy']);
+});
 
     /*
     |--------------------------------------------------------------------------

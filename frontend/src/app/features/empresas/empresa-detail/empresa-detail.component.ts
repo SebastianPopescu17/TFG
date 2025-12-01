@@ -196,20 +196,35 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
     this.sub?.unsubscribe();
   }
 
-  agregarAWathlist(): void {
-    if (!this.userId || !this.empresa) return;
+ agregarAWathlist(): void {
+  if (!this.userId || !this.empresa) return;
 
-    this.dialog
-      .open(ConfirmarDialogComponent, {
+
+  this.api.getWatchlist().subscribe({
+    next: (empresas: Empresa[]) => {
+      const yaExiste = empresas.some(e => e.ticker === this.empresa!.ticker);
+
+      if (yaExiste) {
+        this.dialog.open(MensajeDialogComponent, {
+          width: '400px',
+          data: {
+            titulo: 'Aviso',
+            mensaje: `${this.empresa?.nombre} ya está en tu watchlist ⚠️`,
+            tipo: 'info',
+          },
+        });
+        return;
+      }
+
+
+      this.dialog.open(ConfirmarDialogComponent, {
         data: {
           title: 'Confirmar acción',
           message: `¿Seguro que quieres añadir ${this.empresa?.nombre} a tu watchlist?`,
         },
-      })
-      .afterClosed()
-      .subscribe((result) => {
+      }).afterClosed().subscribe((result) => {
         if (result) {
-          this.api.addToWatchlist(this.userId!, this.empresa!.ticker).subscribe({
+          this.api.addToWatchlist(this.empresa!.ticker).subscribe({
             next: () => {
               this.dialog.open(MensajeDialogComponent, {
                 width: '400px',
@@ -220,16 +235,44 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
                 },
               });
             },
-            error: () => {
-              this.dialog.open(MensajeDialogComponent, {
-                width: '400px',
-                data: { titulo: 'Error', mensaje: 'Error al añadir la empresa ❌', tipo: 'error' },
-              });
+            error: (err) => {
+              if (err.status === 409) {
+                this.dialog.open(MensajeDialogComponent, {
+                  width: '400px',
+                  data: {
+                    titulo: 'Aviso',
+                    mensaje: `${this.empresa?.nombre} ya estaba en tu watchlist ⚠️`,
+                    tipo: 'info',
+                  },
+                });
+              } else {
+                this.dialog.open(MensajeDialogComponent, {
+                  width: '400px',
+                  data: {
+                    titulo: 'Error',
+                    mensaje: 'Error al añadir la empresa ❌',
+                    tipo: 'error',
+                  },
+                });
+              }
             },
           });
         }
       });
-  }
+    },
+    error: () => {
+      this.dialog.open(MensajeDialogComponent, {
+        width: '400px',
+        data: {
+          titulo: 'Error',
+          mensaje: 'No se pudo comprobar la watchlist ❌',
+          tipo: 'error',
+        },
+      });
+    }
+  });
+}
+
 
   abrirDialogoAlerta(): void {
     if (!this.userId || !this.empresa) return;

@@ -68,7 +68,7 @@ export class WatchlistComponent implements OnInit, OnDestroy {
   cargarWatchlist(): void {
     if (!this.userId) return;
     this.loading = true;
-    this.api.getWatchlist(this.userId).subscribe({
+    this.api.getWatchlist().subscribe({
       next: (empresas: Empresa[]) => {
         this.watchlist = empresas;
         this.loading = false;
@@ -90,7 +90,7 @@ export class WatchlistComponent implements OnInit, OnDestroy {
       }
     }).afterClosed().subscribe(result => {
       if (result) {
-        this.api.removeFromWatchlist(this.userId!, empresa.id).subscribe({
+        this.api.removeFromWatchlist(empresa.id).subscribe({
           next: () => {
             this.watchlist = this.watchlist.filter(e => e.id !== empresa.id);
           },

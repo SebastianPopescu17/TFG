@@ -6,14 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Watchlist;
 use App\Models\User;
 use App\Models\Empresa;
+use Illuminate\Support\Facades\Auth;
 
 class WatchlistController extends Controller
 {
-    public function index($id)
+    public function index()
     {
-        $user = User::findOrFail($id);
+        $user = Auth::user();
 
-        // Devuelve directamente las empresas favoritas
         $empresas = Empresa::whereIn('id', function ($query) use ($user) {
             $query->select('empresa_id')
                   ->from('watchlists')
@@ -23,25 +23,37 @@ class WatchlistController extends Controller
         return response()->json($empresas);
     }
 
-    public function store(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-        $empresa = Empresa::where('ticker', $request->ticker)->firstOrFail();
+    public function store(Request $request)
+{
+    $user = Auth::user();
+    $empresa = Empresa::where('ticker', $request->ticker)->firstOrFail();
 
-        Watchlist::firstOrCreate([
-            'user_id'    => $user->id,
-            'empresa_id' => $empresa->id
-        ]);
+    $existe = Watchlist::where('user_id', $user->id)
+                       ->where('empresa_id', $empresa->id)
+                       ->exists();
 
+    if ($existe) {
         return response()->json([
-            'message' => 'Empresa añadida a la watchlist',
+            'message' => 'La empresa ya está en tu watchlist',
             'empresa' => $empresa
-        ]);
+        ], 409); 
     }
 
-    public function destroy($id, $empresa)
+    Watchlist::create([
+        'user_id'    => $user->id,
+        'empresa_id' => $empresa->id
+    ]);
+
+    return response()->json([
+        'message' => 'Empresa añadida a la watchlist',
+        'empresa' => $empresa
+    ]);
+}
+
+
+    public function destroy($empresa)
     {
-        $user = User::findOrFail($id);
+        $user = Auth::user();
 
         if (is_numeric($empresa)) {
             Watchlist::where('user_id', $user->id)
@@ -49,6 +61,7 @@ class WatchlistController extends Controller
                 ->delete();
         } else {
             $empresaModel = Empresa::where('ticker', $empresa)->firstOrFail();
+
             Watchlist::where('user_id', $user->id)
                 ->where('empresa_id', $empresaModel->id)
                 ->delete();
@@ -57,3 +70,4 @@ class WatchlistController extends Controller
         return response()->json(['message' => 'Empresa eliminada de la watchlist']);
     }
 }
+
