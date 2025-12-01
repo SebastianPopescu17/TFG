@@ -140,7 +140,7 @@
     transform: none !important;
   }
 
-  /* Ambas caras usan flujo normal */
+  
   .flip-front,
   .flip-back {
     position: relative;

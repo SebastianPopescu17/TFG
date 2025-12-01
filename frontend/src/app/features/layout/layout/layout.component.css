@@ -185,7 +185,7 @@
   display: none;
 }
 
-app-dashboard, app-empresas, app-watchlist, app-alertas, app-noticias, app-macros, app-calculadora, app-cartera, app-saldo, app-admin {
+app-dashboard, app-empresas, app-watchlist, app-alertas, app-noticias, app-macros, app-calculadora, app-cartera, app-saldo, app-admin, app-operaciones {
   margin: 0;
   padding: 0;
   width: 100%;
