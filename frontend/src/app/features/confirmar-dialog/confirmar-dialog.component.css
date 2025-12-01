@@ -9,7 +9,7 @@ mat-dialog-actions {
   margin-top: 15px;
   display: flex;
   justify-content: flex-end;
-  gap: 12px; 
+  gap: 12px;
 }
 
 mat-dialog-actions button {
@@ -31,4 +31,75 @@ mat-dialog-actions button:last-child {
 
 button {
   min-width: 100px;
+}
+
+
+@media (max-width: 600px) {
+  h2[mat-dialog-title] {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  mat-dialog-content {
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 0.8rem;
+  }
+
+  mat-dialog-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+
+  mat-dialog-actions button {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  h2[mat-dialog-title] {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  mat-dialog-content {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  mat-dialog-actions {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  mat-dialog-actions button {
+    flex: 1;
+    min-width: 120px;
+  }
+}
+
+
+@media (min-width: 1025px) {
+  h2[mat-dialog-title] {
+    font-size: 1.5rem;
+  }
+
+  mat-dialog-content {
+    font-size: 15px;
+  }
+
+  mat-dialog-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+
+  mat-dialog-actions button {
+    min-width: 100px;
+  }
 }

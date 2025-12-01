@@ -78,3 +78,54 @@
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(239,71,111,0.5);
 }
+
+
+@media (max-width: 600px) {
+  mat-dialog-content {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+
+  mat-form-field.full-width {
+    width: 100%;
+  }
+
+  mat-dialog-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  mat-dialog-actions button {
+    width: 100%;
+  }
+}
+
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  mat-dialog-content {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+
+  mat-dialog-actions {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  mat-dialog-actions button {
+    flex: 1;
+  }
+}
+
+@media (min-width: 1025px) {
+  mat-dialog-content {
+    font-size: 1rem;
+    padding: 1.2rem;
+  }
+
+  mat-dialog-actions {
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+}

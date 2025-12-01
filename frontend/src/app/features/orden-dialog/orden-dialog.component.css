@@ -50,3 +50,85 @@ button[mat-raised-button]:disabled {
   background-color: #cbd5e1;
   color: #64748b;
 }
+
+
+@media (max-width: 600px) {
+  .dialog-content {
+    min-width: auto;
+    width: 100%;
+    padding: 0.8rem;
+  }
+
+  .dialog-title {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .empresa, .precio, .importe, .saldo {
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  mat-dialog-actions.dialog-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+
+  mat-dialog-actions.dialog-actions button {
+    width: 100%;
+  }
+}
+
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .dialog-content {
+    min-width: auto;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .dialog-title {
+    font-size: 1.3rem;
+  }
+
+  .empresa, .precio, .importe, .saldo {
+    font-size: 0.9rem;
+  }
+
+  mat-dialog-actions.dialog-actions {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  mat-dialog-actions.dialog-actions button {
+    flex: 1;
+    min-width: 140px;
+  }
+}
+
+
+@media (min-width: 1025px) {
+  .dialog-content {
+    min-width: 400px;
+    padding: 1rem;
+  }
+
+  .dialog-title {
+    font-size: 1.5rem;
+  }
+
+  .empresa, .precio, .importe, .saldo {
+    font-size: 0.95rem;
+  }
+
+  mat-dialog-actions.dialog-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 0.75rem;
+  }
+
+  mat-dialog-actions.dialog-actions button {
+    min-width: 120px;
+  }
+}

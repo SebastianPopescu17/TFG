@@ -10,21 +10,18 @@ export class IndicadoresMacroService {
 
   constructor(private http: HttpClient) {}
 
-  getPaises(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.baseUrl}/indicadores/paises`);
-  }
+getPaises(): Observable<string[]> {
+  return this.http.get<string[]>(`${this.baseUrl}/indicadores/paises`);
+}
 
-  getIndicadoresDisponibles(): Observable<{ codigo: string; nombre: string }[]> {
-    return this.http.get<{ codigo: string; nombre: string }[]>(
-      `${this.baseUrl}/indicadores/disponibles`
-    );
-  }
+getIndicadoresDisponibles(): Observable<{ codigo: string; nombre: string }[]> {
+  return this.http.get<{ codigo: string; nombre: string }[]>(`${this.baseUrl}/indicadores/disponibles`);
+}
 
-  getIndicadores(params: any): Observable<IndicadorMacro[]> {
-    return this.http.get<IndicadorMacro[]>(`${this.baseUrl}/indicadores`, {
-      params,
-    });
-  }
+getIndicadores(params: any) {
+  return this.http.get(`${this.baseUrl}/indicadores`, { params });
+}
+
 
 }
 

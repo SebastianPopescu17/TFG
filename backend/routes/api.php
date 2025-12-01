@@ -61,13 +61,14 @@ Route::middleware('auth:sanctum')->group(function () {
     */
     Route::prefix('indicadores')->group(function () {
         Route::get('/', [IndicadorMacroController::class, 'index']);
-        Route::get('/series', [IndicadorMacroController::class, 'series']);
-        Route::get('/kpi', [IndicadorMacroController::class, 'kpi']);
-        Route::get('/compare', [IndicadorMacroController::class, 'compare']);
+       // Route::get('/series', [IndicadorMacroController::class, 'series']);
+       // Route::get('/kpi', [IndicadorMacroController::class, 'kpi']);
+       // Route::get('/compare', [IndicadorMacroController::class, 'compare']);
         Route::get('/paises', [IndicadorMacroController::class, 'paises']);
+        Route::get('/disponibles', [IndicadorMacroController::class, 'disponibles']);
 
     });
-    Route::get('/indicadores/disponibles', [IndicadorMacroController::class, 'disponibles']);
+
 
 
 

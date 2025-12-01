@@ -152,3 +152,93 @@ mat-label {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+
+@media (max-width: 600px) {
+  .recover-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .recover-side {
+    display: none;
+  }
+
+  .recover-form-wrapper {
+    flex: none;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .auth-card {
+    max-width: 100%;
+    padding: 1.5rem;
+  }
+
+  .auth-title {
+    font-size: 1.6rem;
+  }
+
+  .auth-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .auth-button {
+    font-size: 0.9rem;
+    padding: 0.8rem;
+  }
+}
+
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .recover-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .recover-side {
+    min-height: 200px;
+    min-width: 100%;
+  }
+
+  .recover-form-wrapper {
+    flex: none;
+    width: 100%;
+    padding: 2rem;
+  }
+
+  .auth-card {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .auth-title {
+    font-size: 1.8rem;
+  }
+
+  .auth-subtitle {
+    font-size: 0.9rem;
+  }
+}
+
+
+@media (min-width: 1025px) {
+  .recover-container {
+    flex-direction: row;
+    height: 100vh;
+  }
+
+  .recover-side {
+    display: block;
+    min-width: 50%;
+  }
+
+  .recover-form-wrapper {
+    flex: 1;
+    padding: 2rem;
+  }
+
+  .auth-card {
+    max-width: 420px;
+  }
+}

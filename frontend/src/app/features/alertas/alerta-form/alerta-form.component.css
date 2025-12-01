@@ -104,19 +104,104 @@
 }
 
 
-@media (max-width: 768px) {
+
+@media (max-width: 600px) {
+  .alerta-card {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .titulo {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
   .form-row {
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
   }
 
   .acciones {
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
+    margin-top: 24px;
   }
 
   .btn {
     width: 100%;
+    font-size: 0.95rem;
+    padding: 10px 20px;
     text-align: center;
+  }
+}
+
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .alerta-card {
+    padding: 24px;
+  }
+
+  .titulo {
+    font-size: 22px;
+    margin-bottom: 24px;
+  }
+
+  .form-row {
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .acciones {
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+  }
+
+  .btn {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+  }
+}
+
+
+@media (min-width: 1025px) {
+  .alerta-card {
+    padding: 28px;
+  }
+
+  .titulo {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  .form-row {
+    flex-direction: row;
+    gap: 18px;
+  }
+
+  .acciones {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 18px;
+  }
+
+  .btn {
+    min-width: 160px;
+    font-size: 1rem;
   }
 }

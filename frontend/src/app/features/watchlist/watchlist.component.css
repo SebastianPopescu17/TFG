@@ -158,4 +158,34 @@
   to { opacity: 1; }
 }
 
+/* 📱 Responsive ajustes */
+@media (max-width: 768px) {
+  .cards-container {
+    grid-template-columns: 1fr;
+  }
+
+  .left-text h1 {
+    font-size: 1rem;
+  }
+
+  .left-text h2 {
+    font-size: 0.9rem;
+  }
+
+  .product-text p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .cards-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1201px) {
+  .cards-container {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+}
 

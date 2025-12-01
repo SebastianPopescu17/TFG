@@ -1,6 +1,4 @@
-:root {
-  /* local variables removed; use global theme variables */
-}
+
 
 .saldo-dashboard {
   display: flex;
@@ -215,11 +213,119 @@
   border-radius: 4px;
 }
 
-@media (max-width: 600px) {
-  .saldo-hero {
+
+@media (max-width: 480px) {
+  .saldo-dashboard {
     padding: 1rem;
+    gap: 1rem;
   }
+
+  .hero-title {
+    font-size: 1.4rem;
+  }
+
+  .saldo-text {
+    font-size: 1rem;
+  }
+
+  .saldo-cifra {
+    font-size: 1.4rem;
+  }
+
   .monto-field {
     width: 100%;
   }
+
+  .acciones {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .acciones button {
+    width: 100%;
+  }
+
+  .mat-header-cell,
+  .mat-cell {
+    font-size: 0.85rem;
+    padding: 0.6rem;
+  }
 }
+
+
+@media (min-width: 481px) and (max-width: 1024px) {
+  .saldo-dashboard {
+    padding: 1.5rem;
+  }
+
+  .hero-title {
+    font-size: 1.6rem;
+  }
+
+  .saldo-text {
+    font-size: 1.1rem;
+  }
+
+  .saldo-cifra {
+    font-size: 1.6rem;
+  }
+
+  .monto-field {
+    width: 80%;
+  }
+
+  .acciones {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .acciones button {
+    flex: 1;
+    min-width: 140px;
+  }
+
+  .mat-header-cell,
+  .mat-cell {
+    font-size: 0.9rem;
+    padding: 0.8rem;
+  }
+}
+
+
+@media (min-width: 1025px) {
+  .saldo-dashboard {
+    padding: 2rem;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .saldo-text {
+    font-size: 1.3rem;
+  }
+
+  .saldo-cifra {
+    font-size: 1.8rem;
+  }
+
+  .monto-field {
+    width: 60%;
+  }
+
+  .acciones {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .acciones button {
+    min-width: 160px;
+  }
+
+  .mat-header-cell,
+  .mat-cell {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+}
+

@@ -1,0 +1,95 @@
+
+@media (max-width: 600px) {
+  h2[mat-dialog-title] {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  .help-content {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    padding: 0.5rem;
+  }
+
+  .help-content section {
+    margin-bottom: 1rem;
+  }
+
+  .help-content h3 {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+    text-align: center;
+  }
+
+  .help-content ul {
+    padding-left: 1rem;
+  }
+
+  mat-dialog-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+
+  mat-dialog-actions button {
+    width: 100%;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  h2[mat-dialog-title] {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  .help-content {
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 1rem;
+  }
+
+  .help-content h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  mat-dialog-actions {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    justify-content: center;
+  }
+
+  mat-dialog-actions button {
+    flex: 1;
+    min-width: 140px;
+  }
+}
+
+
+@media (min-width: 1025px) {
+  h2[mat-dialog-title] {
+    font-size: 1.8rem;
+  }
+
+  .help-content {
+    font-size: 1rem;
+    line-height: 1.6;
+    padding: 1.5rem;
+  }
+
+  .help-content h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.6rem;
+  }
+
+  mat-dialog-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+
+  mat-dialog-actions button {
+    min-width: 120px;
+  }
+}

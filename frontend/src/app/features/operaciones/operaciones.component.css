@@ -109,3 +109,76 @@
   color: var(--text-main);
   box-shadow: 0 6px 18px rgba(0,0,0,0.4);
 }
+
+
+@media (max-width: 600px) {
+  .operaciones-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .operacion-card {
+    padding: 0.8rem;
+  }
+
+  .op-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
+  .fecha {
+    font-size: 0.8rem;
+  }
+
+  .op-body .row {
+    font-size: 0.8rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+
+  ::ng-deep .mat-card-title {
+    font-size: 1.2rem;
+  }
+}
+
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .operaciones-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .operacion-card {
+    padding: 1rem;
+  }
+
+  .op-body .row {
+    font-size: 0.85rem;
+  }
+
+  ::ng-deep .mat-card-title {
+    font-size: 1.3rem;
+  }
+}
+
+
+@media (min-width: 1025px) {
+  .operaciones-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .operacion-card {
+    padding: 1rem 1.2rem;
+  }
+
+  .op-body .row {
+    font-size: 0.9rem;
+  }
+
+  ::ng-deep .mat-card-title {
+    font-size: 1.4rem;
+  }
+}

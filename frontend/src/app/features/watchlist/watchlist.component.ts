@@ -1,19 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
-import { Api } from '../../../core/services/api.service';
-import { Empresa } from '../../../core/models/empresa';
+import { Api } from '../../core/services/api.service';
+import { Empresa } from '../../core/models/empresa';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AuthService } from '../../../core/services/auth.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
-import { PollingService } from '../../../core/services/polling.service';
+import { PollingService } from '../../core/services/polling.service';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmarDialogComponent } from '../../confirmar-dialog/confirmar-dialog.component';
+import { ConfirmarDialogComponent } from '../confirmar-dialog/confirmar-dialog.component';
 
 @Component({
   selector: 'app-watchlist',
@@ -102,7 +101,7 @@ export class WatchlistComponent implements OnInit, OnDestroy {
   }
 
   irADetalle(ticker: string): void {
-    
+
     this.router.navigate(['/empresas', ticker]);
   }
 }

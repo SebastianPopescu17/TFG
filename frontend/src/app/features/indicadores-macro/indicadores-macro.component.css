@@ -124,5 +124,98 @@
   text-shadow: 0 0 6px rgba(239,68,68,0.6);
 }
 
-/* Animaciones */
-/* animations use global keyframes */
+
+@media (max-width: 600px) {
+  :host {
+    padding: 1rem;
+  }
+
+  .header-card {
+    padding: 1rem;
+  }
+
+  .titulo-indicador {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  .filters-inline {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .filters-label {
+    font-size: 0.9rem;
+  }
+
+  .toggle-group {
+    justify-content: center;
+  }
+
+  .toggle-group button {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .tabla-indicadores th,
+  .tabla-indicadores td {
+    font-size: 0.85rem;
+    padding: 0.6rem;
+  }
+}
+
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  :host {
+    padding: 1.5rem;
+  }
+
+  .titulo-indicador {
+    font-size: 1.6rem;
+  }
+
+  .filters-inline {
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .toggle-group button {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.7rem;
+  }
+
+  .tabla-indicadores th,
+  .tabla-indicadores td {
+    font-size: 0.9rem;
+    padding: 0.7rem;
+  }
+}
+
+/* 💻 Escritorio */
+@media (min-width: 1025px) {
+  :host {
+    padding: 2rem;
+  }
+
+  .titulo-indicador {
+    font-size: 2rem;
+  }
+
+  .filters-inline {
+    gap: 2rem;
+  }
+
+  .toggle-group button {
+    font-size: 1rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .tabla-indicadores th,
+  .tabla-indicadores td {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+}
+
+

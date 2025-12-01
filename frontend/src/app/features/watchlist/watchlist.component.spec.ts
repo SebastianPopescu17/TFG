@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
-import { WatchlistComponent } from './watchlist.component';
+import { WatchlistComponent } from './watchlist/watchlist.component';
 
 describe('Watchlist', () => {
   let component: WatchlistComponent;
