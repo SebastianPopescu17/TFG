@@ -1,5 +1,4 @@
 
-
 .saldo-dashboard {
   display: flex;
   flex-direction: column;
@@ -111,7 +110,7 @@
 .movimientos-section {
   padding: 1.5rem;
   border-radius: 18px;
-  background: var(--bg-gradient);
+  background: #838383;
   backdrop-filter: blur(10px);
   box-shadow: 0 6px 20px rgba(59,130,246,0.3);
   animation: fadeInUp 0.8s ease;
@@ -122,7 +121,7 @@
   font-weight: 800;
   text-align: center;
   margin-bottom: 1.2rem;
-  background-image: var(--accent-gradient);
+  background-image: var(--text-main);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
