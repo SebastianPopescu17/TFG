@@ -118,6 +118,20 @@ Route::middleware('auth:sanctum')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
+    | Ordenes programadas (compra/venta)
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('ordenes')->group(function () {
+        Route::get('/', [\App\Http\Controllers\OrdenProgramadaController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\OrdenProgramadaController::class, 'store']);
+        Route::get('/{id}', [\App\Http\Controllers\OrdenProgramadaController::class, 'show']);
+        Route::post('/{id}/cancelar', [\App\Http\Controllers\OrdenProgramadaController::class, 'cancelar']);
+        Route::delete('/{id}', [\App\Http\Controllers\OrdenProgramadaController::class, 'destroy']);
+
+    });
+
+    /*
+    |--------------------------------------------------------------------------
     | Alertas
     |--------------------------------------------------------------------------
     */

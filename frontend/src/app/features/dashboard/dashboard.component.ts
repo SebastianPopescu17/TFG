@@ -50,6 +50,12 @@ export class DashboardComponent {
       icon: 'account_balance_wallet',
     },
     {
+      title: 'Órdenes Programadas',
+      description: 'Ten el control de tus inversiones automatizando compras y ventas.',
+      href: '/ordenes',
+      icon: 'schedule', 
+    },
+    {
       title: 'Operaciones',
       description: 'Registra compras, ventas y movimientos de tu cartera.',
       href: '/cartera/operaciones',
@@ -66,13 +72,7 @@ export class DashboardComponent {
       description: 'Consulta tu saldo disponible, ingresa fondos o realiza retiros.',
       href: '/saldo',
       icon: 'savings',
-    },
-    {
-      title: 'Indicadores Macros',
-      description: 'Accede a métricas macroeconómicas esenciales para tus decisiones de inversión.',
-      href: '/macros',
-      icon: 'bar_chart',
-    },
+    }
   ];
 
   constructor(private auth: AuthService) {}

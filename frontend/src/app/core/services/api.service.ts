@@ -152,21 +152,39 @@ export class Api {
     return this.http.get<any>(`${this.baseUrl}/saldo/movimientos?page=${page}`);
   }
   // --- POSICIÓN DE LA EMPRESA ---
-  getPosicion(empresaId: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/posiciones/${empresaId}`);
-  }
-  // Últimos precios de todas las empresas
+ getPosicion(empresaId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/cartera/posiciones/${empresaId}`);
+}
+
+
   getUltimosPrecios(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/precios/ultimos`);
   }
 
-  // Último precio de una empresa concreta
+
   getUltimoPrecio(empresaId: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/empresas/${empresaId}/precio`);
   }
 
-  // Guardar un nuevo precio (si decides hacerlo desde el front)
+
   updatePrecioEmpresa(empresaId: number, precio: number): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/empresas/${empresaId}/precio`, { precio });
   }
+
+  // --- ORDENES PROGRAMADAS ---
+  getOrdenes(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/ordenes`);
+  }
+
+  createOrden(body: { empresa_id: number; tipo: string; cantidad: number; precio_objetivo?: number; scheduled_at?: string }) {
+    return this.http.post<any>(`${this.baseUrl}/ordenes`, body);
+  }
+
+  cancelarOrden(id: number) {
+    return this.http.post<any>(`${this.baseUrl}/ordenes/${id}/cancelar`, {});
+  }
+
+  deleteOrden(id: number) {
+  return this.http.delete(`${this.baseUrl}/ordenes/${id}`);
+}
 }

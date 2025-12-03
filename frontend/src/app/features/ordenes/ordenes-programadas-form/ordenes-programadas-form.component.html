@@ -1,0 +1,83 @@
+<mat-card class="orden-form">
+  <h2 mat-card-title>Nueva orden programada para {{ empresa.nombre }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="orden-form-content">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="tipo">
+        <mat-option value="compra">Compra</mat-option>
+        <mat-option value="venta">Venta</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Cantidad</mat-label>
+      <input
+        matInput
+        formControlName="cantidad"
+        type="number"
+        step="0.01"
+        pattern="^\d+(\.\d{1,2})?$"
+      />
+
+      @if (form.get('tipo')?.value === 'venta') {
+        <mat-hint>
+          Disponibles: {{ availableAmount | number : '1.2-2' }}
+        </mat-hint>
+      }
+
+      @if (form.get('cantidad')?.hasError('required')) {
+        <mat-error>La cantidad es obligatoria</mat-error>
+      }
+
+      @if (form.get('cantidad')?.hasError('min')) {
+        <mat-error>La cantidad debe ser mayor que 0</mat-error>
+      }
+
+      @if (form.get('cantidad')?.hasError('max')) {
+        <mat-error>La cantidad excede las acciones disponibles</mat-error>
+      }
+
+      @if (saldoInsuficiente) {
+        <mat-error>No tienes saldo suficiente para esta orden</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Precio objetivo</mat-label>
+      <input
+        matInput
+        formControlName="precio_objetivo"
+        type="number"
+        step="0.01"
+        pattern="^\d+(\.\d{1,2})?$"
+      />
+
+      @if (form.get('precio_objetivo')?.hasError('required')) {
+        <mat-error>El precio objetivo es obligatorio</mat-error>
+      }
+
+      @if (form.get('precio_objetivo')?.hasError('min')) {
+        <mat-error>Debe ser mayor que 0</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Fecha/Hora (opcional)</mat-label>
+      <input matInput formControlName="scheduled_at" type="datetime-local" />
+    </mat-form-field>
+
+    <div class="actions">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="submitting || saldoInsuficiente"
+      >
+        Crear orden
+      </button>
+
+      <button mat-stroked-button color="warn" type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</mat-card>

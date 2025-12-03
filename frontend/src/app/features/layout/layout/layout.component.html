@@ -27,9 +27,9 @@
           <mat-icon>notifications</mat-icon>
           @if (!sidebarCollapsed) { <span>Alertas</span> }
         </a>
-        <a routerLink="/macros" routerLinkActive="active">
-          <mat-icon>bar_chart</mat-icon>
-          @if (!sidebarCollapsed) { <span>Macros</span> }
+        <a routerLink="/ordenes" routerLinkActive="active">
+          <mat-icon>schedule</mat-icon>
+          @if (!sidebarCollapsed) { <span>Órdenes Programadas</span> }
         </a>
         <a routerLink="/calculadora" routerLinkActive="active">
           <mat-icon>calculate</mat-icon>
@@ -40,7 +40,7 @@
           @if (!sidebarCollapsed) { <span>Cartera</span> }
         </a>
         <a routerLink="/cartera/operaciones" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <mat-icon>history</mat-icon>
+          <mat-icon>swap_horiz</mat-icon>
           @if (!sidebarCollapsed) { <span>Operaciones</span> }
         </a>
         <a routerLink="/saldo" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="saldo-link">

@@ -8,12 +8,12 @@ h2 {
   margin: 0;
 }
 
-/* Éxito */
+
 h2.success {
   color: #16a34a;
 }
 
-/* Error */
+
 h2.error {
   color: #dc2626;
 }

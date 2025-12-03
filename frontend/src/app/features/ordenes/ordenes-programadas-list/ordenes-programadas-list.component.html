@@ -1,0 +1,50 @@
+<mat-card class="ordenes-card">
+  <h2>Órdenes programadas</h2>
+
+  @if (ordenes.length === 0) {
+    <p>No hay órdenes programadas.</p>
+  } @else {
+    <div class="ordenes-grid">
+      @for (orden of ordenes; track orden.id) {
+        <mat-card class="orden-card">
+          <div class="orden-header">
+            <h3>{{ orden.empresa?.nombre }}</h3>
+            <span
+              [ngClass]="{
+                'estado-pendiente': orden.estado === 'pendiente',
+                'estado-cumplida': orden.estado === 'cumplida',
+                'estado-cancelada': orden.estado === 'cancelada'
+              }"
+            >
+              {{ orden.estado | titlecase }}
+            </span>
+          </div>
+
+          <div class="orden-body">
+            <p><strong>Tipo:</strong> {{ orden.tipo | titlecase }}</p>
+            <p><strong>Cantidad:</strong> {{ orden.cantidad | number : '1.2-2' }}</p>
+            <p>
+              <strong>Precio objetivo:</strong>
+              {{ orden.precio_objetivo != null ? (orden.precio_objetivo | number : '1.2-2') : '-' }}
+            </p>
+            <p><strong>Fecha/Hora:</strong> {{ orden.scheduled_at | date : 'short' }}</p>
+          </div>
+
+          <div class="orden-actions">
+            @if (orden.estado === 'pendiente') {
+              <button mat-stroked-button color="warn" (click)="cancelar(orden.id)">
+                Cancelar
+              </button>
+            }
+
+            @if (isCancelada(orden)) {
+              <button mat-stroked-button color="accent"  (click)="eliminar(orden.id)">
+                Eliminar
+              </button>
+            }
+          </div>
+        </mat-card>
+      }
+    </div>
+  }
+</mat-card>

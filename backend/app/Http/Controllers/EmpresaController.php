@@ -39,7 +39,7 @@ class EmpresaController extends Controller
             $query->orderBy('nombre', 'asc');
         }
 
-        //Paginación (100 por defecto)
+        
         $empresas = $query->paginate($request->get('per_page', 80));
 
         return response()->json($empresas);

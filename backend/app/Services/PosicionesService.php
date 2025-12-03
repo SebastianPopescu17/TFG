@@ -15,17 +15,23 @@ class PosicionesService
         );
 
         if ($op->tipo === 'compra') {
-            $pos->cantidad   += $op->cantidad;
-            $pos->invertido  += $op->cantidad * $op->precio;
+            // Actualizar cantidad e invertido
+            $pos->cantidad  = round($pos->cantidad + $op->cantidad, 2);
+            $pos->invertido = round($pos->invertido + ($op->cantidad * $op->precio), 2);
         }
 
         if ($op->tipo === 'venta') {
+            // Asegurar que no se venda más de lo disponible
+            $sellQty = min($op->cantidad, $pos->cantidad);
+            $op->cantidad = $sellQty;
 
-            $op->plusvalia = $op->cantidad * ($op->precio - $pos->precio_medio);
+            // Calcular plusvalia
+            $op->plusvalia = round($sellQty * ($op->precio - $pos->precio_medio), 2);
             $op->save();
 
-            $pos->cantidad   -= $op->cantidad;
-            $pos->invertido  -= $op->cantidad * $pos->precio_medio;
+            // Actualizar posición
+            $pos->cantidad  = round($pos->cantidad - $sellQty, 2);
+            $pos->invertido = round($pos->invertido - ($sellQty * $pos->precio_medio), 2);
 
             if ($pos->cantidad <= 0) {
                 $pos->cantidad = 0;
@@ -34,8 +40,11 @@ class PosicionesService
             }
         }
 
+        // Actualizar precio medio si quedan acciones
         if ($pos->cantidad > 0) {
-            $pos->precio_medio = $pos->invertido / $pos->cantidad;
+            $pos->precio_medio = round($pos->invertido / $pos->cantidad, 2);
+        } else {
+            $pos->precio_medio = 0;
         }
 
         $pos->save();

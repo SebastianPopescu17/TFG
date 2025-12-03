@@ -5,6 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Operacion extends Model
 {
+    const TIPO_COMPRA = 'compra';
+    const TIPO_VENTA = 'venta';
     protected $table = 'operaciones';
     protected $fillable = [
     'user_id',

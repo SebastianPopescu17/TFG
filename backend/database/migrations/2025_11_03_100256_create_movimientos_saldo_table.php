@@ -15,8 +15,8 @@ return new class extends Migration
         $table->id();
         $table->foreignId('user_id')->constrained()->onDelete('cascade');
         $table->enum('tipo', ['ingreso', 'retiro']);
-        $table->decimal('monto', 18, 6);
-        $table->decimal('saldo_resultante', 18, 6);
+        $table->decimal('monto', 18, 2);
+        $table->decimal('saldo_resultante', 18, 2);
         $table->timestamps();
     });
 }

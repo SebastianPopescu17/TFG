@@ -22,6 +22,7 @@ import { AlertaFormComponent } from '../../alertas/alerta-form/alerta-form.compo
 import { OrdenDialogComponent } from '../../orden-dialog/orden-dialog.component';
 import { MensajeDialogComponent } from '../../mensaje-dialog/mensaje-dialog.component';
 import { ConfirmarDialogComponent } from '../../confirmar-dialog/confirmar-dialog.component';
+import { OrdenesProgramadasFormComponent } from '../../ordenes/ordenes-programadas-form/ordenes-programadas-form.component';
 
 
 @Component({
@@ -50,6 +51,7 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
   private sub?: Subscription;
   loading = true;
   saldo = 0;
+  mostrarFormOrden = false;
 
   lineData: ChartConfiguration<'line'>['data'] = {
     datasets: [
@@ -192,7 +194,7 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.polling.stop();
+    
     this.sub?.unsubscribe();
   }
 
@@ -352,4 +354,31 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
         }
       });
   }
+
+  abrirOrdenProgramada(): void {
+  if (!this.empresa) return;
+
+  const ref = this.dialog.open(OrdenesProgramadasFormComponent, {
+    width: '500px',
+    data: { empresa: this.empresa }
+  });
+
+  ref.afterClosed().subscribe(ok => {
+    if (ok) {
+      this.dialog.open(MensajeDialogComponent, {
+        width: '400px',
+        data: {
+          titulo: 'Orden creada',
+          mensaje: 'La orden programada se creó correctamente ✔️',
+          tipo: 'success',
+        },
+      });
+    }
+  });
 }
+
+  cerrarForm(): void {
+    this.mostrarFormOrden = false;
+  }
+}
+

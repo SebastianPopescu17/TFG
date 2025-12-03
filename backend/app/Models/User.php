@@ -42,9 +42,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Watchlist::class, 'user_id');
     }
 
-    
+
     public function alertas()
     {
         return $this->hasMany(Alerta::class, 'user_id');
+    }
+
+    public function ordenesProgramadas()
+    {
+        return $this->hasMany(OrdenProgramada::class, 'user_id');
     }
 }

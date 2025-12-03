@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Alerta } from '../models/alerta';
 import { Empresa } from '../models/empresa';
 import { Api } from './api.service';
@@ -9,16 +9,38 @@ import { NotificacionService } from './notificacion.service';
 @Injectable({ providedIn: 'root' })
 export class AlertasService {
   private alertasSubject = new BehaviorSubject<Alerta[]>([]);
-  alertas$ = this.alertasSubject.asObservable();
+  alertas$: Observable<Alerta[]> = this.alertasSubject.asObservable();
 
   private alertasCumplidasSubject = new BehaviorSubject<Alerta[]>([]);
-  alertasCumplidas$ = this.alertasCumplidasSubject.asObservable();
+  alertasCumplidas$: Observable<Alerta[]> = this.alertasCumplidasSubject.asObservable();
+
+  private notifiedAlertIds: Set<number> = new Set();
 
   constructor(
     private api: Api,
     private auth: AuthService,
     private notificacion: NotificacionService
-  ) {}
+  ) {
+    this.loadNotifiedIds();
+  }
+
+  private loadNotifiedIds(): void {
+    const saved = localStorage.getItem('notifiedAlertIds');
+    if (saved) {
+      this.notifiedAlertIds = new Set(JSON.parse(saved));
+    }
+  }
+
+  private saveNotifiedIds(): void {
+    localStorage.setItem('notifiedAlertIds', JSON.stringify([...this.notifiedAlertIds]));
+  }
+
+  private removeNotifiedId(id: number): void {
+    if (this.notifiedAlertIds.has(id)) {
+      this.notifiedAlertIds.delete(id);
+      this.saveNotifiedIds();
+    }
+  }
 
   setAlertas(alertas: Alerta[]): void {
     this.alertasSubject.next(alertas);
@@ -39,33 +61,24 @@ export class AlertasService {
 
         cumplidas.forEach((alerta) => {
           if (!alerta.empresa) return;
+          if (this.notifiedAlertIds.has(alerta.id)) return;
+
           this.notificacion.mostrar(
             `⚡ Alerta cumplida: ${alerta.empresa.nombre} (${alerta.empresa.ticker}) → condición ${alerta.condicion} ${alerta.valor}`
           );
+
+          this.notifiedAlertIds.add(alerta.id);
+          this.saveNotifiedIds();
         });
       },
       error: (err) => console.error('Error evaluando alertas', err),
     });
   }
 
-  private cumpleCondicion(alerta: Alerta, precio: number): boolean {
-    const valor = alerta.valor;
-
-    switch (alerta.condicion) {
-      case 'mayor':
-        return typeof valor === 'number' ? precio > valor : false;
-
-      case 'menor':
-        return typeof valor === 'number' ? precio < valor : false;
-
-      case 'igual':
-        return typeof valor === 'number' ? Math.abs(precio - valor) < 0.01 : false;
-
-      case 'entre':
-        return Array.isArray(valor) ? precio >= valor[0] && precio <= valor[1] : false;
-
-      default:
-        return false;
-    }
+  
+  eliminarAlerta(id: number): void {
+    const alertas = this.alertasSubject.getValue().filter(a => a.id !== id);
+    this.alertasSubject.next(alertas);
+    this.removeNotifiedId(id);
   }
 }

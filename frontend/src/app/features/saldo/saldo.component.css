@@ -110,7 +110,7 @@
 .movimientos-section {
   padding: 1.5rem;
   border-radius: 18px;
-  background: #838383;
+  background: #f5f3f3;
   backdrop-filter: blur(10px);
   box-shadow: 0 6px 20px rgba(59,130,246,0.3);
   animation: fadeInUp 0.8s ease;

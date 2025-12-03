@@ -15,7 +15,7 @@ class CarteraController extends Controller
     {
         $data = $request->validate([
             'empresa_id' => 'required|exists:empresas,id',
-            'cantidad'   => 'required|numeric|min:0.000001',
+            'cantidad'   => 'required|numeric|min:0.01',
             'precio'     => 'required|numeric|min:0',
         ]);
 
@@ -50,7 +50,7 @@ class CarteraController extends Controller
     {
         $data = $request->validate([
             'empresa_id' => 'required|exists:empresas,id',
-            'cantidad'   => 'required|numeric|min:0.000001',
+            'cantidad'   => 'required|numeric|min:0.01',
             'precio'     => 'required|numeric|min:0',
         ]);
 
@@ -91,33 +91,35 @@ class CarteraController extends Controller
     $userId = $request->user()->id;
 
     $posiciones = DB::table('posiciones as pos')
-        ->join('empresas as e', 'pos.empresa_id', '=', 'e.id')
-        ->join(DB::raw('(
-            SELECT p1.empresa_id, p1.precio
-            FROM precios p1
-            INNER JOIN (
-                SELECT empresa_id, MAX(created_at) as max_created
-                FROM precios
-                GROUP BY empresa_id
-            ) p2
-            ON p1.empresa_id = p2.empresa_id AND p1.created_at = p2.max_created
-        ) as ultimos'), 'ultimos.empresa_id', '=', 'e.id')
-        ->where('pos.user_id', $userId)
-        ->where('pos.cantidad', '>', 0)
+    ->join('empresas as e', 'pos.empresa_id', '=', 'e.id')
+
+    ->leftJoin(DB::raw('(
+        SELECT p1.empresa_id, p1.precio
+        FROM precios p1
+        INNER JOIN (
+            SELECT empresa_id, MAX(created_at) as max_created
+            FROM precios
+            GROUP BY empresa_id
+        ) p2
+        ON p1.empresa_id = p2.empresa_id AND p1.created_at = p2.max_created
+    ) as ultimos'), 'ultimos.empresa_id', '=', 'e.id')
+    ->where('pos.user_id', $userId)
+    ->where('pos.cantidad', '>', 0)
         ->select(
-            'e.id as empresa_id',
-            'e.nombre as empresa',
-            'e.ticker',
-            'pos.cantidad',
-            'pos.precio_medio',
-            'pos.invertido',
-            'ultimos.precio as precio_actual',
-            DB::raw('(pos.cantidad * ultimos.precio) as valor_actual'),
-            DB::raw('(pos.cantidad * ultimos.precio - pos.invertido) as rentabilidad'),
-            DB::raw('CASE WHEN pos.invertido > 0
-                THEN ((pos.cantidad * ultimos.precio - pos.invertido) / pos.invertido) * 100
-                ELSE 0 END as rentabilidad_pct')
-        )
+    'e.id as empresa_id',
+    'e.nombre as empresa',
+    'e.ticker',
+    'pos.cantidad',
+    'pos.precio_medio',
+    'pos.invertido',
+    DB::raw('COALESCE(ultimos.precio, pos.precio_medio) as precio_actual'),
+    DB::raw('COALESCE(pos.cantidad * ultimos.precio, pos.invertido) as valor_actual'),
+    DB::raw('COALESCE(pos.cantidad * ultimos.precio - pos.invertido, 0) as rentabilidad'),
+
+    DB::raw('CASE WHEN pos.invertido > 0
+        THEN (COALESCE(pos.cantidad * ultimos.precio, pos.invertido) - pos.invertido) / pos.invertido * 100
+        ELSE 0 END as rentabilidad_pct')
+)
         ->get();
 
     $totalInvertido = $posiciones->sum('invertido');

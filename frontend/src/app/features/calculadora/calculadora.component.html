@@ -11,78 +11,155 @@
       </mat-card-header>
       <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-
           <mat-card-subtitle class="section-title">Modo de Simulación</mat-card-subtitle>
-          <mat-slide-toggle formControlName="isMonteCarlo" color="primary" class="monte-carlo-toggle">
+          <mat-slide-toggle
+            formControlName="isMonteCarlo"
+            color="primary"
+            class="monte-carlo-toggle"
+          >
             Activar Simulación de Monte Carlo (Análisis de probabilidad)
           </mat-slide-toggle>
 
           @if (form.get('isMonteCarlo')?.value) {
-            <div class="monte-carlo-options">
-              <mat-form-field appearance="outline">
-                <mat-label>Volatilidad (Desv. Estándar %)</mat-label>
-                <input matInput type="number" formControlName="standardDeviation" />
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>Nº de Simulaciones</mat-label>
-                <input matInput type="number" formControlName="simulationCount" />
-              </mat-form-field>
-            </div>
+          <div class="monte-carlo-options">
+            <mat-form-field appearance="outline">
+              <mat-label>Volatilidad (Desv. Estándar %)</mat-label>
+              <input matInput type="number" formControlName="standardDeviation" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Nº de Simulaciones</mat-label>
+              <input matInput type="number" formControlName="simulationCount" />
+            </mat-form-field>
+          </div>
           }
 
           <mat-card-subtitle class="section-title">Fases de la Inversión</mat-card-subtitle>
           <div class="input-row">
-            <mat-form-field appearance="outline"><mat-label>Inversión inicial (€)</mat-label><input matInput type="number" formControlName="initialInvestment" /></mat-form-field>
-            <mat-form-field appearance="outline"><mat-label>Aportación mensual (€)</mat-label><input matInput type="number" formControlName="monthlyContribution" /></mat-form-field>
-            <mat-form-field appearance="outline"><mat-label>Años totales</mat-label><input matInput type="number" formControlName="years" /></mat-form-field>
-            <mat-form-field appearance="outline"><mat-label>Crecimiento aportación (% anual)</mat-label><input matInput type="number" formControlName="growthRate" /></mat-form-field>
-            <mat-form-field appearance="outline"><mat-label>Año de inicio del retiro</mat-label><input matInput type="number" formControlName="retirementStartYear" /></mat-form-field>
-            <mat-form-field appearance="outline"><mat-label>Retiro anual inicial (€)</mat-label><input matInput type="number" formControlName="annualWithdrawal" /></mat-form-field>
-            <mat-form-field appearance="outline"><mat-label>Crecimiento del retiro (%)</mat-label><input matInput type="number" formControlName="withdrawalGrowthRate" /></mat-form-field>
+            <mat-form-field appearance="outline"
+              ><mat-label>Inversión inicial (€)</mat-label
+              ><input matInput type="number" formControlName="initialInvestment"
+            /></mat-form-field>
+            <mat-form-field appearance="outline"
+              ><mat-label>Aportación mensual (€)</mat-label
+              ><input matInput type="number" formControlName="monthlyContribution"
+            /></mat-form-field>
+            <mat-form-field appearance="outline"
+              ><mat-label>Años totales</mat-label
+              ><input matInput type="number" formControlName="years"
+            /></mat-form-field>
+            <mat-form-field appearance="outline"
+              ><mat-label>Crecimiento aportación (% anual)</mat-label
+              ><input matInput type="number" formControlName="growthRate"
+            /></mat-form-field>
+            <mat-form-field appearance="outline"
+              ><mat-label>Año de inicio del retiro</mat-label
+              ><input matInput type="number" formControlName="retirementStartYear"
+            /></mat-form-field>
+            <mat-form-field appearance="outline"
+              ><mat-label>Retiro anual inicial (€)</mat-label
+              ><input matInput type="number" formControlName="annualWithdrawal"
+            /></mat-form-field>
+            <mat-form-field appearance="outline"
+              ><mat-label>Crecimiento del retiro (%)</mat-label
+              ><input matInput type="number" formControlName="withdrawalGrowthRate"
+            /></mat-form-field>
           </div>
 
-          <mat-card-subtitle class="section-title">Parámetros del Mercado y Costes</mat-card-subtitle>
+          <mat-card-subtitle class="section-title"
+            >Parámetros del Mercado y Costes</mat-card-subtitle
+          >
           <div class="input-row">
-            <mat-form-field appearance="outline"><mat-label>Rentabilidad anual media (%)</mat-label><input matInput type="number" formControlName="interestRate" /></mat-form-field>
-            <mat-form-field appearance="outline"><mat-label>Dividendos anuales (%)</mat-label><input matInput type="number" formControlName="dividendRate" /></mat-form-field>
-            <mat-form-field appearance="outline"><mat-label>Inflación anual media (%)</mat-label><input matInput type="number" formControlName="inflationRate" /></mat-form-field>
-            <mat-form-field appearance="outline"><mat-label>Comisión de gestión (%)</mat-label><input matInput type="number" formControlName="annualFee" /></mat-form-field>
-            <mat-form-field appearance="outline"><mat-label>Impuestos s/ beneficios (%)</mat-label><input matInput type="number" formControlName="taxRate" /></mat-form-field>
-            <mat-form-field appearance="outline"><mat-label>Objetivo de capital (€)</mat-label><input matInput type="number" formControlName="objetivo" /></mat-form-field>
+            <mat-form-field appearance="outline"
+              ><mat-label>Rentabilidad anual media (%)</mat-label
+              ><input matInput type="number" formControlName="interestRate"
+            /></mat-form-field>
+            <mat-form-field appearance="outline"
+              ><mat-label>Dividendos anuales (%)</mat-label
+              ><input matInput type="number" formControlName="dividendRate"
+            /></mat-form-field>
+            <mat-form-field appearance="outline"
+              ><mat-label>Inflación anual media (%)</mat-label
+              ><input matInput type="number" formControlName="inflationRate"
+            /></mat-form-field>
+            <mat-form-field appearance="outline"
+              ><mat-label>Comisión de gestión (%)</mat-label
+              ><input matInput type="number" formControlName="annualFee"
+            /></mat-form-field>
+            <mat-form-field appearance="outline"
+              ><mat-label>Impuestos s/ beneficios (%)</mat-label
+              ><input matInput type="number" formControlName="taxRate"
+            /></mat-form-field>
+            <mat-form-field appearance="outline"
+              ><mat-label>Objetivo de capital (€)</mat-label
+              ><input matInput type="number" formControlName="objetivo"
+            /></mat-form-field>
           </div>
 
           <mat-card-subtitle class="section-title">Eventos Personalizados</mat-card-subtitle>
           @if (!form.get('isMonteCarlo')?.value) {
-            <mat-form-field appearance="outline" class="rentabilidades-field">
-              <mat-label>Rentabilidades anuales específicas (%, separadas por coma)</mat-label>
-              <textarea matInput rows="1" placeholder="Ej: 8, -5, 12..." (blur)="onRentabilidadesBlur($event)" formControlName="rentabilidadesAnuales"></textarea>
-            </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Rentabilidades anuales específicas (%, separadas por coma)</mat-label>
+            <input
+              matInput
+              type="text"
+              placeholder="Ej: 8, -5, 12..."
+              (blur)="onRentabilidadesBlur($event)"
+              formControlName="rentabilidadesAnuales"
+            />
+          </mat-form-field>
+
           }
 
           <div formArrayName="marketCrashEvents" class="event-section">
             @for (c of marketCrashEvents.controls; track $index) {
-              <div [formGroupName]="$index" class="event-row">
-                <mat-form-field appearance="outline"><mat-label>Año Caída</mat-label><input matInput type="number" formControlName="year"></mat-form-field>
-                <mat-form-field appearance="outline"><mat-label>% Caída</mat-label><input matInput type="number" formControlName="percentage"></mat-form-field>
-                <button mat-icon-button color="warn" type="button" (click)="removeMarketCrashEvent($index)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
+            <div [formGroupName]="$index" class="event-row">
+              <mat-form-field appearance="outline"
+                ><mat-label>Año Caída</mat-label
+                ><input matInput type="number" formControlName="year"
+              /></mat-form-field>
+              <mat-form-field appearance="outline"
+                ><mat-label>% Caída</mat-label
+                ><input matInput type="number" formControlName="percentage"
+              /></mat-form-field>
+              <button
+                mat-icon-button
+                color="warn"
+                type="button"
+                (click)="removeMarketCrashEvent($index)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
             }
-            <button mat-stroked-button type="button" (click)="addMarketCrashEvent()"><mat-icon>add</mat-icon>Añadir Caída</button>
+            <button mat-stroked-button type="button" (click)="addMarketCrashEvent()">
+              <mat-icon>add</mat-icon>Añadir Caída
+            </button>
           </div>
 
           <div formArrayName="extraContributions" class="event-section">
             @for (e of extraContributions.controls; track $index) {
-              <div [formGroupName]="$index" class="event-row">
-                <mat-form-field appearance="outline"><mat-label>Año Aportación</mat-label><input matInput type="number" formControlName="year"></mat-form-field>
-                <mat-form-field appearance="outline"><mat-label>Monto (€)</mat-label><input matInput type="number" formControlName="amount"></mat-form-field>
-                <button mat-icon-button color="warn" type="button" (click)="removeExtraContribution($index)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
+            <div [formGroupName]="$index" class="event-row">
+              <mat-form-field appearance="outline"
+                ><mat-label>Año Aportación</mat-label
+                ><input matInput type="number" formControlName="year"
+              /></mat-form-field>
+              <mat-form-field appearance="outline"
+                ><mat-label>Monto (€)</mat-label
+                ><input matInput type="number" formControlName="amount"
+              /></mat-form-field>
+              <button
+                mat-icon-button
+                color="warn"
+                type="button"
+                (click)="removeExtraContribution($index)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
             }
-            <button mat-stroked-button type="button" (click)="addExtraContribution()"><mat-icon>add</mat-icon>Añadir Aportación</button>
+            <button mat-stroked-button type="button" (click)="addExtraContribution()">
+              <mat-icon>add</mat-icon>Añadir Aportación
+            </button>
           </div>
 
           <button mat-raised-button color="primary" type="submit">
@@ -93,178 +170,204 @@
     </mat-card>
   </div>
 
-  <div class="resultados">
-    @if (result) {
+  <div class="resultados" id="resultados">
+    @if (result) { @if (result.type === 'simple') {
+    <mat-tab-group>
+      <mat-tab label="Resumen">
+        <mat-card class="resultado">
+          <mat-card-content>
+            @let agotamiento = result.moneyRunsOutYear; @if (agotamiento) {
+            <div class="alert-card warning">
+              <mat-icon>warning</mat-icon>
+              <p>
+                Tu capital se agota en el <strong>año {{ agotamiento }}</strong
+                >.
+              </p>
+            </div>
+            } @let objetivo = result.objetivoAlcanzado; @if (objetivo) {
+            <div class="alert-card success">
+              <mat-icon>flag</mat-icon>
+              <p>
+                Alcanzas tu objetivo en el <strong>año {{ objetivo }}</strong
+                >.
+              </p>
+            </div>
+            }
 
-      @if (result.type === 'simple') {
-        <mat-tab-group>
+            <div class="resultados-grid">
+              <div class="valor">
+                <p class="label">Total Aportado</p>
+                <p class="cifra">
+                  {{ result.rows[result.rows.length - 1]?.aportado | currencyEs }}
+                </p>
+              </div>
+              <div class="valor">
+                <p class="label">Intereses Netos</p>
+                <p class="cifra">
+                  {{ result.rows[result.rows.length - 1]?.intereses | currencyEs }}
+                </p>
+              </div>
+              <div class="valor">
+                <p class="label">Valor Nominal Final</p>
+                <p class="cifra valor-nominal">{{ result.totalNominal | currencyEs }}</p>
+              </div>
+              <div class="valor">
+                <p class="label">Valor Real Final</p>
+                <p class="cifra valor-real">{{ result.totalReal | currencyEs }}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
 
-          <mat-tab label="Resumen">
-            <mat-card class="resultado">
-              <mat-card-content>
+      <mat-tab label="Gráficas">
+        <mat-card class="grafica">
+          <mat-card-header>
+            <mat-card-title>Evolución del Patrimonio</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <canvas
+              baseChart
+              [data]="chartDataLine"
+              [options]="chartOptionsLine"
+              chartType="line"
+            ></canvas>
+          </mat-card-content>
+        </mat-card>
 
+        <mat-card class="grafica">
+          <mat-card-header>
+            <mat-card-title>Capital vs. Intereses</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <canvas
+              baseChart
+              [data]="chartDataBar"
+              [options]="chartOptionsBar"
+              chartType="bar"
+            ></canvas>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
 
-                @let agotamiento = result.moneyRunsOutYear;
-                @if (agotamiento) {
-                  <div class="alert-card warning">
-                    <mat-icon>warning</mat-icon>
-                    <p>Tu capital se agota en el <strong>año {{ agotamiento }}</strong>.</p>
-                  </div>
-                }
+      <mat-tab label="Tabla Anual">
+        <mat-card class="tabla">
+          <mat-card-content>
+            <div class="overflow-x-auto">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Año</th>
+                    <th>Aportado</th>
+                    <th>Intereses</th>
+                    <th>Valor Nominal</th>
+                    <th>Valor Real</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (r of result.rows; track $index) {
+                  <tr>
+                    <td>{{ r.year }}</td>
+                    <td>{{ r.aportado | currencyEs }}</td>
+                    <td>{{ r.intereses | currencyEs }}</td>
+                    <td>{{ r.valorNominal | currencyEs }}</td>
+                    <td>{{ r.valorReal | currencyEs }}</td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+    </mat-tab-group>
+    } @if (result.type === 'monte_carlo') {
+    <mat-tab-group>
+      <mat-tab label="Resumen de Probabilidad">
+        <mat-card class="resultado">
+          <mat-card-header>
+            <mat-card-title>Abanico de Resultados Finales</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="resultados-grid monte-carlo-grid">
+              <div class="valor">
+                <p class="label">En el peor 10% de los casos (P10)</p>
+                <p class="cifra valor-real">
+                  {{ result.percentileRows[result.percentileRows.length - 1]?.p10 | currencyEs }}
+                </p>
+              </div>
+              <div class="valor">
+                <p class="label">Resultado Mediana (P50)</p>
+                <p class="cifra valor-nominal">
+                  {{ result.percentileRows[result.percentileRows.length - 1]?.p50 | currencyEs }}
+                </p>
+              </div>
+              <div class="valor">
+                <p class="label">En el mejor 10% de los casos (P90)</p>
+                <p class="cifra">
+                  {{ result.percentileRows[result.percentileRows.length - 1]?.p90 | currencyEs }}
+                </p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
 
+      <mat-tab label="Gráfico de Probabilidad">
+        <mat-card class="grafica">
+          <mat-card-header>
+            <mat-card-title>Cono de Probabilidad de la Inversión</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <canvas
+              baseChart
+              [data]="chartDataLine"
+              [options]="chartOptionsLine"
+              chartType="line"
+            ></canvas>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
 
-                @let objetivo = result.objetivoAlcanzado;
-                @if (objetivo) {
-                  <div class="alert-card success">
-                    <mat-icon>flag</mat-icon>
-                    <p>Alcanzas tu objetivo en el <strong>año {{ objetivo }}</strong>.</p>
-                  </div>
-                }
-
-                <div class="resultados-grid">
-                  <div class="valor"><p class="label">Total Aportado</p><p class="cifra">{{ result.rows[result.rows.length - 1]?.aportado | currencyEs }}</p></div>
-                  <div class="valor"><p class="label">Intereses Netos</p><p class="cifra">{{ result.rows[result.rows.length - 1]?.intereses | currencyEs }}</p></div>
-                  <div class="valor"><p class="label">Valor Nominal Final</p><p class="cifra valor-nominal">{{ result.totalNominal | currencyEs }}</p></div>
-                  <div class="valor"><p class="label">Valor Real Final</p><p class="cifra valor-real">{{ result.totalReal | currencyEs }}</p></div>
-                </div>
-
-              </mat-card-content>
-            </mat-card>
-          </mat-tab>
-
-          <mat-tab label="Gráficas">
-            <mat-card class="grafica">
-              <mat-card-header>
-                <mat-card-title>Evolución del Patrimonio</mat-card-title>
-              </mat-card-header>
-              <mat-card-content>
-                <canvas baseChart [data]="chartDataLine" [options]="chartOptionsLine" chartType="line"></canvas>
-              </mat-card-content>
-            </mat-card>
-
-            <mat-card class="grafica">
-              <mat-card-header>
-                <mat-card-title>Capital vs. Intereses</mat-card-title>
-              </mat-card-header>
-              <mat-card-content>
-                <canvas baseChart [data]="chartDataBar" [options]="chartOptionsBar" chartType="bar"></canvas>
-              </mat-card-content>
-            </mat-card>
-          </mat-tab>
-
-          <mat-tab label="Tabla Anual">
-            <mat-card class="tabla">
-              <mat-card-content>
-                <div class="overflow-x-auto">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Año</th>
-                        <th>Aportado</th>
-                        <th>Intereses</th>
-                        <th>Valor Nominal</th>
-                        <th>Valor Real</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @for (r of result.rows; track $index) {
-                        <tr>
-                          <td>{{ r.year }}</td>
-                          <td>{{ r.aportado | currencyEs }}</td>
-                          <td>{{ r.intereses | currencyEs }}</td>
-                          <td>{{ r.valorNominal | currencyEs }}</td>
-                          <td>{{ r.valorReal | currencyEs }}</td>
-                        </tr>
-                      }
-                    </tbody>
-                  </table>
-                </div>
-              </mat-card-content>
-            </mat-card>
-          </mat-tab>
-
-        </mat-tab-group>
-      }
-      @if (result.type === 'monte_carlo') {
-        <mat-tab-group>
-          <mat-tab label="Resumen de Probabilidad">
-            <mat-card class="resultado">
-              <mat-card-header>
-                <mat-card-title>Abanico de Resultados Finales</mat-card-title>
-              </mat-card-header>
-              <mat-card-content>
-                <div class="resultados-grid monte-carlo-grid">
-                  <div class="valor">
-                    <p class="label">En el peor 10% de los casos (P10)</p>
-                    <p class="cifra valor-real">{{ result.percentileRows[result.percentileRows.length - 1]?.p10 | currencyEs }}</p>
-                  </div>
-                  <div class="valor">
-                    <p class="label">Resultado Mediana (P50)</p>
-                    <p class="cifra valor-nominal">{{ result.percentileRows[result.percentileRows.length - 1]?.p50 | currencyEs }}</p>
-                  </div>
-                  <div class="valor">
-                    <p class="label">En el mejor 10% de los casos (P90)</p>
-                    <p class="cifra">{{ result.percentileRows[result.percentileRows.length - 1]?.p90 | currencyEs }}</p>
-                  </div>
-                </div>
-              </mat-card-content>
-            </mat-card>
-          </mat-tab>
-
-          <mat-tab label="Gráfico de Probabilidad">
-            <mat-card class="grafica">
-              <mat-card-header>
-                <mat-card-title>Cono de Probabilidad de la Inversión</mat-card-title>
-              </mat-card-header>
-              <mat-card-content>
-                <canvas baseChart [data]="chartDataLine" [options]="chartOptionsLine" chartType="line"></canvas>
-              </mat-card-content>
-            </mat-card>
-          </mat-tab>
-
-          <mat-tab label="Tabla de Percentiles">
-            <mat-card class="tabla">
-              <mat-card-content>
-                <div class="overflow-x-auto">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Año</th>
-                        <th>P10</th>
-                        <th>P25</th>
-                        <th>P50 (Mediana)</th>
-                        <th>P75</th>
-                        <th>P90</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @for (r of result.percentileRows; track $index) {
-                        <tr>
-                          <td>{{ r.year }}</td>
-                          <td>{{ r.p10 | currencyEs }}</td>
-                          <td>{{ r.p25 | currencyEs }}</td>
-                          <td>{{ r.p50 | currencyEs }}</td>
-                          <td>{{ r.p75 | currencyEs }}</td>
-                          <td>{{ r.p90 | currencyEs }}</td>
-                        </tr>
-                      }
-                    </tbody>
-                  </table>
-                </div>
-              </mat-card-content>
-            </mat-card>
-          </mat-tab>
-
-        </mat-tab-group>
-      }
-    }
-
-    @else {
-      <mat-card class="no-result">
-        <mat-icon color="primary">insights</mat-icon>
-        <h3>Visualiza el futuro de tu dinero</h3>
-        <p>Rellena el formulario y haz clic en "Calcular" para iniciar la simulación.</p>
-      </mat-card>
+      <mat-tab label="Tabla de Percentiles">
+        <mat-card class="tabla">
+          <mat-card-content>
+            <div class="overflow-x-auto">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Año</th>
+                    <th>P10</th>
+                    <th>P25</th>
+                    <th>P50 (Mediana)</th>
+                    <th>P75</th>
+                    <th>P90</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (r of result.percentileRows; track $index) {
+                  <tr>
+                    <td>{{ r.year }}</td>
+                    <td>{{ r.p10 | currencyEs }}</td>
+                    <td>{{ r.p25 | currencyEs }}</td>
+                    <td>{{ r.p50 | currencyEs }}</td>
+                    <td>{{ r.p75 | currencyEs }}</td>
+                    <td>{{ r.p90 | currencyEs }}</td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+    </mat-tab-group>
+    } } @else {
+    <mat-card class="no-result">
+      <mat-icon color="primary">insights</mat-icon>
+      <h3>Visualiza el futuro de tu dinero</h3>
+      <p>Rellena el formulario y haz clic en "Calcular" para iniciar la simulación.</p>
+    </mat-card>
     }
   </div>
 </div>

@@ -61,7 +61,7 @@ export class WatchlistComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.polling.stop();
+    
     this.sub?.unsubscribe();
   }
 

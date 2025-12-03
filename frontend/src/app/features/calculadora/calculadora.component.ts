@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup, FormArray } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -21,14 +20,26 @@ import { ChartService } from '../../core/services/chart.service';
 @Component({
   selector: 'app-calculadora',
   standalone: true,
-  imports: [ CommonModule, ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, BaseChartDirective, CurrencyEsPipe, MatTabsModule, MatDialogModule, MatSlideToggleModule ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    BaseChartDirective,
+    CurrencyEsPipe,
+    MatTabsModule,
+    MatDialogModule,
+    MatSlideToggleModule,
+  ],
   templateUrl: './calculadora.component.html',
   styleUrls: ['./calculadora.component.css'],
 })
 export class CalculadoraComponent implements OnInit {
   form!: FormGroup;
   result: any | null = null;
-
 
   chartOptions: any = {
     responsive: true,
@@ -38,33 +49,32 @@ export class CalculadoraComponent implements OnInit {
         ticks: {
           maxRotation: 45,
           autoSkip: true,
-          maxTicksLimit: 20
-        }
+          maxTicksLimit: 20,
+        },
       },
       y: {
         beginAtZero: true,
         ticks: {
-
-          callback: function(value: string | number) {
-            if (Number(value) >= 1000000) return (Number(value) / 1000000) + 'M';
-            if (Number(value) >= 1000) return (Number(value) / 1000) + 'k';
+          callback: function (value: string | number) {
+            if (Number(value) >= 1000000) return Number(value) / 1000000 + 'M';
+            if (Number(value) >= 1000) return Number(value) / 1000 + 'k';
             return value;
-          }
-        }
-      }
+          },
+        },
+      },
     },
     plugins: {
       legend: {
         position: 'bottom',
       },
-      
-    tooltip: {
-      enabled: true,
+
+      tooltip: {
+        enabled: true,
+      },
+      datalabels: {
+        display: false,
+      },
     },
-    datalabels: {
-      display: false
-    }
-    }
   };
 
   chartDataLine: ChartConfiguration<'line'>['data'] = { labels: [], datasets: [] };
@@ -134,7 +144,10 @@ export class CalculadoraComponent implements OnInit {
 
   onRentabilidadesBlur(event: Event) {
     const value = (event.target as HTMLTextAreaElement).value || '';
-    const rentabilidades = value.split(',').map(v => Number(v.trim())).filter(v => !isNaN(v));
+    const rentabilidades = value
+      .split(',')
+      .map((v) => Number(v.trim()))
+      .filter((v) => !isNaN(v));
     this.form.patchValue({ rentabilidadesAnuales: rentabilidades });
   }
 
@@ -144,10 +157,11 @@ export class CalculadoraComponent implements OnInit {
     this.result = this.calculadoraService.calcular(this.form.value);
 
     if (this.result.type === 'monte_carlo') {
-        this.chartDataLine = this.chartService.getMonteCarloLineChartData(this.result);
+      this.chartDataLine = this.chartService.getMonteCarloLineChartData(this.result);
     } else {
-        this.chartDataLine = this.chartService.getLineChartData(this.result.rows);
-        this.chartDataBar = this.chartService.getBarChartData(this.result.rows);
+      this.chartDataLine = this.chartService.getLineChartData(this.result.rows);
+      this.chartDataBar = this.chartService.getBarChartData(this.result.rows);
     }
+    document.getElementById('resultados')?.scrollIntoView({ behavior: 'smooth' });
   }
 }

@@ -11,7 +11,10 @@ import { Observable, map, shareReplay, Subject, takeUntil, interval } from 'rxjs
 import { AuthService } from '../../../core/services/auth.service';
 import { PollingService } from '../../../core/services/polling.service';
 import { AlertasService } from '../../../core/services/alertas-service';
+import { OrdenesService } from '../../../core/services/ordenes.service';
 import { Alerta } from '../../../core/models/alerta';
+import { Orden } from '../../../core/models/orden';
+import { Empresa } from '../../../core/models/empresa';
 
 @Component({
   selector: 'app-layout',
@@ -36,6 +39,11 @@ export class LayoutComponent implements OnInit, OnDestroy {
   alertasActivas: Alerta[] = [];
   alertasCumplidas: Alerta[] = [];
 
+  ordenes: Orden[] = [];
+  ordenesCumplidas: Orden[] = [];
+
+  empresas: Empresa[] = []; 
+
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -43,7 +51,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
     private router: Router,
     private breakpointObserver: BreakpointObserver,
     private polling: PollingService,
-    private alertasService: AlertasService
+    private alertasService: AlertasService,
+    private ordenesService: OrdenesService
   ) {
     this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
       .pipe(map(result => result.matches), shareReplay());
@@ -59,20 +68,26 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-  this.auth.currentUser$.subscribe(user => {
-    if (user) {
-      this.polling.startGlobal();
-    }
-  });
+    this.auth.currentUser$.subscribe(user => {
+      if (user) {
+        this.polling.startGlobal();
+      }
+    });
 
-  this.alertasService.alertas$.subscribe(a => this.alertasActivas = a);
-  this.alertasService.alertasCumplidas$.subscribe(a => this.alertasCumplidas = a);
+    this.alertasService.alertas$.subscribe(a => this.alertasActivas = a);
+    this.alertasService.alertasCumplidas$.subscribe(a => this.alertasCumplidas = a);
 
-  interval(30000).pipe(takeUntil(this.destroy$)).subscribe(() => {
-    this.alertasService.evaluarAlertas();
-  });
-}
+    this.ordenesService.ordenes$.subscribe(o => this.ordenes = o);
+    this.ordenesService.ordenesCumplidas$.subscribe(o => this.ordenesCumplidas = o);
 
+
+    this.polling.empresas$.subscribe(e => this.empresas = e);
+
+    interval(30000).pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.alertasService.evaluarAlertas();
+      this.ordenesService.evaluarOrdenes(this.empresas);
+    });
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next();

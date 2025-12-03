@@ -9,7 +9,6 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-
 :root {
   --bg-gradient: linear-gradient(135deg, #0f172a, #1e293b, #334155);
   --panel-bg: #1e293b;
@@ -22,7 +21,6 @@ body {
   --text-dark: #0b1220;
   --text-red: #6b1a08;
 }
-
 
 .app-bg {
   background: var(--bg-gradient);
@@ -91,9 +89,6 @@ body {
   padding: 1rem;
 }
 
-
-
-/* Inputs y campos */
 .panel input,
 .panel textarea,
 .panel button,
@@ -186,19 +181,33 @@ textarea:-ms-input-placeholder {
   background-color: var(--input-bg);
 }
 
-/* Snackbar */
 .alerta-snackbar {
-  background: linear-gradient(90deg, var(--accent-yellow), #eab308);
-  color: #111;
-  font-size: 18px;
-  font-weight: 700;
-  padding: 12px 20px;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  background: #0b1220;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 24px;
+  border-radius: 12px;
+  border: 5px solid var(--accent-yellow);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
   text-align: center;
+  letter-spacing: 0.5px;
+  animation: fadeInDown 0.4s ease;
 }
 
-/* Animaciones */
+.alerta-snackbar .mat-mdc-snack-bar-action button {
+  color: #fff;
+  background: transparent;
+  border-radius: 6px;
+  padding: 6px 12px;
+  transition: background 0.3s ease;
+}
+
+.alerta-snackbar .mat-mdc-snack-bar-action button:hover {
+  background: #6b7280;
+}
+
+
 @keyframes gradientFlow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -213,4 +222,22 @@ textarea:-ms-input-placeholder {
 @keyframes fadeInDown {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+.mat-mdc-select-panel {
+  background-color: var(--panel-light-bg) !important;
+  color: var(--text-dark) !important;
+  opacity: 1 !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  z-index: 1000;
+}
+
+select {
+  background-color: var(--panel-light-bg);
+  color: var(--text-dark);
+}
+
+select option {
+  background-color: var(--panel-light-bg);
+  color: var(--text-dark);
 }

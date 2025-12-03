@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class MovimientoSaldo extends Model
 {
     protected $table = 'movimientos_saldo';
-
+   const TIPO_INGRESO = 'ingreso';
+    const TIPO_RETIRO = 'retiro';
     protected $fillable = [
         'user_id',
         'tipo',

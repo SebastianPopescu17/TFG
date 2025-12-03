@@ -19,15 +19,15 @@
       <tbody>
         @for (alerta of alertas; track alerta.id) {
           <tr>
-            <td>{{ alerta.empresa?.nombre }}</td>
-            <td>{{ alerta.tipo | titlecase }}</td>
-            <td>{{ alerta.condicion }} {{ alerta.valor }}</td>
-            <td>
+            <td class="centered">{{ alerta.empresa?.nombre }}</td>
+            <td class="centered">{{ alerta.tipo | titlecase }}</td>
+            <td class="centered">{{ alerta.condicion }} {{ alerta.valor }}</td>
+            <td class="centered">
               <span [ngClass]="alerta.activa ? 'activa' : 'inactiva'">
-                {{ alerta.activa ? 'Activa' : 'Inactiva' }}
+                {{ alerta.activa ? '✅ Activa' : '❌ Inactiva' }}
               </span>
             </td>
-            <td>
+            <td class="centered">
               <button
                 class="icon-btn warn"
                 (click)="eliminarAlerta(alerta.id)"

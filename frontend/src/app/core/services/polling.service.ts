@@ -1,80 +1,88 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Subject, interval } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Subject, interval, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Api } from './api.service';
 import { AuthService } from './auth.service';
 import { Empresa } from '../models/empresa';
 import { AlertasService } from './alertas-service';
+import { OrdenesService } from './ordenes.service';
 
 @Injectable({ providedIn: 'root' })
-export class PollingService implements OnDestroy {
+export class PollingService {
   private empresasSubject = new BehaviorSubject<Empresa[]>([]);
   empresas$ = this.empresasSubject.asObservable();
 
   private empresaSubject = new BehaviorSubject<Empresa | null>(null);
   empresa$ = this.empresaSubject.asObservable();
 
+  private globalSubscription: Subscription | null = null;
+  private tickerSubscription: Subscription | null = null;
   private stop$ = new Subject<void>();
 
   constructor(
     private api: Api,
     private auth: AuthService,
-    private alertasService: AlertasService
+    private alertasService: AlertasService,
+    private ordenesService: OrdenesService
   ) {}
 
- startGlobal(): void {
-  this.stop();
+  startGlobal(): void {
+    if (!this.auth.isAuthenticated()) return;
+    if (this.globalSubscription && !this.globalSubscription.closed) return;
 
-  if (!this.auth.isAuthenticated()) return;
+    this.refreshGlobalData();
 
-  const userId = this.auth.getCurrentUserId();
-  if (!userId) return;
+    this.globalSubscription = interval(5000)
+      .pipe(takeUntil(this.stop$))
+      .subscribe(() => {
+        this.refreshGlobalData();
+        if (new Date().getSeconds() % 30 < 5) {
+          this.alertasService.evaluarAlertas();
+        }
+      });
+  }
 
-  // Carga inicial de empresas
-  this.api.getEmpresas().subscribe({
-    next: res => this.empresasSubject.next(res.data),
-    error: (err: any) => console.error('Error inicial cargando empresas', err)
-  });
-
-  // Refresco cada 5s
-  interval(5000).pipe(takeUntil(this.stop$)).subscribe(() => {
+  private refreshGlobalData() {
     this.api.getEmpresas().subscribe({
-      next: res => this.empresasSubject.next(res.data),
-      error: (err: any) => console.error('Error cargando empresas', err)
+      next: res => {
+        this.empresasSubject.next(res.data);
+        this.ordenesService.evaluarOrdenes(res.data);
+      },
+      error: () => {}
     });
-  });
-
-  // Evaluar alertas cada 30s
-  interval(30000).pipe(takeUntil(this.stop$)).subscribe(() => {
-    this.alertasService.evaluarAlertas();
-  });
-}
+  }
 
   startForTicker(ticker: string): void {
-    this.stop();
-
     if (!this.auth.isAuthenticated()) return;
+    this.stopTicker();
+    this.fetchTicker(ticker);
 
-    // Refrescar empresa concreta cada 5s
-    interval(5000).pipe(takeUntil(this.stop$)).subscribe(() => {
-      this.api.getEmpresa(ticker).subscribe({
-        next: empresa => this.empresaSubject.next(empresa),
-        error: err => console.error('Error cargando empresa', err)
+    this.tickerSubscription = interval(5000)
+      .pipe(takeUntil(this.stop$))
+      .subscribe(() => {
+        this.fetchTicker(ticker);
       });
-    });
+  }
 
-    // Evaluar alertas cada 30s también en vista de empresa
-    interval(30000).pipe(takeUntil(this.stop$)).subscribe(() => {
-      this.alertasService.evaluarAlertas();
+  private fetchTicker(ticker: string) {
+    this.api.getEmpresa(ticker).subscribe({
+      next: empresa => this.empresaSubject.next(empresa),
+      error: () => {}
     });
   }
 
-  stop(): void {
+  stopTicker(): void {
+    if (this.tickerSubscription) {
+      this.tickerSubscription.unsubscribe();
+      this.tickerSubscription = null;
+    }
+  }
+
+  stopAll(): void {
     this.stop$.next();
-  }
-
-  ngOnDestroy(): void {
-    this.stop();
-    this.stop$.complete();
+    if (this.globalSubscription) this.globalSubscription.unsubscribe();
+    if (this.tickerSubscription) this.tickerSubscription.unsubscribe();
+    this.globalSubscription = null;
+    this.tickerSubscription = null;
   }
 }

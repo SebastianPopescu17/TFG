@@ -10,9 +10,9 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('empresa_id')->constrained('empresas')->onDelete('cascade');
-            $table->decimal('cantidad', 18, 6)->default(0);
-            $table->decimal('invertido', 18, 6)->default(0);
-            $table->decimal('precio_medio', 18, 6)->default(0);
+            $table->decimal('cantidad', 18, 2)->default(0);
+            $table->decimal('invertido', 18, 2)->default(0);
+            $table->decimal('precio_medio', 18, 2)->default(0);
             $table->timestamps();
             $table->unique(['user_id','empresa_id']);
         });

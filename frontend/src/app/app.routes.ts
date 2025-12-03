@@ -33,6 +33,8 @@ export const routes: Routes = [
         loadComponent: () => import('./features/admin-dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent)
       },
       { path: 'calculadora', loadComponent: () => import('./features/calculadora/calculadora.component').then(m => m.CalculadoraComponent) }
+      ,{ path: 'ordenes', loadComponent: () => import('./features/ordenes/ordenes-programadas-list/ordenes-programadas-list.component').then(m => m.OrdenesProgramadasListComponent) }
+      ,{ path: 'ordenes/nueva', loadComponent: () => import('./features/ordenes/ordenes-programadas-form/ordenes-programadas-form.component').then(m => m.OrdenesProgramadasFormComponent) }
     ]
   },
 

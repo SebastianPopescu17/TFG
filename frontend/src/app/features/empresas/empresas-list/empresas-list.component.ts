@@ -55,7 +55,7 @@ export class EmpresasListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.polling.stop();
+    
     this.sub?.unsubscribe();
   }
 

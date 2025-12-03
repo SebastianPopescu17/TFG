@@ -4,11 +4,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
 import { Api } from '../../core/services/api.service';
+import { MensajeDialogComponent } from '../mensaje-dialog/mensaje-dialog.component';
 
 interface Movimiento {
   created_at: string;
@@ -40,17 +41,23 @@ export class SaldoComponent implements OnInit {
   displayedColumns = ['fecha', 'tipo', 'monto', 'saldo_resultante'];
   totalMovimientos = 0;
 
-  constructor(private api: Api, private snackBar: MatSnackBar) {}
+  constructor(private api: Api, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.cargarSaldo();
     this.cargarMovimientos();
   }
 
+  private abrirDialogo(titulo: string, mensaje: string, tipo: 'success' | 'error' = 'success'): void {
+    this.dialog.open(MensajeDialogComponent, {
+      data: { titulo, mensaje, tipo }
+    });
+  }
+
   cargarSaldo(): void {
     this.api.getSaldo().subscribe({
       next: res => this.saldo = res.saldo,
-      error: () => this.snackBar.open('Error cargando saldo ❌', 'Cerrar', { duration: 3000 })
+      error: () => this.abrirDialogo('Error', 'Error cargando saldo ❌', 'error')
     });
   }
 
@@ -60,7 +67,7 @@ export class SaldoComponent implements OnInit {
         this.movimientos = res.data ?? [];
         this.totalMovimientos = res.total ?? this.movimientos.length;
       },
-      error: () => this.snackBar.open('Error cargando movimientos ❌', 'Cerrar', { duration: 3000 })
+      error: () => this.abrirDialogo('Error', 'Error cargando movimientos ❌', 'error')
     });
   }
 
@@ -69,10 +76,11 @@ export class SaldoComponent implements OnInit {
     this.api.ingresarSaldo(this.monto).subscribe({
       next: res => {
         this.saldo = res.saldo;
-        this.snackBar.open('Saldo ingresado ✅', 'Cerrar', { duration: 3000 });
+        this.abrirDialogo('Éxito', 'Saldo ingresado ✅', 'success');
         this.monto = 0;
         this.cargarMovimientos();
-      }
+      },
+      error: () => this.abrirDialogo('Error', 'No se pudo ingresar saldo ❌', 'error')
     });
   }
 
@@ -81,12 +89,12 @@ export class SaldoComponent implements OnInit {
     this.api.retirarSaldo(this.monto).subscribe({
       next: res => {
         this.saldo = res.saldo;
-        this.snackBar.open('Saldo retirado ✅', 'Cerrar', { duration: 3000 });
+        this.abrirDialogo('Éxito', 'Saldo retirado ✅', 'success');
         this.monto = 0;
         this.cargarMovimientos();
       },
       error: err => {
-        this.snackBar.open(err?.error?.error || 'Saldo insuficiente ❌', 'Cerrar', { duration: 3000 });
+        this.abrirDialogo('Error', err?.error?.error || 'Saldo insuficiente ❌', 'error');
       }
     });
   }
