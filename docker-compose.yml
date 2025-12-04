@@ -1,24 +1,21 @@
-version: '3.9'
-
 services:
   db:
     image: mysql:8.0
     container_name: db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: investrack
-      MYSQL_USER: root
-      MYSQL_PASSWORD: ""
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
 
   backend:
     build:
       context: ./backend
-      dockerfile: dockerfile
+      dockerfile: Dockerfile  
     container_name: backend
     restart: always
     depends_on:
@@ -30,23 +27,32 @@ services:
       DB_DATABASE: investrack
       DB_USERNAME: root
       DB_PASSWORD: ""
+    volumes:
+      - ./backend:/var/www/html
     ports:
-      - "8000:8000"
+      - "8000:80"
+
+  workers:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: workers
+    depends_on:
+      - backend
+    command: /var/www/html/start-workers.sh
     volumes:
       - ./backend:/var/www/html
 
   frontend:
     build:
       context: ./frontend
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     container_name: frontend
     restart: always
     depends_on:
       - backend
     ports:
       - "8080:80"
-    volumes:
-      - ./frontend:/usr/src/app
 
 volumes:
   db_data:
