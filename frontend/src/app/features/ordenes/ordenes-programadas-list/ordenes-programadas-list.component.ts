@@ -54,7 +54,7 @@ export class OrdenesProgramadasListComponent implements OnInit, OnDestroy {
             width: '400px',
             data: {
               title: 'Orden cancelada',
-              message: `❌ Orden cancelada correctamente`
+              message: `Orden cancelada correctamente`
             }
           });
         },

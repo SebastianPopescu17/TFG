@@ -129,14 +129,14 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
     this.userId = this.auth.getCurrentUserId();
     this.loading = true;
 
-    // Registrar Chart.js dinámicamente para reducir el bundle inicial
+
     try {
       const { Chart, registerables } = await import('chart.js');
       const ChartDataLabels = (await import('chartjs-plugin-datalabels')).default;
       await import('chartjs-adapter-date-fns');
       Chart.register(...registerables, ChartDataLabels);
     } catch (err) {
-      // Si la carga dinámica falla, continuar sin crash (los gráficos fallarán hasta recargar)
+
       console.warn('No se pudo registrar Chart.js dinámicamente:', err);
     }
 
@@ -194,7 +194,7 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    
+
     this.sub?.unsubscribe();
   }
 
@@ -211,7 +211,7 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
           width: '400px',
           data: {
             titulo: 'Aviso',
-            mensaje: `${this.empresa?.nombre} ya está en tu watchlist ⚠️`,
+            mensaje: `${this.empresa?.nombre} ya está en tu lista de favoritos`,
             tipo: 'info',
           },
         });
@@ -232,7 +232,7 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
                 width: '400px',
                 data: {
                   titulo: 'Acción completada',
-                  mensaje: `${this.empresa?.nombre} añadida a tu watchlist ✅`,
+                  mensaje: `${this.empresa?.nombre} añadida a tu lista de favoritos`,
                   tipo: 'success',
                 },
               });
@@ -243,7 +243,7 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
                   width: '400px',
                   data: {
                     titulo: 'Aviso',
-                    mensaje: `${this.empresa?.nombre} ya estaba en tu watchlist ⚠️`,
+                    mensaje: `${this.empresa?.nombre} ya estaba en tu lista de favoritos`,
                     tipo: 'info',
                   },
                 });
@@ -252,7 +252,7 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
                   width: '400px',
                   data: {
                     titulo: 'Error',
-                    mensaje: 'Error al añadir la empresa ❌',
+                    mensaje: 'Error al añadir la empresa ',
                     tipo: 'error',
                   },
                 });
@@ -267,7 +267,7 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
         width: '400px',
         data: {
           titulo: 'Error',
-          mensaje: 'No se pudo comprobar la watchlist ❌',
+          mensaje: 'No se pudo comprobar la watchlist ',
           tipo: 'error',
         },
       });
@@ -324,7 +324,7 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
             if (coste > this.saldo) {
               this.dialog.open(MensajeDialogComponent, {
                 width: '400px',
-                data: { titulo: 'Error', mensaje: 'Saldo insuficiente ❌', tipo: 'error' },
+                data: { titulo: 'Error', mensaje: 'Saldo insuficiente ', tipo: 'error' },
               });
               return;
             }
@@ -337,7 +337,7 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
                     width: '400px',
                     data: {
                       titulo: 'Compra ejecutada',
-                      mensaje: 'La operación se realizó correctamente ✅',
+                      mensaje: 'La operación se realizó correctamente ',
                       tipo: 'success',
                     },
                   });
@@ -346,7 +346,7 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
                 error: () => {
                   this.dialog.open(MensajeDialogComponent, {
                     width: '400px',
-                    data: { titulo: 'Error', mensaje: 'Error ejecutando compra ❌', tipo: 'error' },
+                    data: { titulo: 'Error', mensaje: 'Error ejecutando compra ', tipo: 'error' },
                   });
                 },
               });
@@ -369,7 +369,7 @@ export class EmpresaDetailComponent implements OnInit, OnDestroy {
         width: '400px',
         data: {
           titulo: 'Orden creada',
-          mensaje: 'La orden programada se creó correctamente ✔️',
+          mensaje: 'La orden programada se creó correctamente',
           tipo: 'success',
         },
       });

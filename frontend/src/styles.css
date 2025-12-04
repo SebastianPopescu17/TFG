@@ -76,7 +76,7 @@ body {
 }
 
 .panel-light {
-  background: #ffffff;
+  background: var(--panel-light-bg);
   color: #0b1220;
   border-radius: var(--card-radius);
   padding: 1rem;
@@ -181,6 +181,14 @@ textarea:-ms-input-placeholder {
   background-color: var(--input-bg);
 }
 
+.error-snackbar {
+  background-color: var(--text-red);
+  color: var(--text-main);
+  font-weight: 500;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
 .alerta-snackbar {
   background: #0b1220;
   color: #fff;
@@ -196,7 +204,7 @@ textarea:-ms-input-placeholder {
 }
 
 .alerta-snackbar .mat-mdc-snack-bar-action button {
-  color: #fff;
+  color: var(--text-main);
   background: transparent;
   border-radius: 6px;
   padding: 6px 12px;

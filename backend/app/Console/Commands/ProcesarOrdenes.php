@@ -44,20 +44,24 @@ class ProcesarOrdenes extends Command
                 $cantidad = round($orden->cantidad, 2);
                 $debeEjecutar = false;
 
-                // Condición de precio objetivo
+                
                 if ($orden->precio_objetivo !== null) {
                     $precioObjetivo = round($orden->precio_objetivo, 2);
-                    if ($orden->tipo === OrdenProgramada::TIPO_COMPRA && $precioActual <= $precioObjetivo) {
+
+                    if ($orden->tipo === OrdenProgramada::TIPO_COMPRA && $precioActual == $precioObjetivo) {
                         $debeEjecutar = true;
                     }
-                    if ($orden->tipo === OrdenProgramada::TIPO_VENTA && $precioActual >= $precioObjetivo) {
+
+                    if ($orden->tipo === OrdenProgramada::TIPO_VENTA && $precioActual == $precioObjetivo) {
                         $debeEjecutar = true;
                     }
                 }
 
-                // Condición de fecha programada
-                if (!$debeEjecutar && $orden->scheduled_at && now()->greaterThanOrEqualTo($orden->scheduled_at)) {
-                    $debeEjecutar = true;
+
+                if ($debeEjecutar && $orden->scheduled_at) {
+                    if (!now()->greaterThanOrEqualTo($orden->scheduled_at)) {
+                        $debeEjecutar = false;
+                    }
                 }
 
                 if (!$debeEjecutar) {
@@ -94,7 +98,7 @@ class ProcesarOrdenes extends Command
 
                     MovimientoSaldo::create([
                         'user_id' => $user->id,
-                        'tipo' => 'compra',
+                        'tipo' => 'retiro',
                         'monto' => -$total,
                         'saldo_resultante' => $user->saldo,
                     ]);
@@ -150,7 +154,7 @@ class ProcesarOrdenes extends Command
 
                     MovimientoSaldo::create([
                         'user_id' => $user->id,
-                        'tipo' => 'venta',
+                        'tipo' => 'ingreso',
                         'monto' => $revenue,
                         'saldo_resultante' => $user->saldo,
                     ]);

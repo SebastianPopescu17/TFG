@@ -52,4 +52,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(OrdenProgramada::class, 'user_id');
     }
+    public function posiciones()
+{
+    return $this->hasMany(Posicion::class, 'user_id');
+}
 }

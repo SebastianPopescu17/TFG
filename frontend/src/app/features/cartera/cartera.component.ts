@@ -53,7 +53,6 @@ export class CarteraComponent implements OnInit, OnDestroy {
   this.loading = true;
   this.api.getCartera().subscribe({
     next: (data: any) => {
-      console.log('Respuesta de /cartera:', data);
       this.detalle = (data.detalle ?? []).map((pos: any) => ({
         empresa_id: pos.empresa_id,
         empresa: pos.empresa,
@@ -86,17 +85,17 @@ export class CarteraComponent implements OnInit, OnDestroy {
 
     this.api.vender({ empresa_id: pos.empresa_id, cantidad, precio: pos.precio_actual }).subscribe({
       next: () => {
-       
+
         this.dialog.open(MensajeDialogComponent, {
           width: '400px',
           data: {
             titulo: 'Venta realizada',
-            mensaje: `Vendidas ${cantidad} acciones de ${pos.ticker} a ${pos.precio_actual} € ✅`,
+            mensaje: `Vendidas ${cantidad} acciones de ${pos.ticker} a ${pos.precio_actual} € `,
             tipo: 'success'
           }
         });
 
-        // Actualizar posición en memoria
+
         pos.cantidad -= cantidad;
         this.actualizarPosicion(pos);
         if (pos.cantidad <= 0) {
@@ -105,12 +104,12 @@ export class CarteraComponent implements OnInit, OnDestroy {
         this.resumen = this.calcularResumen(this.detalle);
       },
       error: (err) => {
-        // 👇 Mostrar diálogo de error
+
         this.dialog.open(MensajeDialogComponent, {
           width: '400px',
           data: {
             titulo: 'Error en la venta',
-            mensaje: err?.error?.error || 'Error al vender ❌',
+            mensaje: err?.error?.error || 'Error al vender ',
             tipo: 'error'
           }
         });

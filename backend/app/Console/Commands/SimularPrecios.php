@@ -45,7 +45,7 @@ class SimularPrecios extends Command
     {
         $empresas = Empresa::all();
 
-        // Factor global de mercado pequeño y constante
+        // Factor global de mercado
         $indiceMercado = $this->generarVariacionNormal(0, 0.0005);
 
         // Ciclo de mercado (bull/bear muy suave)
@@ -59,11 +59,11 @@ class SimularPrecios extends Command
             $volatilidad = $config['volatilidad'];
             $tendencia   = $config['tendencia'];
 
-            // Ajuste por horario de mercado (moderado)
+            // Ajuste por horario de mercado
             $hora = now()->hour;
             $volHorario = ($hora >= 9 && $hora <= 17) ? $volatilidad * 1.2 : $volatilidad * 0.5;
 
-            // Volatilidad adaptativa basada en último tick (menos agresiva)
+            // Volatilidad adaptativa basada en último tick
            $ultimoTick = $empresa->ticks()->latest('registrado_en')->first();
 
             if ($ultimoTick) {
@@ -74,7 +74,7 @@ class SimularPrecios extends Command
             // Variación base
             $variacion = $precioAnterior * $this->generarVariacionNormal(0, $volHorario / 100);
 
-            // Añadir tendencia, índice global y fase de mercado
+            //Tendencia, índice global y fase de mercado
             $variacion += $precioAnterior * $tendencia;
             $variacion += $precioAnterior * $indiceMercado;
             $variacion += $precioAnterior * $faseMercado;
@@ -83,7 +83,7 @@ class SimularPrecios extends Command
             $maxDelta = 0.03 * $precioAnterior;
             $variacion = max(-$maxDelta, min($maxDelta, $variacion));
 
-            // Eventos externos muy suaves
+            // Eventos externos
             if (rand(0,500) < 2) {
                 $evento = rand(-1,1);
                 $variacion += $precioAnterior * $evento * rand(1,2) / 100; // ±1-2%

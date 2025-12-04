@@ -42,7 +42,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   ordenes: Orden[] = [];
   ordenesCumplidas: Orden[] = [];
 
-  empresas: Empresa[] = []; 
+  empresas: Empresa[] = [];
 
   private destroy$ = new Subject<void>();
 
@@ -100,6 +100,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   logout() {
     this.auth.logout();
+    this.polling.stopAll();
+
     this.router.navigate(['/login']);
   }
 }

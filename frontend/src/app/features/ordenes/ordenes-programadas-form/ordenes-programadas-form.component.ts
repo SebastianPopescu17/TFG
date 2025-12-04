@@ -83,7 +83,7 @@ export class OrdenesProgramadasFormComponent implements OnInit {
       this.checkSaldoDisponible();
     });
 
-    // revalidar cantidad y precio objetivo
+   
     this.form.get('cantidad')?.valueChanges.subscribe(() => this.updateImporteTotal());
     this.form.get('precio_objetivo')?.valueChanges.subscribe(() => this.updateImporteTotal());
   }
@@ -158,7 +158,7 @@ export class OrdenesProgramadasFormComponent implements OnInit {
       scheduled_at: this.form.value.scheduled_at ?? undefined,
     };
 
-    // seguridad adicional: validar contra cantidad disponible si es venta
+
     if (payload.tipo === 'venta' && payload.cantidad > (this.availableAmount ?? 0)) {
       this.submitting = false;
       alert('La cantidad a vender excede las acciones disponibles: ' + (this.availableAmount ?? 0));

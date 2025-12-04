@@ -57,7 +57,7 @@ export class SaldoComponent implements OnInit {
   cargarSaldo(): void {
     this.api.getSaldo().subscribe({
       next: res => this.saldo = res.saldo,
-      error: () => this.abrirDialogo('Error', 'Error cargando saldo ❌', 'error')
+      error: () => this.abrirDialogo('Error', 'Error cargando saldo ', 'error')
     });
   }
 
@@ -67,7 +67,7 @@ export class SaldoComponent implements OnInit {
         this.movimientos = res.data ?? [];
         this.totalMovimientos = res.total ?? this.movimientos.length;
       },
-      error: () => this.abrirDialogo('Error', 'Error cargando movimientos ❌', 'error')
+      error: () => this.abrirDialogo('Error', 'Error cargando movimientos ', 'error')
     });
   }
 
@@ -76,11 +76,11 @@ export class SaldoComponent implements OnInit {
     this.api.ingresarSaldo(this.monto).subscribe({
       next: res => {
         this.saldo = res.saldo;
-        this.abrirDialogo('Éxito', 'Saldo ingresado ✅', 'success');
+        this.abrirDialogo('Éxito', 'Saldo ingresado ', 'success');
         this.monto = 0;
         this.cargarMovimientos();
       },
-      error: () => this.abrirDialogo('Error', 'No se pudo ingresar saldo ❌', 'error')
+      error: () => this.abrirDialogo('Error', 'No se pudo ingresar saldo ', 'error')
     });
   }
 
@@ -89,12 +89,12 @@ export class SaldoComponent implements OnInit {
     this.api.retirarSaldo(this.monto).subscribe({
       next: res => {
         this.saldo = res.saldo;
-        this.abrirDialogo('Éxito', 'Saldo retirado ✅', 'success');
+        this.abrirDialogo('Éxito', 'Saldo retirado ', 'success');
         this.monto = 0;
         this.cargarMovimientos();
       },
       error: err => {
-        this.abrirDialogo('Error', err?.error?.error || 'Saldo insuficiente ❌', 'error');
+        this.abrirDialogo('Error', err?.error?.error || 'Saldo insuficiente ', 'error');
       }
     });
   }

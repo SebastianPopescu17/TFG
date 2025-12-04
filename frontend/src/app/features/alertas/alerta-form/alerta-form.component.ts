@@ -51,7 +51,7 @@ export class AlertaFormComponent implements OnInit {
 
   let valor: number | [number, number] = this.valor;
   if (this.condicion === 'entre') {
-    valor = [this.valorMin, this.valorMax]; // ✅ tupla exacta
+    valor = [this.valorMin, this.valorMax]; 
   }
 
   const data: Partial<Alerta> = {

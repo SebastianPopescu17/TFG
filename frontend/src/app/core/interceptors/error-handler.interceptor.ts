@@ -54,6 +54,7 @@ export const errorHandlerInterceptor: HttpInterceptorFn = (req, next) => {
         duration: 5000,
         horizontalPosition: 'center',
         verticalPosition: 'bottom',
+        panelClass: ['error-snackbar']
       });
 
       return throwError(() => error);
