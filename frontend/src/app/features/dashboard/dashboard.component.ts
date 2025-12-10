@@ -53,7 +53,7 @@ export class DashboardComponent {
       title: 'Órdenes Programadas',
       description: 'Ten el control de tus inversiones automatizando compras y ventas.',
       href: '/ordenes',
-      icon: 'schedule', 
+      icon: 'schedule',
     },
     {
       title: 'Operaciones',
@@ -65,7 +65,7 @@ export class DashboardComponent {
       title: 'Histórico',
       description: 'Visualiza tus posiciones pasadas de las empresas.',
       href: '/historico',
-      icon: 'account_balance_wallet',
+      icon: 'query_stats',
     },
     {
       title: 'Saldo',

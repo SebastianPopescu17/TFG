@@ -51,9 +51,8 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.auth.isAuthenticated()) {
-      this.router.navigate(['/dashboard']);
-    }
+
+    
   }
 
   private passwordsMatchValidator: ValidatorFn = (

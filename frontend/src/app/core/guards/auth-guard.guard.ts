@@ -15,7 +15,7 @@ export const authGuard: CanActivateFn = (route, state): boolean | UrlTree => {
   }
 
 
-  if (isLoggedIn && (url === '/login' || url === '/register')) {
+  if (isLoggedIn && (url === '/login')) {
     return router.parseUrl('/dashboard');
   }
 

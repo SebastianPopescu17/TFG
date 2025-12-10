@@ -29,7 +29,7 @@
   gap: 1rem;
   align-items: center;
   margin-bottom: 1rem;
-  color: #b91018;
+  color: var(--text-main);
 }
 
 mat-form-field {
@@ -62,12 +62,10 @@ canvas {
   padding: 0.5rem;
 }
 
-/* Valor seleccionado dentro del mat-select */
 .mat-select-value {
-  color: var(--text-main) !important;
+  color: #ffffff !important;
   font-weight: 500;
 }
-
 
 .mat-select-panel {
   background-color: var(--panel-bg) !important;
@@ -76,33 +74,33 @@ canvas {
   padding: 0.25rem 0;
 }
 
-
 .mat-option {
-  color: var(--text-main) !important;
+  color: #ffffff !important;
   background-color: var(--panel-bg) !important;
   font-size: 0.95rem;
   font-weight: 500;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-
 .mat-option:hover {
   background-color: rgba(30, 144, 255, 0.2) !important;
-  color: #1e90ff !important;
+  color: #ffffff !important;
 }
 
 .mat-option.mat-selected {
   background-color: rgba(30, 144, 255, 0.25) !important;
-  color: #1e90ff !important;
+  color: #ffffff !important;
   font-weight: 600;
 }
 
-
 mat-form-field .mat-form-field-label {
-  color: var(--text-main) !important;
+  color: #ffffff !important;
   font-weight: 500;
 }
 
+input.mat-input-element {
+  color: #ffffff !important;
+}
 
 @media (max-width: 600px) {
   .controls {
@@ -128,7 +126,6 @@ mat-form-field .mat-form-field-label {
   }
 }
 
-
 @media (min-width: 601px) and (max-width: 1024px) {
   .controls {
     flex-wrap: wrap;
@@ -151,7 +148,6 @@ mat-form-field .mat-form-field-label {
     font-size: 1.1rem;
   }
 }
-
 
 @media (min-width: 1025px) {
   .controls {

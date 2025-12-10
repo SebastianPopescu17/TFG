@@ -38,9 +38,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Instalar dependencias
 RUN composer install --no-dev --optimize-autoloader
 
-# Comando comentado para migraciones (solo si hiciera falta)
+# Comandos para migraciones y seeders
 # RUN php artisan migrate --force
-
+# RUN php artisan db:seed --force
 
 EXPOSE 80
 

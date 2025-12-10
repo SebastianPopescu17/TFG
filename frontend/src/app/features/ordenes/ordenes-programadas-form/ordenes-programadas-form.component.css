@@ -1,4 +1,4 @@
-/* Contenedor principal */
+
 .orden-form {
   max-width: 480px;
   margin: 20px auto;
@@ -8,7 +8,7 @@
   background-color: #fff;
 }
 
-/* Título */
+
 .orden-form h2 {
   font-size: 1.5rem;
   font-weight: 600;
@@ -16,16 +16,16 @@
   text-align: center;
 }
 
-/* Diferenciar compra/venta */
+
 .orden-form.compra h2 {
-  color: #2e7d32; /* verde Material */
+  color: #2e7d32;
 }
 
 .orden-form.venta h2 {
-  color: #c62828; /* rojo Material */
+  color: #c62828;
 }
 
-/* Contenido del formulario */
+
 .orden-form-content {
   display: flex;
   flex-direction: column;
@@ -40,20 +40,20 @@ mat-form-field {
   width: 100%;
 }
 
-/* Errores */
+
 mat-error {
   font-size: 0.875rem;
   color: #f44336;
   font-weight: 500;
 }
 
-/* Hints */
+
 mat-hint {
   font-size: 0.8rem;
   color: #666;
 }
 
-/* Acciones */
+
 .actions {
   display: flex;
   justify-content: space-between;
@@ -70,20 +70,20 @@ mat-hint {
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-/* Botón primario */
+
 button[color="primary"] {
   font-weight: 600;
   background-color: #1976d2;
-  color: #fff;
+  color:var(--text-main);
 }
 
-/* Botón cancelar */
+
 button[color="warn"] {
   border: 1px solid #c62828;
   color: #c62828;
 }
 
-/* Responsive */
+
 @media (max-width: 500px) {
   .orden-form {
     margin: 10px;
