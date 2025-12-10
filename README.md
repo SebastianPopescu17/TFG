@@ -1,2 +1,3 @@
 # TFG
-Repo del TFG
+Repo del TFG. 
+Para copiarlo usar git clone.
